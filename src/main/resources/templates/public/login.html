@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 10px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            display: none;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    {{#errorMessage}}
+    <script type="text/javascript">
+        alert("{{errorMessage}}")
+    </script>
+    {{/errorMessage}}
+    <div class="loginpage" id="loginPage"> <!-- 화면 중앙에 위치하기 위한 div 추가 -->
+        <form class="loginForm" action="/login" method="post">
+            <h2>로그인</h2>
+            <div class="input-wrapper">
+                <input class="loginText" id="usernameInput" type="text" name="username" placeholder="아이디" required
+                    oninput="validateEmail(this)">
+                <div class="error-message" id="emailErrorMessage">이메일 형식이 아닙니다.</div>
+            </div>
+            <input class="loginPassword" id="passwordInput" type="password" name="password" placeholder="비밀번호" required
+                oninput="validatePassword(this)">
+            <div class="error-message" id="passwordErrorMessage" style="margin-bottom: 5px;">비밀번호는 적어도 하나의 영문자와 하나의 숫자를
+                포해야합니다.</div>
+            <input class="loginSubmit" type="submit" value="로그인" id="loginButton" disabled>
+            <button class="signup-button" onclick="openJoinPopup()">회원가입</button>
+            <script>
+       
+                function openJoinPopup() {
+                    var popup = window.open("http://localhost:8081/joinPage", "_self");
+                }
+
+                function validateEmail(input) {
+                    var email = input.value;
+                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    var errorMessage = document.getElementById("emailErrorMessage");
+                    var loginButton = document.getElementById("loginButton");
+
+                    if (email.trim() === "") {
+                        errorMessage.style.display = "none";
+                        loginButton.disabled = true;
+                    } else if (!emailPattern.test(email)) {
+                        errorMessage.style.display = "block";
+                        loginButton.disabled = true;
+                    } else {
+                        errorMessage.style.display = "none";
+                        loginButton.disabled = false;
+                    }
+                }
+
+                function validatePassword(input) {
+                    var password = input.value;
+                    var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+                    var errorMessage = document.getElementById("passwordErrorMessage");
+                    var loginButton = document.getElementById("loginButton");
+
+                    if (password.trim() === "") {
+                        errorMessage.style.display = "none";
+                        loginButton.disabled = true;
+                    } else if (!passwordPattern.test(password)) {
+                        errorMessage.style.display = "block";
+                        loginButton.disabled = true;
+                    } else {
+                        errorMessage.style.display = "none";
+                        loginButton.disabled = false;
+                    }
+                }
+            </script>
+            <div class="social-login">
+                <img src="/static/img/main/kakao.png" onclick="kakaoLogin()">
+                <img src="/static/img/main/naver.png" onclick="naverLogin()">
+                <img src="/static/img/main/google.png" onclick="googleLogin()">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

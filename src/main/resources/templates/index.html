@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Jua&family=Nanum+Myeongjo:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gowun+Batang&family=Jua&family=Nanum+Myeongjo:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // 인덱스 페이지 로딩 시 실행
+        window.onload = function () {
+            // URL에서 success 파라미터 값을 가져옴
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const login_success = urlParams.get('login_success');
+
+
+            // 회원가입 성공 여부에 따라 팝업 열기
+            if (success === 'true') {
+                document.getElementById("popupFrame").src = "http://localhost:8081/loginPage"; // 두 번째 HTML 페이지를 로드
+
+
+            } else {
+                var popup = document.getElementById("popup");
+                var overlay = document.getElementById("overlay");
+                popup.style.display = "none";
+                overlay.style.display = "none";
+                currentPopup = null;
+            }
+        };
+    </script>
+
+</head>
+
+<body>
+    <!-- HTML 코드 -->
+    <div class="logo">Emoti</div>
+    <header>
+        <div class="logo">Emoti</div>
+        <nav>
+
+        </nav>
+    </header>
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Daily Quote</title>
+    </head>
+
+    <body>
+        <section id="section5">
+            <br><br>
+            <h2 id="quote">-명언-</h2>
+            <br>
+            <p1 id="author">-저자-</p1>
+            <br><br>
+        </section>
+
+        <script>
+            // 30개의 명언 및 저자 목록
+            const quotes = [
+                { quote: "행복은 인생의 목적이 아니라 인생을 사는 방법이다.", author: "알버트 아인슈타인" },
+                { quote: "행복은 우리가 사는 방식에 달려있다.", author: "댈 카네기" },
+                { quote: "성공은 준비된 사람이 온다.", author: "제이크 노튼" },
+                { quote: "최고의 복은 다른 사람을 행복하게 하는 것이다.", author: "알버트 슈바이처" },
+                { quote: "당신이 할 수 있다고 믿든 할 수 없다고 믿든, 확실해진다.", author: "헨리 포드" },
+                { quote: "매일 매일이 새로운 학습이다.", author: "제이크 노튼" },
+                { quote: "성공의 열쇠는 무엇보다도 열정이다.", author: "아노니무스" },
+                { quote: "어려운 시간을 견디고 이겨낼 수 있는 사람은 이기는 사람이다.", author: "로버트 H. 슐러" },
+                { quote: "가장 좋은 시간은 지금이다.", author: "안드레 쥬이르" },
+                { quote: "가장 어두운 밤이 가장 처음에 등장하는 해를 기다린다.", author: "안토니 데미로스" },
+                { quote: "당신이 매일 무엇을 결정하는가가 중요하다. 올바른 것을 선택하면 행복해질 것이다.", author: "알버트 슈바이처" },
+                { quote: "어제는 역사이고, 내일은 미스테리이다. 오늘은 선물이다.", author: "빌 키어" },
+                { quote: "길이 있는 사람은 반드시 간다.", author: "한니발" },
+                { quote: "성공은 짧은 시간에 오지 않는다.", author: "윌리엄 셰익스피어" },
+                { quote: "용기는 두려움이 끝나는 그 순간까지만 필요하다.", author: "엘리너 루즈벨트" },
+                { quote: "성공은 간단한 것이다. 근면이나 노력이란 없다. 단지 어떻게 인내심을 가지고 기다리는가의 문제일 뿐이다.", author: "소포클레스" },
+                { quote: "성공의 비결은 단 한 가지, 그것이 열정이다.", author: "팔로알토" },
+                { quote: "어제의 꿈은 오늘의 목표이고, 오늘의 노력은 내일의 성취이다.", author: "로버트 셩스토리" },
+                { quote: "평범한 것을 행하는 것이 성공의 첫 걸음이다.", author: "윌리엄 제임스" },
+                { quote: "사람은 생각하는 대로 된다.", author: "브루스 리 린든" },
+                { quote: "행복한 시간을 가져야 할 용기가 있는 사람은 그 시간이 두 배로 행복하다.", author: "세네카" },
+                { quote: "가장 어두운 밤이 가장 처음에 등장하는 해를 기다린다.", author: "안토니 데미로스" },
+                { quote: "내일의 운명은 오늘의 선택에 달려 있다.", author: "알베르 카뮈" },
+                { quote: "성공은 주어지는 것이 아니라 노력해서 얻어진다.", author: "다윈" },
+                { quote: "열정은 인내와 노력을 이긴다.", author: "미셸 피카르" },
+                { quote: "모든 일에는 두려움이 있는데, 그것을 이기는 사람만이 진정으로 성공할 수 있다.", author: "하비 파이어스톤" },
+                { quote: "어떤 문제든지 해결책은 하나다. 그것은 끝까지 버텨내는 힘이다.", author: "나폴레옹 힐" },
+                { quote: "인생에서 두 번의 실패는 삶의 더 큰 승리를 가져온다.", author: "콜린 파월" },
+                { quote: "우리는 항상 최선을 다해야 한다. 그리고 그것은 우리의 주요한 의무이다.", author: "윈스턴 처칠" },
+                { quote: "계획없는 목표는 바람에 밀려 조종이 불가능하다.", author: "슈페이어" },
+                { quote: "계획을 세우는 것은 목표를 가진 사람에게 특별한 도구를 제공한다.", author: "크리스토퍼 마지너스" },
+                { quote: "나는 나의 한계를 안다. 그것이 내가 그 너머로 가는 이유다.", author: "-세르주 갱스부르-" },
+            ];
+
+            // 페이지가 로드될 때마다 랜덤한 명언 및 저자를 선택하여 표시
+            window.onload = function () {
+                const quoteElement = document.getElementById('quote');
+                const authorElement = document.getElementById('author');
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                quoteElement.innerText = quotes[randomIndex].quote;
+                authorElement.innerText = quotes[randomIndex].author;
+            };
+        </script>
+
+        <section id="section1">
+            <h2>우리의 기분</h2>
+            <p id=emotionText></p>
+            <br><br>
+            <!-- 기존 이미지 대신 버튼 추가 -->
+            <figure onclick="openPopup()">
+                <img id=emotionImage src="/static/img/main/smile.png" alt="이미지 1"
+                    style="width: 200px; height: auto; ">
+            </figure>
+            <div class="popup" id="popup">
+                <iframe id="popupFrame" src="" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+
+            </div>
+            <div class="overlay" id="overlay" onclick="closePopup()"></div>
+            <script>
+
+                const Emotions = {
+                    "1": "HAPPY",
+                    "2": "CALM",
+                    "3": "SURPRISE",
+                    "4": "SAD",
+                    "5": "ANGRY"
+                };
+
+                var currentPopup = null;
+
+                function openPopup() {
+                    var popup = document.getElementById("popup");
+                    var overlay = document.getElementById("overlay");
+                    popup.style.display = "block";
+                    overlay.style.display = "block";
+                    currentPopup = popup;
+                    document.getElementById("popupFrame").src = "http://localhost:8081/loginPage"; // 두 번째 HTML 페이지를 로드
+                }
+
+                function closePopup() {
+                    var popup = document.getElementById("popup");
+                    var overlay = document.getElementById("overlay");
+                    popup.style.display = "none";
+                    overlay.style.display = "none";
+                    currentPopup = null;
+                    window.location.href = "http://localhost:8081/user/index?login_success=true";
+                }
+
+            </script>
+            <br><br>
+            <div class="info" id="info_text" style="display: none;">함께 좋은 기분을 만들어가고 싶으시면<br>저를 클릭해주세요!</div>
+            <br><br>
+        </section>
+
+    </body>
+
+    </html>

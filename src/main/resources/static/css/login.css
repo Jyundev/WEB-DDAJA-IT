@@ -1,0 +1,187 @@
+
+.loginPage {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 00px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.loginForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 7px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 폼을 가운데 정렬 */
+    width: 300px; /* 폼의 너비 */
+    height: 420px;
+}
+.loginText, .loginPassword {
+    width: calc(100% - 33px); /* 아이디 패스워드 입력창의 너비 */
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+.loginSubmit {
+    width: calc(100% - 33px); /* 로그인 및 회원가입 버튼의 너비 */
+    padding: 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 7px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* modal.css */
+.signUpForm {
+    max-width: 300px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    padding: 20px; /* 내부 여백 설정 */
+    background-color: #f9f9f9; /* 배경색 설정 */
+    border-radius: 5px; /* 테두리 반경 설정 */
+    overflow-y: auto; /* 내용이 모달 창을 넘칠 경우 스크롤을 추가합니다. */
+}
+
+
+.signup-button {
+    width: calc(100% - 33px); /* 로그인 및 회원가입 버튼의 너비 */
+    padding: 15px;
+    border: none;
+    border-radius: 7px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.loginSubmit:hover {
+    background-color: #0056b3;
+}
+
+.signup-button:hover {
+    background-color: #0056b3;
+}
+.social-login {
+    margin-top: 30px;
+    text-align: center;
+}
+.social-login img {
+    width: 80px; /* 소셜 로그인 아이콘의 크기 */
+    border-radius: 50%;
+    margin: 0 7px;
+    cursor: pointer;
+}
+
+/* modal.css */
+.back-to-login {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 0px;
+    background-color: #328ae8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-to-login:hover {
+    background-color: #0056b3;
+}
+
+
+.signup-button {
+    width: calc(100% - 33px); /* 로그인 및 회원가입 버튼의 너비 */
+    padding: 15px;
+    border: none;
+    border-radius: 7px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+.signup-button:hover {
+    background-color: #0056b3;
+}
+.social-login {
+    margin-top: 30px;
+    text-align: center;
+}
+.social-login img {
+    width: 80px; /* 소셜 로그인 아이콘의 크기 */
+    border-radius: 50%;
+    margin: 0 7px;
+    cursor: pointer;
+}
+
+.signUpPage {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.signUpForm {
+    margin-top: 100;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 7px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 폼을 가운데 정렬 */
+    width: 400px; /* 폼의 너비 */
+    height: 400px; /* 폼의 높이비 */
+}
+.signUpNickname, .signUpEmail, .signUpPassword, .signUpPasswordCheck {
+    width: calc(100% - 33px); /* 아이디 패스워드 입력창의 너비 */
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+.signUpSubmit {
+    width: calc(100% - 33px); /* 로그인 및 회원가입 버튼의 너비 */
+    padding: 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 7px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+.signup-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
