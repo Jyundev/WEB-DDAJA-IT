@@ -64,3 +64,11 @@ springdoc:
   cache:
     disabled: true
   model-and-view-allowed: true
+
+
+# loging
+# race → warn → info → debug → error(적은 로깅) 순
+# 개발 서버는 debug, 운영 서버는 info
+logging:
+  level:
+    com.web: debug
