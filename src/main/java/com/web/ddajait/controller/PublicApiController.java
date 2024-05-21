@@ -32,16 +32,12 @@ public class PublicApiController {
     @Tag(name = "Public API")
     @Operation(summary = "회원가입", description = "회원가입 API 입니다. email, nickname, password 는 필수이며, age, gender는 선택사항입니다.")
     @PostMapping("/join")
-    public void join(@Valid @RequestBody UserDto dto, HttpServletResponse response) throws IOException {
+    public void join(@Valid @RequestBody UserDto dto, HttpServletResponse response) throws Exception {
         log.info("[PublicController][join] Start - Email: {}, Nickname: {}", dto.getEmail(), dto.getNickname());
-        
-        try {
-            userService.joinUser(dto);
-            log.info("[PublicController][join] Success - User: {}", dto.getNickname());
-            response.sendRedirect("/loginPage"); // 리다이렉션 URL 설정
-        } catch (Exception e) {
-            log.error("[PublicController][join] Error - {}", e.getMessage());
-            response.sendRedirect("/signup?error=true"); // 오류 발생 시 회원가입 페이지로 리다이렉트 및 에러 표시
-        }
+
+        userService.createMemberr(dto);
+        log.info("[PublicController][join] Success - User: {}", dto.getNickname());
+        response.sendRedirect("/loginPage"); // 리다이렉션 URL 설정
+
     }
 }

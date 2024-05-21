@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.config.constant.Role;
+import com.web.ddajait.config.error.custom.DuplicateMemberException;
 import com.web.ddajait.model.dao.UserDao;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.entity.UserEntity;
@@ -73,9 +74,24 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    // 회원가입
     @Override
-    public void joinUser(UserDto dto) throws Exception {
-        log.info("[UserServiceImpl][joinUser] Start");
+    public void createMemberr(UserDto dto) throws Exception {
+        log.info("[UserServiceImpl][createMemberr] Start");
+
+        // 중복회원 처리
+        int emailCheck = countMemberByMemberEmail(dto.getEmail());
+        int nicknameCheck = countMemberByMemberNickname(dto.getNickname());
+
+        // 이메일(ID) 중복 
+        if (emailCheck > 0 ) {
+            throw new DuplicateMemberException(dto.getEmail());
+        }
+
+        // 닉네임 중복 
+        if (nicknameCheck > 0 ) {
+            throw new DuplicateMemberException(dto.getNickname());
+        }
 
         UserEntity userEntity = new UserEntity();
         userEntity.setAge(dto.getAge());
@@ -92,24 +108,23 @@ public class UserServiceImpl implements UserService {
         userEntity.setUserId(dto.getUserId());
         userEntity.setRole(dto.getRole());
 
-        // 인가 : 권한 설정 
-        // 사용자의 닉네임이 ROLE_ADMIN인 경우 관리자로 인식 
-        if(dto.getNickname().equals(Role.ADMIN.getKey())){
+        // 인가 : 권한 설정
+        // 사용자의 닉네임이 ROLE_ADMIN인 경우 관리자로 인식
+        if (dto.getNickname().equals(Role.ADMIN.getKey())) {
             userEntity.setRole(Role.ADMIN.name());
         }
 
-        log.info("[UserServiceImpl][joinUser] dto "+ dto);
+        log.info("[UserServiceImpl][createMemberr] dto " + dto);
 
         // 비밀번호 암호화 적용
         String rawPwd = userEntity.getPassword();
         String encodedPwd = bCryptPasswordEncoder.encode(rawPwd);
         userEntity.setPassword(encodedPwd);
 
-        log.info("[UserServiceImpl][joinUser] userEntity "+ userEntity);
+        log.info("[UserServiceImpl][createMemberr] userEntity " + userEntity);
 
-        userDao.joinUser(userEntity);
+        userDao.createMemberr(userEntity);
 
-        
     }
 
     @Override
@@ -127,9 +142,19 @@ public class UserServiceImpl implements UserService {
         userEntity.setQualifiedCertificate(dto.getQualifiedCertificate());
         userEntity.setTier(dto.getTier());
         userEntity.setUserId(dto.getUserId());
-        userEntity.setRole(dto.getRole());   
-        
+        userEntity.setRole(dto.getRole());
+
         userDao.updateUser(userEntity);
     }
-    
+
+    @Override
+    public int countMemberByMemberEmail(String email) throws Exception {
+        return userDao.countMemberByMemberEmail(email);
+    }
+
+    @Override
+    public int countMemberByMemberNickname(String nickname) throws Exception {
+        return userDao.countMemberByMemberNickname(nickname);
+    }
+
 }

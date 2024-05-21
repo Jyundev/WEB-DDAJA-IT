@@ -25,13 +25,12 @@ public class UserImpl implements UserDao {
     }
 
     @Override
-    public void joinUser(UserEntity entity) {
+    public void createMemberr(UserEntity entity) {
         userRepository.save(entity);
     }
 
     @Override
     public void updateUser(UserEntity entity) {
-        // TODO Auto-generated method stub
         userRepository.save(entity);
     }
 
@@ -39,6 +38,16 @@ public class UserImpl implements UserDao {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
         
+    }
+
+    @Override
+    public int countMemberByMemberEmail(String email) throws Exception {
+        return userRepository.countMemberByMemberEmail(email);
+    }
+
+    @Override
+    public int countMemberByMemberNickname(String nickname) throws Exception {
+        return userRepository.countMemberByMemberNickname(nickname);
     }
 
 }

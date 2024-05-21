@@ -55,7 +55,7 @@ public class PublicController {
 
     //     log.info("[PublicController][join] Start dto : "+dto);
         
-    //     userService.joinUser(dto);
+    //     userService.createMemberr(dto);
 
     //     // 회원가입이 성공했을 때 인덱스 페이지로 리다이렉션하고 성공 파라미터를 함께 전달
     //     redirectAttributes.addAttribute("success", true);
