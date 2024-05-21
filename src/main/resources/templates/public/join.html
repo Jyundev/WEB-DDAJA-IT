@@ -4,14 +4,14 @@
 <head>
     {{#error}}
     <script type="text/javascript">
-        console.log("error : {{error}}")
-        alert("회원가입에 실패했습니다")
+        console.log("error : {{error}}");
+        alert("회원가입에 실패했습니다");
     </script>
     {{/error}}
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>회원가입</title>
     <link rel="stylesheet" href="/static/css/login.css">
     <style>
         .error-message {
@@ -27,108 +27,124 @@
 
 <body>
     <div class="signUpPage" id="signUpPage"> <!-- 회원가입 폼 -->
-        <form class="signUpForm" action="/join" method="post" enctype="application/x-www-form-urlencoded">
+        <form class="signUpForm" action="/api/v1/public/join" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return handleSignUp(event)">
             <h2>회원가입</h2>
             <div class="input-wrapper">
-                <input class="signUpNickname" id="nicknameInput" type="text" name="nickname" placeholder="닉네임" required
-                    oninput="validateNickname(this)">
+                <input class="signUpNickname" id="nicknameInput" type="text" name="nickname" placeholder="닉네임" required oninput="validateNickname(this)">
                 <div class="error-message" id="nicknameErrorMessage">닉네임은 한글, 영어 소문자, 숫자, 밑줄(_)만 포함할 수 있습니다.</div>
-
             </div>
             <div class="input-wrapper">
-                <input class="signUpEmail" id="emailInput" name="email" placeholder="이메일" required
-                    oninput="validateEmail(this)">
+                <input class="signUpEmail" id="emailInput" name="email" placeholder="이메일" required oninput="validateEmail(this)">
                 <div class="error-message" id="emailErrorMessage">이메일 형식이 아닙니다.</div>
             </div>
             <div class="input-wrapper">
-                <input class="signUpPassword" id="passwordInput" type="password" name="password" placeholder="비밀번호"
-                    required oninput="validatePassword(this)">
-                <div class="error-message" id="passwordErrorMessage">비밀번호는 적어도 하나의 영문자와 하나의 숫자를 포해야합니다(6자-10자).</div>
+                <input class="signUpPassword" id="passwordInput" type="password" name="password" placeholder="비밀번호" required oninput="validatePassword(this)">
+                <div class="error-message" id="passwordErrorMessage">비밀번호는 적어도 하나의 영문자와 하나의 숫자를 포함해야합니다(6자-10자).</div>
             </div>
             <div class="input-wrapper">
-                <input class="signUpPasswordCheck" id="passwordCheckInput" type="password" name="passwordCheck"
-                    placeholder="비밀번호 확인" required oninput="validatePasswordCheck(this)">
+                <input class="signUpPasswordCheck" id="passwordCheckInput" type="password" name="passwordCheck" placeholder="비밀번호 확인" required oninput="validatePasswordCheck(this)">
                 <div class="error-message" id="passwordCheckErrorMessage">비밀번호가 일치하지 않습니다.</div>
             </div>
             <input class="signUpSubmit" type="submit" value="회원가입" id="signUpButton" disabled>
         </form>
         <script>
+            function handleSignUp(event) {
+                event.preventDefault(); // 폼의 기본 제출을 막음
+
+                // 모든 유효성 검사 로직 확인
+                var nicknameValid = validateNickname(document.getElementById("nicknameInput"));
+                var emailValid = validateEmail(document.getElementById("emailInput"));
+                var passwordValid = validatePassword(document.getElementById("passwordInput"));
+                var passwordCheckValid = validatePasswordCheck(document.getElementById("passwordCheckInput"));
+
+                if (nicknameValid && emailValid && passwordValid && passwordCheckValid) {
+                    document.querySelector('.signUpForm').submit(); // 유효성 검사를 통과한 경우 폼 제출
+                }
+            }
 
             function validateNickname(input) {
-            var nickname = input.value;
-            var nicknamePattern = /^[가-힣a-z0-9_]+$/;
-            var errorMessage = document.getElementById("nicknameErrorMessage");
-            var signUpButton = document.getElementById("signUpButton");
+                var nickname = input.value;
+                var nicknamePattern = /^[가-힣a-z0-9_]+$/;
+                var errorMessage = document.getElementById("nicknameErrorMessage");
+                var signUpButton = document.getElementById("signUpButton");
 
-            if (nickname.trim() === "") {
-                errorMessage.style.display = "none";
-                signUpButton.disabled = true;
-            } else if (!nicknamePattern.test(nickname)) {
-                errorMessage.style.display = "block";
-                signUpButton.disabled = true;
-            } else {
-                errorMessage.style.display = "none";
-                signUpButton.disabled = false;
+                if (nickname.trim() === "") {
+                    errorMessage.style.display = "none";
+                    return false;
+                } else if (!nicknamePattern.test(nickname)) {
+                    errorMessage.style.display = "block";
+                    return false;
+                } else {
+                    errorMessage.style.display = "none";
+                    return true;
+                }
             }
-        }
 
-        function validateEmail(input) {
-            // var email = input.value;
-            // var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            // var errorMessage = document.getElementById("emailErrorMessage");
-            // var signUpButton = document.getElementById("signUpButton");
-
-            // if (email.trim() === "") {
-            //     errForMessage.style.display = "none";
-            //     signUpButton.disabled = true;
-            // } else if (!emailPattern.test(email)) {
-            //     errorMessage.style.display = "block";
-            //     signUpButton.disabled = true;
-            // } else {
-            //     errorMessage.style.display = "none";
-            //     signUpButton.disabled = false;
-            // }
-        }
-
-        function validatePassword(input) {
-            var password = input.value;
-            var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-            var errorMessage = document.getElementById("passwordErrorMessage");
-            var signUpButton = document.getElementById("signUpButton");
-
-            if (password.trim() === "") {
-                errorMessage.style.display = "none";
-                signUpButton.disabled = true;
-            } else if (!passwordPattern.test(password)) {
-                errorMessage.style.display = "block";
-                signUpButton.disabled = true;
-            } else {
-                errorMessage.style.display = "none";
-                signUpButton.disabled = false;
+            function validateEmail(input) {
+                var email = input.value;
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                var errorMessage = document.getElementById("emailErrorMessage");
+                
+                if (email.trim() === "") {
+                    errorMessage.style.display = "none";
+                    return false;
+                } else if (!emailPattern.test(email)) {
+                    errorMessage.style.display = "block";
+                    return false;
+                } else {
+                    errorMessage.style.display = "none";
+                    return true;
+                }
             }
-        }
 
-        function validatePasswordCheck(input) {
-            var passwordCheck = input.value;
-            var password = document.getElementById("passwordInput").value;
-            var passwordCheckErrorMessage = document.getElementById("passwordCheckErrorMessage");
-            var signUpButton = document.getElementById("signUpButton");
+            function validatePassword(input) {
+                var password = input.value;
+                var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,10}$/;
+                var errorMessage = document.getElementById("passwordErrorMessage");
 
-            if (passwordCheck.trim() !== "") {
-                if (password !== passwordCheck) {
-                    passwordCheckErrorMessage.style.display = "block";
-                    signUpButton.disabled = true;
+                if (password.trim() === "") {
+                    errorMessage.style.display = "none";
+                    return false;
+                } else if (!passwordPattern.test(password)) {
+                    errorMessage.style.display = "block";
+                    return false;
+                } else {
+                    errorMessage.style.display = "none";
+                    return true;
+                }
+            }
+
+            function validatePasswordCheck(input) {
+                var passwordCheck = input.value;
+                var password = document.getElementById("passwordInput").value;
+                var passwordCheckErrorMessage = document.getElementById("passwordCheckErrorMessage");
+
+                if (passwordCheck.trim() !== "") {
+                    if (password !== passwordCheck) {
+                        passwordCheckErrorMessage.style.display = "block";
+                        return false;
+                    } else {
+                        passwordCheckErrorMessage.style.display = "none";
+                        return true;
+                    }
                 } else {
                     passwordCheckErrorMessage.style.display = "none";
-                    signUpButton.disabled = false;
+                    return false;
                 }
-            } else {
-                passwordCheckErrorMessage.style.display = "none";
             }
-        }
 
+            // 각 유효성 검사 함수에서 모든 입력이 유효할 때만 제출 버튼 활성화
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', () => {
+                    var nicknameValid = validateNickname(document.getElementById("nicknameInput"));
+                    var emailValid = validateEmail(document.getElementById("emailInput"));
+                    var passwordValid = validatePassword(document.getElementById("passwordInput"));
+                    var passwordCheckValid = validatePasswordCheck(document.getElementById("passwordCheckInput"));
 
-    </script>
+                    document.getElementById("signUpButton").disabled = !(nicknameValid && emailValid && passwordValid && passwordCheckValid);
+                });
+            });
+        </script>
     </div>
 </body>
 
