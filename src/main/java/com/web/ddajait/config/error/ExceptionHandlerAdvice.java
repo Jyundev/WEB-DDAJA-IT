@@ -7,25 +7,31 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.web.ddajait.config.constant.CommonErrorCode;
-import com.web.ddajait.config.constant.EntityErrorCode;
+import com.web.ddajait.config.constant.errorCode.Common;
+import com.web.ddajait.config.constant.errorCode.Member;
+import com.web.ddajait.config.error.custom.DuplicateMemberException;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-
+/*
+ * 
+ * 
+ */
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
-     //모든 에러 -> 하위 에러에서 못받을 때
+    
+     // Exception에 대한 예외처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleException(Exception e){
         // NestedExceptionUtils.getMostSpecificCause() -> 가장 구체적인 원인, 즉 가장 근본 원인을 찾아서 반환
         log.error("[Exception] cause: {} , message: {}", NestedExceptionUtils.getMostSpecificCause(e), e.getMessage());
-        ErrorCode errorCode = CommonErrorCode.INTERNAL_SERVER_ERROR;
+        ErrorCode errorCode = Common.INTERNAL_SERVER_ERROR;
         ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(), errorCode.getCode(), errorCode.getMessage());
         return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
     }
 
+    // RuntimeException에 대한 예외처리
     @ExceptionHandler(RestApiException.class)
     public ResponseEntity handleSystemException(RestApiException e){
         log.error("[SystemException] cause: {}, message: {}",NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
@@ -38,7 +44,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity handleIllegalArgumentException(IllegalArgumentException e){
         log.error("[IlleagalArgumentException] cause: {} , message: {}",NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
-        ErrorCode errorCode = CommonErrorCode.ILLEGAL_ARGUMENT_ERROR;
+        ErrorCode errorCode = Common.ILLEGAL_ARGUMENT_ERROR;
         ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(),errorCode.getCode(),errorCode.getMessage());
         return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
     }
@@ -47,7 +53,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         log.error("[MethodArgumentNotValidException] cause: {}, message: {}",NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
-        ErrorCode errorCode = CommonErrorCode.INVALID_ARGUMENT_ERROR;
+        ErrorCode errorCode = Common.INVALID_ARGUMENT_ERROR;
         ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(),
                 errorCode.getCode(),
                 errorCode.getMessage(),
@@ -59,7 +65,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity handleHttpMessageNotReadableException(HttpMessageNotReadableException e){
         log.error("[HttpMessageNotReadableException] cause: {}, message: {}",NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
-        ErrorCode errorCode = CommonErrorCode.INVALID_FORMAT_ERROR;
+        ErrorCode errorCode = Common.INVALID_FORMAT_ERROR;
         ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(), errorCode.getCode(),  errorCode.getMessage());
         return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
     }
@@ -67,9 +73,21 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity handleEntityNotFoundException(EntityNotFoundException e){
         log.error("[EntityNotFoundException] cause:{}, message: {}", NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
-        ErrorCode errorCode = EntityErrorCode.MEMBER_NOT_FOUND_ERROR;
+        ErrorCode errorCode = Member.MEMBER_NOT_FOUND_ERROR;
         ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(),errorCode.getCode(), errorCode.getMessage());
         return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
     }
+
+
+    //  Custom
+    //중복 회원 예외처리
+    @ExceptionHandler(DuplicateMemberException.class)
+    public ResponseEntity handleHttpClientErrorException(DuplicateMemberException e){
+            log.error("[DuplicateMemberException : Conflict] cause: {}, message: {}",NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
+            ErrorCode errorCode = Member.MEMBER_ID_ALREADY_EXISTS_ERROR;
+            ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(),errorCode.getCode(), e.getMessage()+ errorCode.getMessage());
+            return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
+    }
+
  
 }

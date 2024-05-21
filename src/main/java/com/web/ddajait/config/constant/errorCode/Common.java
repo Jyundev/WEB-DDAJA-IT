@@ -1,4 +1,4 @@
-package com.web.ddajait.config.constant;
+package com.web.ddajait.config.constant.errorCode;
 
 import org.springframework.http.HttpStatus;
 
@@ -7,9 +7,15 @@ import com.web.ddajait.config.error.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/*
+ * 공통 에러 코드
+ * httpStatus와 message를 필드로 가지고 @Getter 어노테이션을 사용하여 
+ * implements한 메소드들을 굳이 코드로 재정의하지 않음  
+ */
+
 @Getter
 @RequiredArgsConstructor
-public enum CommonErrorCode implements ErrorCode{
+public enum Common implements ErrorCode{
     INVALID_ARGUMENT_ERROR(HttpStatus.BAD_REQUEST, 400, "올바르지 않은 파라미터입니다."),
     INVALID_FORMAT_ERROR(HttpStatus.BAD_REQUEST,400, "올바르지 않은 포맷입니다."),
     INVALID_TYPE_ERROR(HttpStatus.BAD_REQUEST, 400, "올바르지 않은 타입입니다."),
