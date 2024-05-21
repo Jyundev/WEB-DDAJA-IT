@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.web.ddajait.config.constant.Role;
 import com.web.ddajait.config.handler.LoginAuthFailureHandler;
 import com.web.ddajait.config.handler.LoginAuthSuccessHandelr;
 import com.web.ddajait.config.handler.LogoutAuthSuccessHandler;
@@ -57,13 +56,19 @@ public class SecurityConfig {
                                 // 인증 & 인가 설정
                                 .authorizeHttpRequests(authorize -> authorize // http request 요청에 대한 화면 접근(url path) 권한
                                                                               // 설정
-                                                // "/user" 와 같은 url path로 접근할 경우
-                                                .requestMatchers("/user/**")
-                                                .authenticated() // 인증(로그인)만 접근 가능
-                                                // "/admin" 와 같은 url path로 접근할 경우...
-                                                .requestMatchers("/admin/**")
-                                                .hasAnyAuthority(Role.ADMIN.name())
-                                                .anyRequest().permitAll()) // 그외의 모든 url path는 누구나 접근 가능
+                                         // 계정 로그인,아이디 찾기 등은 인증되지 않은 사용자만
+                                        .requestMatchers("/public/**")
+                                        .anonymous()
+                                        // "/user" 와 같은 url path로 접근할 경우... 
+                                        .requestMatchers("/user/**")
+                                        // 인증(로그인)만 접근 가능
+                                        .authenticated()
+                                        // "/admin" 와 같은 url path로 접근할 경우...
+                                        .requestMatchers("/admin/**")
+                                        // ADMIN이라는 권한을 갖은 사용자만 접근 가능 
+                                        .hasAnyAuthority("ADMIN")
+                                        // 그외의 모든 url path는 누구나 접근 가능 
+                                        .anyRequest().permitAll())
 
                                 // 인증(로그인)에 대한 설정
                                 .formLogin(formLogin -> formLogin

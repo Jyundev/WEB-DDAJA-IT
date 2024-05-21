@@ -1,44 +1,65 @@
 package com.web.ddajait.config.error;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 // https://studyandwrite.tistory.com/502
 // https://velog.io/@leehyeonmin34/exception-handling
 
 @Getter
+@Builder
+@RequiredArgsConstructor
 public class ErrorResponse {
-    private String message;
-    private String code;
-    private int status;
-    private List<FieldError> errors = new ArrayList<>();
+    private final boolean success = false;
+    private final HttpStatus httpStatus;
+    private final int code;
+    private final String message;
 
-    @Builder
-    public ErrorResponse(String message, String code, int status, List<FieldError> errors) {
-        this.message = message;
-        this.code = code;
-        this.status = status;
-        this.errors = initErrors(errors);
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private final List<ValidationError> errors;
+
+    public static ErrorResponse of(HttpStatus httpStatus,int code, String message){
+        return ErrorResponse.builder()
+                .httpStatus(httpStatus)
+                .code(code)
+                .message(message)
+                .build();
     }
-
-    private List<FieldError> initErrors(List<FieldError> errors) {
-        return (errors == null) ? new ArrayList<>() : errors;
+    public static ErrorResponse of(HttpStatus httpStatus,int code, String message, BindingResult bindingResult){
+        return ErrorResponse.builder()
+                .httpStatus(httpStatus)
+                .code(code)
+                .message(message)
+                .errors(ValidationError.of(bindingResult))
+                .build();
     }
 
     @Getter
-    public static class FieldError {
-        private String field;
-        private String value;
-        private String reason;
+    public static class ValidationError{
+        private final String field;
+        private final String value;
+        private final String message;
 
-        @Builder
-        public FieldError(String field, String value, String reason) {
-            this.field = field;
-            this.value = value;
-            this.reason = reason;
+        private ValidationError(FieldError fieldError){
+            this.field = fieldError.getField();
+            this.value = fieldError.getRejectedValue() == null? "" :fieldError.getRejectedValue().toString() ;
+            this.message = fieldError.getDefaultMessage();
         }
+
+        public static List<ValidationError> of(final BindingResult bindingResult){
+            return bindingResult.getFieldErrors().stream()
+                    .map(ValidationError :: new)
+                    .toList();
+        }
+
     }
 }
