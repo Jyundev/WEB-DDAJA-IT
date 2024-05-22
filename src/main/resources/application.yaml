@@ -7,45 +7,9 @@ server:
 
 # Spring Data Source 설정 
 spring:
-
-  output:
-    ansi:
-      enabled: always 
-
-  # 데이터 베이스 
-  datasource:
-      url: jdbc:mysql://fp.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com:3306/ddajait_data
-      username: fp
-      password: qwerasdf1!
-      driver-class-name: com.mysql.cj.jdbc.Driver
-
-    # sql:
-    #   init:
-    #     mode: always
-
-
-    #  데이터 베이스 커넥션 
-  jpa:
-    hibernate:
-      ddl-auto: update 
-    properties:
-      properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-          
-    # defer-datasource-initialization: true
-        
-
-  # mustache (1. 루트폴더 변경, 2. 타임리프 캐시 설정 변경)
-  mustache:
-    prefix: classpath:templates/
-    check-template-location: true
-    suffix: .html
-    cache: false
-
-  mvc:
-    static-path-pattern: /static/**
-
+  profiles:
+    active: dev  # default application 파일의 이름
+                 # ex application-dev.yml -> dev
 
 # spring doc
 springdoc:

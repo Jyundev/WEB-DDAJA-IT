@@ -2,8 +2,6 @@ package com.web.ddajait.config.constant;
 
 import org.springframework.http.HttpStatus;
 
-import com.web.ddajait.model.dto.response.ResponseCode;
-
 public enum ResponseStatus implements ResponseCode{
 
     SUCCESS(200, HttpStatus.OK, "성공했습니다"),
