@@ -14,28 +14,27 @@ public class UserImpl implements UserDao {
     private UserRepository userRepository;
 
     @Override
-    public UserEntity findById(Long userId) {
+    public UserEntity findById(Long userId) throws Exception{
         return userRepository.findById(userId).get();
-
     }
 
     @Override
-    public UserEntity findByEmail(String email) {
+    public UserEntity findByEmail(String email) throws Exception{
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public void createMemberr(UserEntity entity) {
+    public void createMemberr(UserEntity entity) throws Exception{
         userRepository.save(entity);
     }
 
     @Override
-    public void updateUser(UserEntity entity) {
+    public void updateUser(UserEntity entity) throws Exception{
         userRepository.save(entity);
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id) throws Exception{
         userRepository.deleteById(id);
         
     }

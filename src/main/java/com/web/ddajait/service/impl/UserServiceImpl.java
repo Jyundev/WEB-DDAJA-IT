@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) throws Exception {
         // TODO Auto-generated method stub
+
         UserEntity entity = userDao.findById(id);
         userDao.deleteUser(entity.getUserId());
     }
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
     // 회원가입
     @Override
     public void createMemberr(UserDto dto) throws Exception {
-        log.info("[UserServiceImpl][createMemberr] Start");
+        log.info("[UserServiceImpl][createMemberr]");
 
         // 중복회원 처리
         int emailCheck = countMemberByMemberEmail(dto.getEmail());
@@ -129,6 +130,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UserDto dto) throws Exception {
+        log.info("[UserServiceImpl][updateUser] Start");
+
+        // 중복회원 처리
+        int emailCheck = countMemberByMemberEmail(dto.getEmail());
+        int nicknameCheck = countMemberByMemberNickname(dto.getNickname());
+
+        // 이메일(ID) 중복 
+        if (emailCheck > 0 ) {
+            throw new DuplicateMemberException(dto.getEmail());
+        }
+
+        // 닉네임 중복 
+        if (nicknameCheck > 0 ) {
+            throw new DuplicateMemberException(dto.getNickname());
+        }
+
         UserEntity userEntity = new UserEntity();
         userEntity.setAge(dto.getAge());
         userEntity.setEmail(dto.getEmail());

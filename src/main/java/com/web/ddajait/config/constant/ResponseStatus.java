@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum ResponseStatus implements ResponseCode{
 
-    SUCCESS(200, HttpStatus.OK, "성공했습니다"),
-    FAILURE(600, HttpStatus.BAD_REQUEST, "실패했습니다."),
+    SUCCESS(200, HttpStatus.OK, " : SUCCESS"),
+    FAILURE(600, HttpStatus.BAD_REQUEST, " : FAILURE"),
     ;
 
     private final HttpStatus httpStatus;
