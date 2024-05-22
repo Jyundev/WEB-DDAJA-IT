@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@Tag(name = "Public API", description = "Public API 입니다.")
+@Tag(name = "Public", description = "Public API 입니다.")
 @RequestMapping("/api/v1/public")
 public class PublicApiController {
     private static final Logger log = LoggerFactory.getLogger(PublicApiController.class);
@@ -29,7 +29,6 @@ public class PublicApiController {
     @Autowired 
     UserService userService;
 
-    @Tag(name = "Public API")
     @Operation(summary = "회원가입", description = "회원가입 API 입니다. email, nickname, password 는 필수이며, age, gender는 선택사항입니다.")
     @PostMapping("/join")
     public ResponseEntity<ResponseDto<UserDto>> join(@Valid @RequestBody UserDto dto) throws Exception {

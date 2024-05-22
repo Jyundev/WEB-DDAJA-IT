@@ -1,6 +1,9 @@
 package com.web.ddajait.model.dto;
 
+
 import org.hibernate.validator.constraints.URL;
+
+import com.web.ddajait.config.constant.Role;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -48,6 +51,6 @@ public class UserDto {
     
     private String qualifiedCertificate;
     
-    private String role;
+    private String role = Role.USER.name();
 
 }
