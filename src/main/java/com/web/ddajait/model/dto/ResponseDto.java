@@ -1,4 +1,4 @@
-package com.web.ddajait.model.dto.response;
+package com.web.ddajait.model.dto;
 
 import org.springframework.http.HttpStatus;
 

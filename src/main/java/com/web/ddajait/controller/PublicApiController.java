@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.UserDto;
-import com.web.ddajait.model.dto.response.ResponseHandler;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,7 +48,7 @@ public class PublicApiController {
         userService.createMemberr(dto);
         log.info("[PublicController][join] Success - User: {}", dto.getNickname());
 
-        return ResponseHandler.SUCCESS_SAMPLE(dto);
+        return ResponseHandler.SUCCESS(dto);
 
     }
 }
