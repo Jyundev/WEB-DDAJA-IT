@@ -1,4 +1,4 @@
-package com.web.ddajait.config.constant.errorCode;
+package com.web.ddajait.config.constant.Code;
 
 import org.springframework.http.HttpStatus;
 
@@ -12,12 +12,13 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum Member implements ErrorCode{
+public enum MemberError implements ErrorCode{
 
     MEMBER_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND,404,"존재하지 않는 사용자입니다"),
-    MEMBER_ID_ALREADY_EXISTS_ERROR(HttpStatus.CONFLICT,409, ""),
+    MEMBER_ID_ALREADY_EXISTS_ERROR(HttpStatus.CONFLICT,409, "중복된 사용자입니다."),
     MEMBER_EMAIL_ALREADY_EXISTS_ERROR(HttpStatus.CONFLICT,409,"는 이미 존재하는 이메일입니다."),
     INACTIVE_USER_ERROR(HttpStatus.FORBIDDEN, 403,"권한이 없는 사용자입니다"),
+    
     ;
     private final HttpStatus httpStatus;
     private final int code;
