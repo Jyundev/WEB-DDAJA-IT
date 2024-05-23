@@ -15,13 +15,9 @@ spring:
 
   # 데이터 베이스 
   datasource:
-      # url: jdbc:mysql://127.0.0.1:3306/dockertestdb?userSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-      # username: root
-      # password: root1234
-      # driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/examplesdb?userSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-      username: urstory
-      password: u1234
+      url: jdbc:mysql://127.0.0.1:3306/dockertestdb?userSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+      username: root
+      password: root1234
       driver-class-name: com.mysql.cj.jdbc.Driver
 
 
