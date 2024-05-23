@@ -12,6 +12,7 @@ import com.web.ddajait.config.constant.MemberError;
 import com.web.ddajait.config.error.custom.DuplicateMemberException;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 /*
  * 
@@ -58,6 +59,19 @@ public class ExceptionHandlerAdvice {
                 errorCode.getCode(),
                 errorCode.getMessage(),
                 e.getBindingResult());
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
+    }
+
+
+    //@Validated 유효성 검사에서 예외가 발생했을 때 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity handleMethodArgumentNotValidException(ConstraintViolationException e){
+        log.error("[MethodArgumentNotValidException] cause: {}, message: {}",NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
+        ErrorCode errorCode = CommonError.INVALID_ARGUMENT_ERROR;
+        ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(),
+                errorCode.getCode(),
+                errorCode.getMessage()
+                );
         return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
     }
 

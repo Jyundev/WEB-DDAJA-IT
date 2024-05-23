@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme.Type;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -26,8 +28,17 @@ import lombok.RequiredArgsConstructor;
 public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
+        String jwtSchemeName = "bearer-token";
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList(jwtSchemeName);
+
+
         return new OpenAPI()
-                .components(new Components())
+                .components(new Components()
+                .addSecuritySchemes(jwtSchemeName, new io.swagger.v3.oas.models.security.SecurityScheme()
+                .type(Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT")))
+                .addSecurityItem(securityRequirement)
                 .info(apiInfo());
     }
  
@@ -36,5 +47,6 @@ public class SwaggerConfig {
                 .title("Springdoc 테스트")
                 .description("Springdoc을 사용한 Swagger UI 테스트")
                 .version("1.0.0");
+                
     }
 }

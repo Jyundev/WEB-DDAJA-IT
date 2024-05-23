@@ -13,6 +13,7 @@ spring:
 
 # spring doc
 springdoc:
+  show-login-endpoint: true # security /login 적용 
   api-docs:
     path: /api-docs
     groups:

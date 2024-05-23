@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.web.ddajait.config.auth.AuthenticatedMatchers;
 import com.web.ddajait.config.handler.LoginAuthFailureHandler;
 import com.web.ddajait.config.handler.LoginAuthSuccessHandelr;
 import com.web.ddajait.config.handler.LogoutAuthSuccessHandler;
@@ -67,6 +68,8 @@ public class SecurityConfig {
                                         .requestMatchers("/admin/**")
                                         // ADMIN이라는 권한을 갖은 사용자만 접근 가능 
                                         .hasAnyAuthority("ADMIN")
+                                        // Swagger
+                                        .requestMatchers(AuthenticatedMatchers.swaggerArray).permitAll()
                                         // 그외의 모든 url path는 누구나 접근 가능 
                                         .anyRequest().permitAll())
 
