@@ -29,7 +29,7 @@ public class UserCertificateEntity {
     @Column(name = "application", nullable = false)
     private Boolean application;
 
-    @Column(name = "userResult", nullable = false)
+    @Column(name = "userResult", nullable = true)
     private Boolean userResult;
 
     @Column(name = "certificateId", nullable = false)

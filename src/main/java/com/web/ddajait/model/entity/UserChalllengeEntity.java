@@ -25,11 +25,11 @@ public class UserChalllengeEntity {
     @Column(name = "userChallengeId", nullable = false)
     private Long userChallengeId;
 
-    @Column(name = "progressRate")
-    private Double progressRate;
+    @Column(name = "progressRate", length = 10)
+    private String progressRate;
 
-    @Column(name = "status", length = 50)
-    private String status;
+    @Column(name = "challengeStep", nullable = false, length = 50)
+    private String challengeStep;
 
     @Column(name = "challengeId", nullable = false)
     private Long challengeId;

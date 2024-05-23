@@ -1,6 +1,7 @@
 package com.web.ddajait.model.entity;
 
 import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,19 +21,24 @@ import lombok.ToString;
 @Table(name = "certificateRegistration")
 public class CertificationRegistrationEntity {
     @Id
-    @Column(name = "registrationID", nullable = false)
+    @Column(name = "CertificationRegistrationId", nullable = false)
     private Long registrationId;
-
     // @OneToOne
     // @MapsId
     // @JoinColumn(name = "CertificateId")
     // private CertificateInfoEntity certificateInfoEntity;
 
+    @Column(name = "certificateId", nullable = false)
+    private Long certificateId;
+
     @Column(name = "certificateName", nullable = false, length = 255)
     private String certificateName;
 
+    @Column(name = "type", nullable = false, length = 50)
+    private Timestamp Type;
+
     @Column(name = "round", nullable = false)
-    private Timestamp round;
+    private int round;
 
     @Column(name = "testDay", nullable = false)
     private Timestamp testDay;
@@ -45,12 +51,5 @@ public class CertificationRegistrationEntity {
 
     @Column(name = "resultDay", nullable = false)
     private Timestamp resultDay;
-
-    @Column(name = "type", nullable = false, length = 50)
-    private String type;
-
-    @Column(name = "certificateId", nullable = false)
-    private Long certificateId;
-
     
 }

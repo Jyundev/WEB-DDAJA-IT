@@ -1,8 +1,11 @@
 package com.web.ddajait.model.entity;
 
-import java.sql.Timestamp;
+import java.util.List;
+
+import com.web.ddajait.util.JsonListConverter;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 @Getter
 @Setter
 @ToString
@@ -22,11 +24,13 @@ import lombok.ToString;
 @Entity(name = "ChallengeChapterEntity")
 @Table(name = "challengeChapter")
 public class ChallengeChapterEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chapterId", nullable = false)
     private Long chapterId;
+
+    @Column(name = "missionDay", nullable = false, length = 50)
+    private String missionDay;
 
     @Column(name = "chapterNum", nullable = false)
     private int chapterNum;
@@ -34,20 +38,18 @@ public class ChallengeChapterEntity {
     @Column(name = "chapterName", nullable = false, length = 255)
     private String chapterName;
 
-    @Column(name = "missionDay", nullable = false)
-    private Timestamp missionDay;
+    @Column(name = "chapterLink")
+    @Convert(converter = JsonListConverter.class)
+    private List<String> chapterLink;
 
-    @Column(name = "chapterLink", length = 1000)
-    private String chapterLink;
-
-    @Column(name = "chapterMission", nullable = false, length = 255)
+    @Column(name = "chapterMission", nullable = true, length = 255)
     private String chapterMission;
+
+    @Column(name = "challengeId", nullable = false)
+    private String challengeId;
 
     // @ManyToOne
     // @JoinColumn(name = "ChallengeId")
     // private ChallengeInfoEntity challenges; // FK
-
-
-    
 
 }

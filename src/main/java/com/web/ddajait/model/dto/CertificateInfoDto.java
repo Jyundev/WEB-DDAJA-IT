@@ -1,12 +1,13 @@
 package com.web.ddajait.model.dto;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 @Getter
 @Setter
 @ToString
@@ -14,7 +15,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class CertificateInfoDto {
 
-    @NotBlank
     private Long certificateId;
 
     @NotBlank
@@ -29,29 +29,27 @@ public class CertificateInfoDto {
     @NotBlank
     private String type;
 
-    private String relatedJob;
+    @NotBlank
+    private String overview;
 
     private String difficulty;
+    
+    @NotBlank
+    private List<String> eligibility;
 
     @NotBlank
-    private String round;
+    private List<String> examContent;
 
     @NotBlank
-    private String registrationFee;
+    private List<String> examStandards;
 
     @NotBlank
-    private String certificateInfo;
+    private List<String> passCriteria;
 
     @NotBlank
-    private String detailInfo;
+    private String registrationLink;
 
-    @NotBlank
-    private String examTendency;
+    private List<String> relatedJob;
 
-    @NotBlank
-    private String qualifications;
-
-    @NotBlank
-    private String passCriteria;
  
 }

@@ -14,13 +14,12 @@ import lombok.ToString;
 @NoArgsConstructor
 public class UserCertificateDto {
     
-    @NotBlank
+    
     private Long userCetificateId;
     
     @NotBlank
     private Boolean application;
 
-    @NotBlank
     private Boolean userResult;
 
     @NotBlank

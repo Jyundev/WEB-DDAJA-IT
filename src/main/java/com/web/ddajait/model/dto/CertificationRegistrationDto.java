@@ -15,15 +15,19 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CertificationRegistrationDto {
-
-    @NotBlank
     private Long registrationId;
     
+    @NotBlank
+    private Long certificateId;
+
     @NotBlank
     private String certificateName;
 
     @NotBlank
-    private Timestamp round;
+    private Timestamp Type;
+
+    @NotBlank
+    private int round;
 
     @NotBlank
     private Timestamp testDay;
@@ -36,11 +40,4 @@ public class CertificationRegistrationDto {
 
     @NotBlank
     private Timestamp resultDay;
-
-    @NotBlank
-    private String type;
-
-    @NotBlank
-    private Long certificateId;
-    
 }

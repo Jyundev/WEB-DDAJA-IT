@@ -29,20 +29,23 @@ public class ChallengeInfoEntity {
     @Column(name = "challengeName", nullable = false, length = 100)
     private String challengeName;
 
-    @Column(name = "challengeInfo", nullable = false, length = 255)
+    @Column(name = "challengeInfo", nullable = false, columnDefinition = "TEXT")
     private String challengeInfo;
 
-    @Column(name = "category", nullable = false, length = 255)
-    private String category;
+    @Column(name = "chapter", nullable = false, length = 255)
+    private String chapter;
 
     @Column(name = "book", nullable = false, length = 100, columnDefinition = "varchar(100) default '이기적'")
     private String book;
 
-    @Column(name = "passRate", nullable = false)
-    private Double passRate;
+    @Column(name = "passRate", nullable = true, length = 10)
+    private String passRate;
 
-    @Column(name = "memberPassRate", nullable = false)
-    private Double memberPassRate;
+    @Column(name = "memberPassRate", nullable = true, length = 10)
+    private String memberPassRate;
+
+    @Column(name = "totalprogressRate", nullable = true, length = 10)
+    private String totalprogressRate;
 
     @Column(name = "certificateId", nullable = false)
     private Long certificateId;

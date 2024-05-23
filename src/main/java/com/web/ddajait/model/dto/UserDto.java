@@ -1,6 +1,8 @@
 package com.web.ddajait.model.dto;
 
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.URL;
 
 import com.web.ddajait.config.constant.Role;
@@ -14,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 @Getter
 @Setter
 @ToString
@@ -41,7 +42,8 @@ public class UserDto {
 
     private Boolean isLogin;
 
-    private String interest;
+    
+    private List<String> interest;
 
     private String job;
 

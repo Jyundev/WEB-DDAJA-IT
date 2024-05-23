@@ -14,7 +14,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class IncorrectAnswerDto {
     
-    @NotBlank
     private Long incorrectId;
 
     @NotBlank

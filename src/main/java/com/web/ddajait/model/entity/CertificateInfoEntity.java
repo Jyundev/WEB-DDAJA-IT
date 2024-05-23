@@ -1,6 +1,13 @@
 package com.web.ddajait.model.entity;
 
+import java.util.List;
+// https://ict-nroo.tistory.com/132
+// https://resilient-923.tistory.com/417
+
+import com.web.ddajait.util.JsonListConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,9 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-// https://ict-nroo.tistory.com/132
-// https://resilient-923.tistory.com/417
 
 @Getter
 @Setter
@@ -26,7 +30,7 @@ public class CertificateInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CertificateId", nullable = false)
+    @Column(name = "certificateId", nullable = false)
     private Long certificateId;
 
     @Column(name = "certificateName", nullable = false, length = 100)
@@ -41,29 +45,35 @@ public class CertificateInfoEntity {
     @Column(name = "type", nullable = false, length = 50)
     private String type;
 
-    @Column(name = "relatedJob", length = 100)
-    private String relatedJob;
+    @Column(name = "overview", nullable = false, columnDefinition = "TEXT")
+    private String overview;
 
-    @Column(name = "difficulty", length = 50)
+    @Column(name = "difficulty", nullable = true, length = 50)
     private String difficulty;
 
-    @Column(name = "registrationFee", length = 50)
-    private String registrationFee;
+    @Column(name = "eligibility", nullable = false)
+    @Convert(converter = JsonListConverter.class)
+    private List<String> eligibility;
 
-    @Column(name = "certificateInfo", nullable = false, columnDefinition = "TEXT")
-    private String certificateInfo;
+    @Column(name = "examContent", nullable = false)
+    @Convert(converter = JsonListConverter.class)
+    private List<String> examContent;
 
-    @Column(name = "detailInfo", nullable = false, length = 255)
-    private String detailInfo;
+    @Column(name = "examStandards", nullable = false)
+    @Convert(converter = JsonListConverter.class)
+    private List<String> examStandards;
 
-    @Column(name = "examTendency", nullable = false, length = 255)
-    private String examTendency;
+    @Column(name = "passCriteria", nullable = false)
+    @Convert(converter = JsonListConverter.class)
+    private List<String> passCriteria;
 
-    @Column(name = "qualifications", nullable = false, length = 255)
-    private String qualifications;
+    @Column(name = "registrationLink", nullable = false)
+    private String registrationLink;
 
-    @Column(name = "passCriteria", nullable = false, length = 255)
-    private String passCriteria;
+    @Column(name = "relatedJob")
+    @Convert(converter = JsonListConverter.class)
+    private List<String> relatedJob;
+
 
     // @OneToOne(mappedBy = "certificateInfo", cascade = CascadeType.ALL, fetch =
     // FetchType.LAZY, orphanRemoval = true)

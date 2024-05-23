@@ -14,14 +14,12 @@ import lombok.ToString;
 @NoArgsConstructor
 public class UserChalllengeDto {
     
-    @NotBlank
     private Long userChallengeId;
 
-    @NotBlank
-    private Double progressRate;
+    private String progressRate;
 
     @NotBlank
-    private String status;
+    private String challengeStep;
 
     @NotBlank
     private Long challengeId;

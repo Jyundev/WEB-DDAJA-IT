@@ -1,6 +1,11 @@
 package com.web.ddajait.model.entity;
 
+import java.util.List;
+
+import com.web.ddajait.util.JsonListConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,8 +51,9 @@ public class UserEntity {
     @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean isLogin;
 
-    @Column(name = "interest", length = 1000)
-    private String interest;
+    @Column(name = "interest")
+    @Convert(converter = JsonListConverter.class)
+    private List<String> interest;
 
     @Column(name = "job", length = 100)
     private String job;
@@ -58,7 +64,7 @@ public class UserEntity {
     @Column(name = "tier")
     private int tier;
 
-    @Column(name = "qualifiedCertificate", length = 1000)
+    @Column(name = "qualifiedCertificate", columnDefinition = "TEXT")
     private String qualifiedCertificate;
     
     // 일반사용자 / 관리자를 구분용

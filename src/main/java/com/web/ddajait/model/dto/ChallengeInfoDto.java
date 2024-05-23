@@ -14,7 +14,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ChallengeInfoDto {
  
-    @NotBlank
     private Long challengeId;
 
     @NotBlank
@@ -24,16 +23,18 @@ public class ChallengeInfoDto {
     private String challengeInfo;
 
     @NotBlank
-    private String category;
+    private String chapter;
 
     @NotBlank
     private String book;
 
-    private Double passRate;
+    private String passRate;
 
-    private Double memberPassRate;
+    private String memberPassRate;
 
     @NotBlank
     private Long certificateId;
 
+    @NotBlank
+    private String totalprogressRate;
 }
