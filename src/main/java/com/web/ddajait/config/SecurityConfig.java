@@ -58,14 +58,14 @@ public class SecurityConfig {
                                 .authorizeHttpRequests(authorize -> authorize // http request 요청에 대한 화면 접근(url path) 권한
                                                                               // 설정
                                          // 계정 로그인,아이디 찾기 등은 인증되지 않은 사용자만
-                                        .requestMatchers("/public/**")
+                                        .requestMatchers("/public/**","/api/v1/public/**")
                                         .anonymous()
                                         // "/user" 와 같은 url path로 접근할 경우... 
-                                        .requestMatchers("/user/**")
+                                        .requestMatchers("/user/**", "/api/v1/user/**")
                                         // 인증(로그인)만 접근 가능
                                         .authenticated()
                                         // "/admin" 와 같은 url path로 접근할 경우...
-                                        .requestMatchers("/admin/**")
+                                        .requestMatchers("/admin/**","/api/v1/admin/**")
                                         // ADMIN이라는 권한을 갖은 사용자만 접근 가능 
                                         .hasAnyAuthority("ADMIN")
                                         // Swagger

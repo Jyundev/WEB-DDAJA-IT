@@ -21,7 +21,7 @@ public interface UserService {
         public int countMemberByMemberEmail(String email) throws Exception;
         public int countMemberByMemberNickname(String email) throws Exception;
 
-        // // 로그인 성공시 >> 로그인 유무 저장
-        // public void updateIsLoginByEmail(String email, Boolean isLogin) throws ServletException;
+        // 로그인 성공시 >> 로그인 유무 저장
+        public void updateIsLoginByID(String Email, Boolean isLogin) throws Exception;
     
 }

@@ -2,6 +2,8 @@ package com.web.ddajait.model.dao;
 
 import com.web.ddajait.model.entity.UserEntity;
 
+import jakarta.servlet.ServletException;
+
 public interface UserDao {
 
     // select
@@ -23,7 +25,7 @@ public interface UserDao {
 
     public int countMemberByMemberNickname(String email) throws Exception;
 
-    // // login 성공 확인
-    // public void updateIsLoginByEmail(UserEntity entity) throws ServletException;
+    // login 성공 확인
+    public void updateIsLoginByID(UserEntity entity) throws ServletException;
 
 }

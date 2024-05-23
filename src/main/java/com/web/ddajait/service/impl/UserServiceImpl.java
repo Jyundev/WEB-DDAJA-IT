@@ -11,6 +11,7 @@ import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.service.UserService;
 
+import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,7 +26,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) throws Exception {
         // TODO Auto-generated method stub
-
         UserEntity entity = userDao.findById(id);
         userDao.deleteUser(entity.getUserId());
     }
@@ -172,6 +172,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countMemberByMemberNickname(String nickname) throws Exception {
         return userDao.countMemberByMemberNickname(nickname);
+    }
+
+    @Override
+    public void updateIsLoginByID(String ID, Boolean isLogin) throws ServletException, Exception  {
+        UserEntity userEntity = userDao.findByEmail(ID);
+        userEntity.setIsLogin((isLogin));
+        userDao.updateIsLoginByID(userEntity);
     }
 
 }

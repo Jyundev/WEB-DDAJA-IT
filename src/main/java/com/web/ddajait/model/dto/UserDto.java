@@ -41,7 +41,6 @@ public class UserDto {
     private String gender;
 
     private Boolean isLogin;
-
     
     private List<String> interest;
 
