@@ -36,17 +36,20 @@ public class LoginAuthSuccessHandelr extends SimpleUrlAuthenticationSuccessHandl
 
         try {
             userService.updateIsLoginByID(userDetails.getUsername(), true);
+            log.info("[LoginAuthSuccessHandler][updateIsLoginByID] Start");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (userDetails.getUsername() == null) {
             response.sendRedirect("/close");
-
         }else{
             HttpSession session = request.getSession();
             UserDto dto;
             try {
+            log.info("[LoginAuthSuccessHandler][Session] Start : " + userDetails.getUsername());
+
                 dto = userService.findByEmail(userDetails.getUsername());
                 session.setAttribute("userId",dto.getUserId());
                 session.setAttribute("userEmail", dto.getEmail());
@@ -58,8 +61,6 @@ public class LoginAuthSuccessHandelr extends SimpleUrlAuthenticationSuccessHandl
 
         }
    
-
-        response.sendRedirect("/close");
 
         super.onAuthenticationSuccess(request, response, authentication);
     }
