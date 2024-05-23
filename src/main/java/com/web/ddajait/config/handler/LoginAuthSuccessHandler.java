@@ -22,9 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class LoginAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Autowired
-    @Lazy
+
     private UserService userService;
+
+    @Autowired
+    public LoginAuthSuccessHandler(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,

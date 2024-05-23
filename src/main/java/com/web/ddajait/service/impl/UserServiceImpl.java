@@ -2,6 +2,7 @@ package com.web.ddajait.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.config.constant.Role;
@@ -18,10 +19,19 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    // @Autowired
+    // private UserDao userDao;
+    // @Autowired
+    // private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final UserDao userDao;
+    private final PasswordEncoder bCryptPasswordEncoder;
+
+
+    public UserServiceImpl(UserDao userDao, PasswordEncoder bCryptPasswordEncoder) {
+        this.userDao = userDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public void deleteUser(Long id) throws Exception {
@@ -84,13 +94,13 @@ public class UserServiceImpl implements UserService {
         int emailCheck = countMemberByMemberEmail(dto.getEmail());
         int nicknameCheck = countMemberByMemberNickname(dto.getNickname());
 
-        // 이메일(ID) 중복 
-        if (emailCheck > 0 ) {
+        // 이메일(ID) 중복
+        if (emailCheck > 0) {
             throw new DuplicateMemberException(dto.getEmail());
         }
 
-        // 닉네임 중복 
-        if (nicknameCheck > 0 ) {
+        // 닉네임 중복
+        if (nicknameCheck > 0) {
             throw new DuplicateMemberException(dto.getNickname());
         }
 
@@ -136,13 +146,13 @@ public class UserServiceImpl implements UserService {
         int emailCheck = countMemberByMemberEmail(dto.getEmail());
         int nicknameCheck = countMemberByMemberNickname(dto.getNickname());
 
-        // 이메일(ID) 중복 
-        if (emailCheck > 0 ) {
+        // 이메일(ID) 중복
+        if (emailCheck > 0) {
             throw new DuplicateMemberException(dto.getEmail());
         }
 
-        // 닉네임 중복 
-        if (nicknameCheck > 0 ) {
+        // 닉네임 중복
+        if (nicknameCheck > 0) {
             throw new DuplicateMemberException(dto.getNickname());
         }
 
@@ -175,7 +185,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateIsLoginByID(String ID, Boolean isLogin) throws ServletException, Exception  {
+    public void updateIsLoginByID(String ID, Boolean isLogin) throws ServletException, Exception {
         UserEntity userEntity = userDao.findByEmail(ID);
         userEntity.setIsLogin((isLogin));
         userDao.updateIsLoginByID(userEntity);

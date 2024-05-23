@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,11 +22,18 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class AuthProvider implements AuthenticationProvider {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    // @Autowired
+    // private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private AuthUserService securityUserService;
+
+    @Autowired
+    public AuthProvider(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // ID, PW 검증 확인
     @Override
@@ -61,8 +69,8 @@ public class AuthProvider implements AuthenticationProvider {
     }
 
     private boolean isNotMatches(String password, String encodePassword) {
-        log.info("[AuthProvider] : " + bCryptPasswordEncoder.encode(password));
-        return !bCryptPasswordEncoder.matches(password, encodePassword);
+        log.info("[AuthProvider] : " + passwordEncoder.encode(password));
+        return !passwordEncoder.matches(password, encodePassword);
     }
 
 }
