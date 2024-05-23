@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class LoginAuthSuccessHandelr extends SimpleUrlAuthenticationSuccessHandler {
+public class LoginAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Autowired
     @Lazy
