@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
   servlet:
     encoding:
       # 한글깨짐 처리 
@@ -16,7 +16,7 @@ spring:
 
   # 데이터 베이스 
   datasource:
-      url: jdbc:mysql://fp.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com:3306/ddajait_data
+      url: jdbc:mysql://finaldb.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com:3306/ddajait_data
       username: fp
       password: qwerasdf1!
       driver-class-name: com.mysql.cj.jdbc.Driver

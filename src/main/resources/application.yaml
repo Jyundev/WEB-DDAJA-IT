@@ -8,7 +8,7 @@ server:
 # Spring Data Source 설정 
 spring:
   profiles:
-    active: dev  # default application 파일의 이름
+    active: proud  # default application 파일의 이름
                  # ex application-dev.yml -> dev
 
 # spring doc
