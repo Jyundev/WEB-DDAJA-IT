@@ -24,6 +24,12 @@ public class UserServiceImpl implements UserService {
     // @Autowired
     // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Override
+    public int loadUserByUsername(String username) throws Exception {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
     private final UserDao userDao;
     private final PasswordEncoder bCryptPasswordEncoder;
 

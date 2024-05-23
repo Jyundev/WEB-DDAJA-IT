@@ -24,4 +24,7 @@ public interface UserService {
         // 로그인 성공시 >> 로그인 유무 저장
         public void updateIsLoginByID(String Email, Boolean isLogin) throws Exception;
     
+        // userdetails.User 정보 가져오기 
+        public int loadUserByUsername(final String username) throws Exception;
+
 }

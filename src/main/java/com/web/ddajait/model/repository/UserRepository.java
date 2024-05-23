@@ -15,4 +15,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>{
     
     @Query(value = "SELECT COUNT(*) FROM users WHERE nickname = :nickname", nativeQuery = true)
     int countMemberByMemberNickname(@Param("nickname") String nickname);
+
+    @Query(value = "SELECT COUNT(*) FROM users WHERE nickname = :email", nativeQuery = true)
+    int getUserAuthorities(@Param("nickname") String email);
+    
+
 }

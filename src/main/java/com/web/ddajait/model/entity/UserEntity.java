@@ -1,6 +1,7 @@
 package com.web.ddajait.model.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import com.web.ddajait.util.JsonListConverter;
 
@@ -10,6 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -66,9 +70,17 @@ public class UserEntity {
 
     @Column(name = "qualifiedCertificate", columnDefinition = "TEXT")
     private String qualifiedCertificate;
-    
+
     // 일반사용자 / 관리자를 구분용
     @Column(name = "role", length = 50)
-    private String role; 
+    private String role;
+
+    // UserEntity와 AuthorityEntity 간의 다대다 관계를 정의하고, 그 관계를 관리하는 user_authority 테이블을 생성
+    @ManyToMany
+    @JoinTable(name = "user_authority", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id") }, inverseJoinColumns = {
+                    @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
+
+    private Set<AuthorityEntity> authorities;
 
 }
