@@ -33,10 +33,10 @@ public class CertificateInfoEntity {
     @Column(name = "certificateId", nullable = false)
     private Long certificateId;
 
-    @Column(name = "certificateName", nullable = false, length = 100)
+    @Column(name = "certificate_name", nullable = false, length = 100)
     private String certificateName;
 
-    @Column(name = "certificateFullName", nullable = false, length = 255)
+    @Column(name = "certificateFull_name", nullable = false, length = 255)
     private String certificateFullName;
 
     @Column(name = "field", nullable = false, length = 100)
@@ -67,7 +67,7 @@ public class CertificateInfoEntity {
     @Convert(converter = JsonListConverter.class)
     private List<String> passCriteria;
 
-    @Column(name = "registrationLink", nullable = false)
+    @Column(name = "registration_link", nullable = false)
     private String registrationLink;
 
     @Column(name = "relatedJob")

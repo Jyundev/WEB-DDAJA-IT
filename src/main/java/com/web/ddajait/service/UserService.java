@@ -4,7 +4,7 @@ import com.web.ddajait.model.dto.UserDto;
 
 public interface UserService {
         // 가입 insert
-        public void createMemberr(UserDto dto) throws Exception;
+        public void createMember(UserDto dto) throws Exception;
 
         // 조회 select
         public UserDto findById(Long id) throws Exception;
@@ -24,4 +24,10 @@ public interface UserService {
         // 로그인 성공시 >> 로그인 유무 저장
         public void updateIsLoginByID(String Email, Boolean isLogin) throws Exception;
     
+        // 권한 처리 
+        public UserDto getUserWithAuthorities(String username) throws Exception;
+
+        public UserDto getMyUserWithAuthorities() throws Exception;
+
+
 }
