@@ -20,11 +20,9 @@ spring:
       password: root1234
       driver-class-name: com.mysql.cj.jdbc.Driver
 
-
-    
-    # sql:
-    #   init:
-    #     mode: always
+  # sql:
+  #   init:
+  #     mode: always
 
 
 
@@ -32,14 +30,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update 
+    show-sql: true
     properties:
       properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
           
-    # defer-datasource-initialization: true
-      
-
+ 
   # mustache (1. 루트폴더 변경, 2. 타임리프 캐시 설정 변경)
   mustache:
     prefix: classpath:templates/

@@ -82,7 +82,7 @@ public class UserEntity {
     @ManyToMany
     @JoinTable(name = "user_authority", joinColumns = {
             @JoinColumn(name = "userId", referencedColumnName = "userId") }, inverseJoinColumns = {
-                    @JoinColumn(name = "authorityName", referencedColumnName = "authorityName") })
+                    @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
     private Set<AuthorityEntity> authorities;
 
 }

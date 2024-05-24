@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final PasswordEncoder bCryptPasswordEncoder;
 
+
     public UserServiceImpl(UserDao userDao, PasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
