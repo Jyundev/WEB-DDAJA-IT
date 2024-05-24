@@ -1,12 +1,10 @@
 package com.web.ddajait.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.web.ddajait.config.auth.AuthProvider;
 import com.web.ddajait.config.handler.LoginAuthSuccessHandler;
 import com.web.ddajait.service.UserService;
 
@@ -18,10 +16,9 @@ public class AppConfig {
 
     // @Autowired
     // public AppConfig(UserService userService, PasswordEncoder passwordEncoder) {
-    //     this.userService = userService;
-    //     this.passwordEncoder = passwordEncoder;
+    // this.userService = userService;
+    // this.passwordEncoder = passwordEncoder;
     // }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -33,9 +30,9 @@ public class AppConfig {
         return new LoginAuthSuccessHandler(userService);
     }
 
-    @Bean
-    public AuthProvider authProvider(PasswordEncoder passwordEncoder) {
-        return new AuthProvider(passwordEncoder);
-    }
+    // @Bean
+    // public AuthProvider authProvider(PasswordEncoder passwordEncoder) {
+    //     return new AuthProvider(passwordEncoder);
+    // }
 
 }

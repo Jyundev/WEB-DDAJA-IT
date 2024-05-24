@@ -2,11 +2,9 @@ package com.web.ddajait.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -44,7 +42,7 @@ public class SecurityConfig {
         // 비밀번호 암호화에서 사용할 객체
         // @Bean
         // public PasswordEncoder passwordEncoder() {
-        //         return new BCryptPasswordEncoder();
+        // return new BCryptPasswordEncoder();
         // }
 
         // 인증(로그인) & 인가(권한)에 대한 시큐리티 설정

@@ -3,9 +3,11 @@ package com.web.ddajait.model.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.web.ddajait.config.error.custom.NotFoundMemberException;
 import com.web.ddajait.model.dao.UserDao;
 import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.model.repository.UserRepository;
+import com.web.ddajait.util.SecurityUtil;
 
 import jakarta.servlet.ServletException;
 
@@ -26,7 +28,7 @@ public class UserImpl implements UserDao {
     }
 
     @Override
-    public void createMemberr(UserEntity entity) throws Exception {
+    public void createMember(UserEntity entity) throws Exception {
         userRepository.save(entity);
     }
 
@@ -55,6 +57,20 @@ public class UserImpl implements UserDao {
     public void updateIsLoginByID(UserEntity entity) throws ServletException {
         userRepository.save(entity);
 
+    }
+
+    @Override
+    public UserEntity getMyUserWithAuthorities() throws Exception {
+        UserEntity userEntity =       
+        SecurityUtil.getCurrentUsername()
+                    .flatMap(userRepository::findOneWithAuthoritiesByEmail)
+                    .orElseThrow(() -> new NotFoundMemberException("Member not found"));
+        return userEntity;
+    }
+
+    @Override
+    public UserEntity getUserWithAuthorities(String email) throws Exception {
+        return userRepository.findOneWithAuthoritiesByEmail(email).orElse(null);
     }
 
 }

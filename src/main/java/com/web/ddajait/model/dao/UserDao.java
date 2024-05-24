@@ -20,7 +20,7 @@ public interface UserDao {
      * 유저를 생성한다.
      */
 
-    public void createMemberr(UserEntity entity) throws Exception;;
+    public void createMember(UserEntity entity) throws Exception;;
 
     /**
      * 유저 프로필을 수정한다.
@@ -44,4 +44,12 @@ public interface UserDao {
      */
     public void updateIsLoginByID(UserEntity entity) throws ServletException;
 
+    /**
+     * 권한을 확인한다.
+     */
+    public UserEntity getUserWithAuthorities(String email) throws Exception;
+
+    public UserEntity getMyUserWithAuthorities() throws Exception;
+
+    
 }

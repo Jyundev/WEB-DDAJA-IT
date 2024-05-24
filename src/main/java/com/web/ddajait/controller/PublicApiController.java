@@ -4,8 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +33,7 @@ public class PublicApiController {
     @PostMapping("/join")
     public ResponseEntity<ResponseDto<UserDto>> join(@Valid @RequestBody UserDto dto) throws Exception {
         log.info("[PublicController][join] Start - Email: {}, Nickname: {}", dto.getEmail(), dto.getNickname());
-        userService.createMemberr(dto);
+        userService.createMember(dto);
         log.info("[PublicController][join] Success - User: {}", dto.getNickname());
 
         return ResponseHandler.SUCCESS(dto, "회원가입");

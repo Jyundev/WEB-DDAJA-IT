@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -75,12 +77,12 @@ public class UserEntity {
     @Column(name = "role", length = 50)
     private String role;
 
-    // UserEntity와 AuthorityEntity 간의 다대다 관계를 정의하고, 그 관계를 관리하는 user_authority 테이블을 생성
+    // UserEntity와 AuthorityEntity 간의 다대다 관계를 정의하고, 그 관계를 관리하는 user_authority 테이블을
+    // 생성
     @ManyToMany
     @JoinTable(name = "user_authority", joinColumns = {
             @JoinColumn(name = "userId", referencedColumnName = "userId") }, inverseJoinColumns = {
                     @JoinColumn(name = "authorityName", referencedColumnName = "authorityName") })
-
     private Set<AuthorityEntity> authorities;
 
 }
