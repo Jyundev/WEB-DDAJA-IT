@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 //  요청에 대해서 허용을 할 주소
 @NoArgsConstructor
 public class AuthenticatedMatchers {
-    public static final String[] swaggerArray = {
+    public static final String[] ignoringArray = {
             "/api-docs",
             "/swagger-ui-custom.html",
             "/v3/api-docs/**",

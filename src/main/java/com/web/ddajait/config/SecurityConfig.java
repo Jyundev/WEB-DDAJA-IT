@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -75,8 +76,8 @@ public class SecurityConfig {
                                                 // "/admin" 와 같은 URL path로 접근할 경우 ADMIN 권한을 갖은 사용자만 접근 가능
                                                 .requestMatchers("/admin/**", "/api/v1/admin/**")
                                                 .hasAnyAuthority("ADMIN")
-                                                //AuthenticatedMatchers URL은 누구나 접근 가능
-                                                .requestMatchers(AuthenticatedMatchers.swaggerArray).permitAll()
+                                                // AuthenticatedMatchers URL은 누구나 접근 가능
+                                                .requestMatchers(AuthenticatedMatchers.ignoringArray).permitAll()
                                                 .requestMatchers("/favicon.ico").permitAll()
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
                                                 .anyRequest().permitAll())
@@ -103,5 +104,26 @@ public class SecurityConfig {
                                                 UsernamePasswordAuthenticationFilter.class);
 
                 return httpSecurity.build();
+
         }
+
+        @Bean
+        public WebSecurityCustomizer webSecurityCustomizer() {
+                return (web) -> web.ignoring().requestMatchers(
+                        "/api-docs",
+                        "/swagger-ui-custom.html",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/api-docs/**",
+                        "/swagger-ui.html",
+                        "/swagger-custom-ui.html",
+                        "/static/**", 
+                        "/css/**", 
+                        "/js/**", 
+                        "/images/**", 
+                        "/webjars/**", 
+                        "/h2-console/**",
+                        "/index"
+                );
+                    }
 }
