@@ -20,6 +20,6 @@ import lombok.ToString;
 @Table(name = "authority")
 public class AuthorityEntity {
     @Id
-    @Column(name = "authority_name", length = 50)
+    @Column(name = "authorityName", length = 50)
     private String authorityName;
 }

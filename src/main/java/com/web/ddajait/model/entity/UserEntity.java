@@ -78,8 +78,8 @@ public class UserEntity {
     // UserEntity와 AuthorityEntity 간의 다대다 관계를 정의하고, 그 관계를 관리하는 user_authority 테이블을 생성
     @ManyToMany
     @JoinTable(name = "user_authority", joinColumns = {
-            @JoinColumn(name = "user_id", referencedColumnName = "user_id") }, inverseJoinColumns = {
-                    @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
+            @JoinColumn(name = "userId", referencedColumnName = "userId") }, inverseJoinColumns = {
+                    @JoinColumn(name = "authorityName", referencedColumnName = "authorityName") })
 
     private Set<AuthorityEntity> authorities;
 
