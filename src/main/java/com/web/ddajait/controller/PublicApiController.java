@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PublicApiController {
     private static final Logger log = LoggerFactory.getLogger(PublicApiController.class);
 
-    @Autowired 
+    @Autowired
     UserService userService;
 
     @Operation(summary = "회원가입", description = "회원가입 API 입니다. email, nickname, password 는 필수이며, age, gender는 선택사항입니다.")
@@ -40,11 +40,6 @@ public class PublicApiController {
 
     }
 
-    // @GetMapping("/user")
-    // @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    // public ResponseEntity<User> getMyUserInfo() {
-    //     return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
-    // }
-
     
+
 }

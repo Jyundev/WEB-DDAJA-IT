@@ -75,7 +75,7 @@ public class SecurityConfig {
                                                 // "/admin" 와 같은 URL path로 접근할 경우 ADMIN 권한을 갖은 사용자만 접근 가능
                                                 .requestMatchers("/admin/**", "/api/v1/admin/**")
                                                 .hasAnyAuthority("ADMIN")
-                                                // Swagger 관련 URL은 누구나 접근 가능
+                                                //AuthenticatedMatchers URL은 누구나 접근 가능
                                                 .requestMatchers(AuthenticatedMatchers.swaggerArray).permitAll()
                                                 .requestMatchers("/favicon.ico").permitAll()
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
