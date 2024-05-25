@@ -14,6 +14,7 @@ import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -30,6 +31,9 @@ public class PublicApiController {
     UserService userService;
 
     @Operation(summary = "회원가입", description = "회원가입 API 입니다. email, nickname, password 는 필수이며, age, gender는 선택사항입니다.")
+    @Parameter(name = "email", description = "유저 이메일 값", example = "Jyundev@gmail.com", required = true)
+    @Parameter(name = "nickname", description = "닉네임 값", example = "Jyundev", required = true)
+    @Parameter(name = "password", description = "유저 비밀번호", example = "1234qwer", required = true)
     @PostMapping("/join")
     public ResponseEntity<ResponseDto<UserDto>> join(@Valid @RequestBody UserDto dto) throws Exception {
         log.info("[PublicController][join] Start - Email: {}, Nickname: {}", dto.getEmail(), dto.getNickname());

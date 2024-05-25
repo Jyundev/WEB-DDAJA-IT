@@ -1,5 +1,7 @@
 package com.web.ddajait.model.dao.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,14 @@ import jakarta.servlet.ServletException;
 @Service
 public class UserImpl implements UserDao {
 
+
     @Autowired
     private UserRepository userRepository;
+    
+    @Override
+    public List<UserEntity> getAllUsers() throws Exception {
+        return userRepository.findAll();
+    }
 
     @Override
     public UserEntity findById(Long userId) throws Exception {

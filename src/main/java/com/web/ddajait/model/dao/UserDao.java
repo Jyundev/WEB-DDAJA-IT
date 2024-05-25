@@ -4,6 +4,8 @@ import com.web.ddajait.model.entity.UserEntity;
 
 import jakarta.servlet.ServletException;
 
+import java.util.List;
+
 public interface UserDao {
 
     /**
@@ -15,6 +17,14 @@ public interface UserDao {
     public UserEntity findById(Long userId) throws Exception;;
 
     public UserEntity findByEmail(String email) throws Exception;;
+
+    /**
+     * user 테이블에서 모든 유저의 정보를 가져온다.
+     * @return 모든 유저의 정보
+     */
+
+    public List<UserEntity> getAllUsers() throws Exception;;
+
 
     /**
      * 유저를 생성한다.

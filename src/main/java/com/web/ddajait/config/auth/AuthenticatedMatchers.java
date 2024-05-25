@@ -6,21 +6,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticatedMatchers {
     public static final String[] ignoringArray = {
-            "/api-docs",
-            "/swagger-ui-custom.html",
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/api-docs/**",
-            "/swagger-ui.html",
-            "/swagger-custom-ui.html",
-            "/static/**", 
-            "/css/**", 
-            "/js/**", 
-            "/images/**", 
-            "/webjars/**", 
-            "/h2-console/**",
-            "/index"
-
-
+        "/api-docs",
+        "/swagger-ui-custom.html",
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/api-docs/**",
+        "/swagger-ui.html",
+        "/swagger-custom-ui.html",
+        "/static/**", 
+        "/css/**", 
+        "/js/**", 
+        "/images/**", 
+        "/webjars/**", 
+        "/h2-console/**",
+        "/index",
+        "/static/**"
     };
 }

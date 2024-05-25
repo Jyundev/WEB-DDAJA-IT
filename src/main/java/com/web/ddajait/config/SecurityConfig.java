@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 import com.web.ddajait.config.auth.AuthenticatedMatchers;
 import com.web.ddajait.config.handler.LoginAuthFailureHandler;
@@ -19,6 +20,7 @@ import com.web.ddajait.config.jwt.JwtAuthenticationEntryPoint;
 import com.web.ddajait.config.jwt.JwtFilter;
 import com.web.ddajait.config.jwt.TokenProvider;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +34,7 @@ public class SecurityConfig {
 
         // JWT 관련 빈
         private final TokenProvider tokenProvider;
+        private final CorsFilter corsFilter;
         private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
         private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -54,6 +57,7 @@ public class SecurityConfig {
                 httpSecurity
                                 // CSRF 비활성화
                                 .csrf(csrf -> csrf.disable())
+                                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                                 // 예외 처리 설정
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 // 인증되지 않은 사용자가 접근했을 때 401에러 발생
@@ -69,6 +73,7 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 // 인증 & 인가 설정
                                 .authorizeHttpRequests(authorize -> authorize
+
                                                 // 계정 로그인, 아이디 찾기 등은 인증되지 않은 사용자만 접근 가능
                                                 .requestMatchers("/public/**", "/api/v1/public/**").anonymous()
                                                 // "/user" 와 같은 URL path로 접근할 경우 인증(로그인)만 접근 가능
@@ -78,7 +83,6 @@ public class SecurityConfig {
                                                 .hasAnyAuthority("ADMIN")
                                                 // AuthenticatedMatchers URL은 누구나 접근 가능
                                                 .requestMatchers(AuthenticatedMatchers.ignoringArray).permitAll()
-                                                .requestMatchers("/favicon.ico").permitAll()
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
                                                 .anyRequest().permitAll())
                                 // 인증(로그인)에 대한 설정
@@ -86,7 +90,7 @@ public class SecurityConfig {
                                                 .loginPage("/loginPage") // Controller에서 로그인 페이지 URL path
                                                 /*
                                                  * 로그인 화면에서 form 태그의 action 주소(URL path)
-                                                 * Spring Security가 로그인 검증을 진행함
+                                                 * Spring Security가 로그인 검증을 진행함D
                                                  * Controller에서는 해당 "/login"을 만들 필요가 없음
                                                  */
                                                 .loginProcessingUrl("/login")
@@ -99,31 +103,13 @@ public class SecurityConfig {
                                                 .logoutUrl("/logout") // 로그아웃 요청 URL path
                                                 .logoutSuccessHandler(logoutAuthSuccessHandler) // 로그아웃 성공시
                                                 .permitAll())
-                                // JwtFilter를 addFilterBefore로 등록
-                                .addFilterBefore(new JwtFilter(tokenProvider),
-                                                UsernamePasswordAuthenticationFilter.class);
+                                // JwtFilter
+                                .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
+
 
                 return httpSecurity.build();
 
         }
 
-        @Bean
-        public WebSecurityCustomizer webSecurityCustomizer() {
-                return (web) -> web.ignoring().requestMatchers(
-                        "/api-docs",
-                        "/swagger-ui-custom.html",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/api-docs/**",
-                        "/swagger-ui.html",
-                        "/swagger-custom-ui.html",
-                        "/static/**", 
-                        "/css/**", 
-                        "/js/**", 
-                        "/images/**", 
-                        "/webjars/**", 
-                        "/h2-console/**",
-                        "/index"
-                );
-                    }
+
 }

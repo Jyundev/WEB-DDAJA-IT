@@ -1,6 +1,9 @@
 package com.web.ddajait.service;
 
 import com.web.ddajait.model.dto.UserDto;
+import com.web.ddajait.model.entity.UserEntity;
+
+import java.util.List;
 
 public interface UserService {
         // 가입 insert
@@ -28,6 +31,8 @@ public interface UserService {
         public UserDto getUserWithAuthorities(String username) throws Exception;
 
         public UserDto getMyUserWithAuthorities() throws Exception;
+
+        public List<UserDto> getAllUsers() throws Exception;;
 
 
 }
