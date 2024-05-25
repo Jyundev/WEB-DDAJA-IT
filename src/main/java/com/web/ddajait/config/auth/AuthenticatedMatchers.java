@@ -20,6 +20,9 @@ public class AuthenticatedMatchers {
         "/webjars/**", 
         "/h2-console/**",
         "/index",
-        "/static/**"
+        "/static/**",
+        "/api/v1/auth/authenticate",
+        "/api/v1/public/join"
+
     };
 }

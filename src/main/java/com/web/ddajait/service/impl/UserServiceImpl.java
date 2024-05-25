@@ -1,13 +1,16 @@
 package com.web.ddajait.service.impl;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.ddajait.config.constant.Role;
 import com.web.ddajait.config.error.custom.DuplicateMemberException;
 import com.web.ddajait.model.dao.UserDao;
 import com.web.ddajait.model.dto.UserDto;
@@ -17,7 +20,6 @@ import com.web.ddajait.service.UserService;
 
 import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -84,6 +86,7 @@ public class UserServiceImpl implements UserService {
         int emailCheck = countMemberByMemberEmail(userDto.getEmail());
         int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
 
+        
         // 이메일(ID) 중복
         if (emailCheck > 0) {
             throw new DuplicateMemberException(userDto.getEmail());
@@ -95,16 +98,28 @@ public class UserServiceImpl implements UserService {
         }
 
         // 권한 설정
-        AuthorityEntity authority = AuthorityEntity.builder()
-                .authorityName("ROLE_USER")
-                .build();
+        Set<AuthorityEntity> authorities = new HashSet<>();
 
+        if (userDto.getNickname().equals(Role.ADMIN.name())) { 
+            
+            log.info("[UserServiceImpl][createMember] : "+userDto.getNickname());
+            authorities.add(AuthorityEntity.builder()
+                    .authorityName(Role.ADMIN.getKey())
+                    .build());
+            authorities.add(AuthorityEntity.builder()
+                    .authorityName(Role.USER.getKey())
+                    .build());
+        } else {
+            authorities.add(AuthorityEntity.builder()
+                    .authorityName(Role.USER.getKey())
+                    .build());
+        }
         UserEntity userEntity = UserEntity.builder()
                 .email(userDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(userDto.getPassword()))
                 .nickname(userDto.getNickname())
-                .authorities(Collections.singleton(authority))
-                .isLogin(false)
+                .authorities(authorities)
+                .isLogin(true)
                 .build();
 
         log.info("[UserServiceImpl][createMemberr] userEntity " + userEntity);

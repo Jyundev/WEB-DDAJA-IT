@@ -68,7 +68,6 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 
-    // Swagger 관련 경로 화이트리스트
     private static final String[] WHITELIST = {
             "/swagger-ui.html",
             "/swagger-ui/**",
@@ -84,11 +83,12 @@ public class JwtFilter extends GenericFilterBean {
             "/swagger-ui/favicon-32x32.png",
             "/api-docs/swagger-config",
             "/static/**",
-            "/favicon.ico"
+            "/favicon.ico",
+            "/api-docs",
 
     };
 
-    // Swagger 경로 확인 메소드
+
     private boolean isStaticResource(String requestURI) {
         for (String path : WHITELIST) {
             if (requestURI.startsWith(path)) {
