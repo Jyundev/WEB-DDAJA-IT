@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.security.sasl.AuthenticationException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -86,7 +88,6 @@ public class UserServiceImpl implements UserService {
         int emailCheck = countMemberByMemberEmail(userDto.getEmail());
         int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
 
-        
         // 이메일(ID) 중복
         if (emailCheck > 0) {
             throw new DuplicateMemberException(userDto.getEmail());
@@ -100,9 +101,9 @@ public class UserServiceImpl implements UserService {
         // 권한 설정
         Set<AuthorityEntity> authorities = new HashSet<>();
 
-        if (userDto.getNickname().equals(Role.ADMIN.name())) { 
-            
-            log.info("[UserServiceImpl][createMember] : "+userDto.getNickname());
+        if (userDto.getNickname().equals(Role.ADMIN.name())) {
+
+            log.info("[UserServiceImpl][createMember] : " + userDto.getNickname());
             authorities.add(AuthorityEntity.builder()
                     .authorityName(Role.ADMIN.getKey())
                     .build());
@@ -127,29 +128,37 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    // 프로필 수정
     @Override
     public void updateUser(UserDto userDto) throws Exception {
         log.info("[UserServiceImpl][updateUser] Start");
 
-        // 중복회원 처리
-        int emailCheck = countMemberByMemberEmail(userDto.getEmail());
-        int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
+        if (userDao.getUserWithAuthorities(userDto.getEmail()) != null) {
 
-        // 이메일(ID) 중복
-        if (emailCheck > 0) {
-            throw new DuplicateMemberException(userDto.getEmail());
+            // 중복회원 처리
+            int emailCheck = countMemberByMemberEmail(userDto.getEmail());
+            int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
+
+            // 이메일(ID) 중복
+            if (emailCheck > 0) {
+                throw new DuplicateMemberException(userDto.getEmail());
+            }
+
+            // 닉네임 중복
+            if (nicknameCheck > 0) {
+                throw new DuplicateMemberException(userDto.getNickname());
+            }
+
+            UserEntity userEntity = new UserEntity();
+
+            BeanUtils.copyProperties(userDto, userEntity);
+
+            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity);
+
+            userDao.updateUser(userEntity);
+        } else {
+            throw new AuthenticationException(userDto.getEmail());
         }
-
-        // 닉네임 중복
-        if (nicknameCheck > 0) {
-            throw new DuplicateMemberException(userDto.getNickname());
-        }
-
-        UserEntity userEntity = new UserEntity();
-
-        BeanUtils.copyProperties(userDto, userEntity);
-
-        userDao.updateUser(userEntity);
     }
 
     @Override

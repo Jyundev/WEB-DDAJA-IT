@@ -78,10 +78,9 @@ public class SecurityConfig {
                                                 .requestMatchers("/public/**", "/api/v1/public/**").anonymous()
                                                 // "/user" 와 같은 URL path로 접근할 경우 인증(로그인)만 접근 가능
                                                 .requestMatchers("/user/**", "/api/v1/user/**").authenticated()
-                                                
                                                 // "/admin" 와 같은 URL path로 접근할 경우 ADMIN 권한을 갖은 사용자만 접근 가능
                                                 .requestMatchers("/admin/**", "/api/v1/admin/**")
-                                                .hasAnyAuthority("ADMIN")
+                                                .hasAnyAuthority("ROLE_ADMIN")
                                                 // AuthenticatedMatchers URL은 누구나 접근 가능
                                                 .requestMatchers("/api/v1/auth/authenticate", "api/v1/public/join").permitAll() // 로그인 api
                                                 // 그 외의 모든 URL path는 누구나 접근 가능

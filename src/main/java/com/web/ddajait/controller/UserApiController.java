@@ -37,13 +37,15 @@ public class UserApiController {
     // 프로필 수정
     @PostMapping("/update")
     @Operation(summary = "프로필 수정", description = "프로필 수정 API 입니다.")
+    @Parameter(name = "email", description = "이메일", example = "Jyundev@gmail.com")
     @Parameter(name = "nickname", description = "닉네임", example = "Jyundev")
-    @Parameter(name = "age", description = "나이", example = "Jyundev")
+    @Parameter(name = "password", description = "패스워드", example = "1234qwer")
+    @Parameter(name = "age", description = "나이", example = "28")
     @Parameter(name = "gender", description = "성별", example = "male/female")
     @Parameter(name = "job", description = "직업", example = "학생/직장인/취준생")
     @Parameter(name = "interest", description = "관심분야", example = "정보보안/네트워크/운영체제 등")
     @Parameter(name = "profileImage", description = "프로필이미지", example = "URL")
-    @Parameter(name = "qualifiedCertificate", description = "취득자격증", example = "{'qualifiedCertificate' : ['정보처리기사', '리눅스마스터']}")
+    @Parameter(name = "qualifiedCertificate", description = "취득자격증", example = "['정보처리기사', '리눅스마스터']")
     @Size(min = 2, max = 10, message = "닉네임은 최소 2자에서 최대 10자여야 합니다.")
     public ResponseEntity<ResponseDto<UserDto> > updateUser(@Valid @RequestBody UserDto dto) throws Exception {
         userService.updateUser(dto);

@@ -1,6 +1,7 @@
 package com.web.ddajait.model.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,5 +81,6 @@ public class UserImpl implements UserDao {
     public UserEntity getUserWithAuthorities(String email) throws Exception {
         return userRepository.findOneWithAuthoritiesByEmail(email).orElse(null);
     }
+
 
 }
