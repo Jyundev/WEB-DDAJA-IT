@@ -47,22 +47,6 @@ public class PublicApiController {
 
     }
 
-    // 유저,권한 정보를 가져오는 메소드
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @Operation(summary = "권한조회", description = "권한조회 API 입니다. \"USER\" 또는 \"ADMIN\" 역할을 가진 사용자만 접근할 수 있습니다.")
-    public ResponseEntity<ResponseDto<UserDto>> getMyUserInfo() throws Exception {
-        return ResponseHandler.SUCCESS(userService.getMyUserWithAuthorities(), "권한 조회");
-    }
 
-    // 현재 securityContext에 저장된 username의 정보만 가져오는 메소드
-    @GetMapping("/user/{username}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @Operation(summary = "특정유저 권한조회", description = "권한조회 API 입니다.  \"ADMIN\" 역할을 가진 사용자만 접근할 수 있습니다")
-    @Parameter(name = "email", description = "유저 이메일(ID)", example = "Jyundev@gmail.com", required = true)
-    public ResponseEntity<ResponseDto<UserDto>> getUserInfo(@PathVariable("email") String email) throws Exception {
-        return ResponseHandler.SUCCESS(userService.getUserWithAuthorities(email), email+" 권한 조회");
-
-    }
 
 }

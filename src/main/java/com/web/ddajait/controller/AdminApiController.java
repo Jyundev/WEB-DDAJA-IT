@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,17 @@ public class AdminApiController {
         List<UserDto> userDtos = userService.getAllUsers();
 
         return ResponseHandler.SUCCESS(userDtos, "모든 유저조회에 성공했습니다.");
+    }
+
+    // 현재 securityContext에 저장된 username의 정보만 가져오는 메소드
+    @GetMapping("/user/{email}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @Operation(summary = "특정유저 권한조회", description = "권한조회 API 입니다.  \"ADMIN\" 역할을 가진 사용자만 접근할 수 있습니다")
+    @Parameter(name = "email", description = "유저 이메일(ID)", example = "Jyundev@gmail.com", required = true)
+    public ResponseEntity<ResponseDto<UserDto>> getUserInfo(@PathVariable("email") String email) throws Exception {
+        log.info("[UserApiController][getUserInfo] Start");
+        return ResponseHandler.SUCCESS(userService.getUserWithAuthorities(email), email + " 권한 조회");
+
     }
 
 }

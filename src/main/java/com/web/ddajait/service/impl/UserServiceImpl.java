@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.security.sasl.AuthenticationException;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +17,7 @@ import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.service.UserService;
+import com.web.ddajait.util.EntityUtil;
 
 import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
@@ -130,10 +129,13 @@ public class UserServiceImpl implements UserService {
 
     // 프로필 수정
     @Override
-    public void updateUser(UserDto userDto) throws Exception {
+    @Transactional
+    public void updateUser(UserDto userDto, Long id) throws Exception {
         log.info("[UserServiceImpl][updateUser] Start");
 
-        if (userDao.getUserWithAuthorities(userDto.getEmail()) != null) {
+        // 기존 사용자 정보 가져오기
+        if (userDao.findById(id) != null && userDao.getUserWithAuthorities(userDto.getEmail()) != null) {
+            UserEntity userEntity = new UserEntity();
 
             // 중복회원 처리
             int emailCheck = countMemberByMemberEmail(userDto.getEmail());
@@ -149,15 +151,13 @@ public class UserServiceImpl implements UserService {
                 throw new DuplicateMemberException(userDto.getNickname());
             }
 
-            UserEntity userEntity = new UserEntity();
+            // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
+            EntityUtil.copyNonNullProperties(userDto, userEntity);
 
-            BeanUtils.copyProperties(userDto, userEntity);
-
+            log.info("[UserServiceImpl][updateUser] userDto : " + userDto);
             log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity);
 
             userDao.updateUser(userEntity);
-        } else {
-            throw new AuthenticationException(userDto.getEmail());
         }
     }
 
@@ -180,12 +180,15 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     public UserDto getMyUserWithAuthorities() throws Exception {
-        return UserDto.from(userDao.getMyUserWithAuthorities());
+        log.info("[UserServiceImpl][getMyUserWithAuthorities] Start ");
+        UserDto userDto =  UserDto.from(userDao.getMyUserWithAuthorities());
+        return userDto;
 
     }
 
     @Override
     public UserDto getUserWithAuthorities(String username) throws Exception {
+        log.info("[UserServiceImpl][getUserWithAuthorities] Start ");
         return UserDto.from(userDao.getUserWithAuthorities(username));
 
     }

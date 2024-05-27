@@ -14,7 +14,7 @@ public interface UserService {
         public UserDto findByEmail(String email) throws Exception;
 
         // 프로필 수정 update
-        public void updateUser(UserDto dto) throws Exception;
+        public void updateUser(UserDto dto, Long id) throws Exception;
 
         // 회원 탈퇴 delete
         public void deleteUser(Long id) throws Exception;

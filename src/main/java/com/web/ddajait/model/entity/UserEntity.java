@@ -85,4 +85,5 @@ public class UserEntity {
                     @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
     private Set<AuthorityEntity> authorities;
 
+
 }
