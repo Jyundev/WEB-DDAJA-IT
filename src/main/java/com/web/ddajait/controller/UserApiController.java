@@ -6,7 +6,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserDto;
-import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +20,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,7 +43,7 @@ public class UserApiController {
     @Operation(summary = "프로필 수정", description = "프로필 수정 API 입니다.")
     @Parameter(name = "email", description = "이메일", example = "Jyundev@gmail.com")
     @Parameter(name = "nickname", description = "닉네임", example = "Jyundev")
-    @Parameter(name = "pasword", description = "패스워드", example = "1234qwer")
+    @Parameter(name = "password", description = "패스워드", example = "1234qwer")
     @Parameter(name = "age", description = "나이", example = "28")
     @Parameter(name = "gender", description = "성별", example = "male/female")
     @Parameter(name = "job", description = "직업", example = "학생/직장인/취준생")

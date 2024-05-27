@@ -134,8 +134,8 @@ public class UserServiceImpl implements UserService {
         log.info("[UserServiceImpl][updateUser] Start");
 
         // 기존 사용자 정보 가져오기
-        if (userDao.findById(id) != null && userDao.getUserWithAuthorities(userDto.getEmail()) != null) {
-            UserEntity userEntity = new UserEntity();
+        if (userDao.findById(id) != null) {
+            UserEntity userEntity = userDao.findById(id);
 
             // 중복회원 처리
             int emailCheck = countMemberByMemberEmail(userDto.getEmail());
