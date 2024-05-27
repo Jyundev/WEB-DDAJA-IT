@@ -43,6 +43,9 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
         log.info("[AuthController][authorize] Start");
+
+        log.info("[AuthController][authorize] LoginDto : " + loginDto.username(), loginDto.password());
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDto.username(), loginDto.password());
 

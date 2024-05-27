@@ -31,7 +31,7 @@ import lombok.ToString;
 public class ChapterQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name = "question_id", nullable = false)
     private Long questionId;
 
     @Column(nullable = false, length = 255)
