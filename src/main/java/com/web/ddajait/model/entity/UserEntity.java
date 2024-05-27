@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.web.ddajait.util.JsonListConverter;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -77,13 +79,24 @@ public class UserEntity {
     @Column(name = "role", length = 50)
     private String role;
 
-    // UserEntity와 AuthorityEntity 간의 다대다 관계를 정의하고, 그 관계를 관리하는 user_authority 테이블을
-    // 생성
+    // UserEntity와 AuthorityEntity 간의 다대다 관계를 정의하고, 
+    // 그 관계를 관리하는 user_authority 테이블을 생성
     @ManyToMany
     @JoinTable(name = "user_authority", joinColumns = {
             @JoinColumn(name = "userId", referencedColumnName = "userId") }, inverseJoinColumns = {
                     @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
     private Set<AuthorityEntity> authorities;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserChalllengeEntity> userChallenges;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserCertificateEntity> userCertifications;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserWrongQuestionEntity> userWrongQuestions;
+
 
 
 }

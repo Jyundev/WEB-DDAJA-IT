@@ -1,10 +1,16 @@
 package com.web.ddajait.model.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,33 +29,42 @@ public class ChallengeInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "challengeId", nullable = false)
+    @Column(nullable = false)
     private Long challengeId;
 
-    @Column(name = "challengeName", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String challengeName;
 
-    @Column(name = "challengeInfo", nullable = false, columnDefinition = "TEXT")
-    private String challengeInfo;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String challengeDetail;
 
-    @Column(name = "chapter", nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String chapter;
 
-    @Column(name = "book", nullable = false, length = 100, columnDefinition = "varchar(100) default '이기적'")
+    @Column(nullable = false, length = 100, columnDefinition = "varchar(100) default '이기적'")
     private String book;
 
-    @Column(name = "passRate", nullable = true, length = 10)
+    @Column(nullable = true, length = 10)
     private String passRate;
 
-    @Column(name = "memberPassRate", nullable = true, length = 10)
+    @Column(nullable = true, length = 10)
     private String memberPassRate;
 
-    @Column(name = "totalprogressRate", nullable = true, length = 10)
+    @Column(nullable = true, length = 10)
     private String totalprogressRate;
 
-    @Column(name = "certificateId", nullable = false)
-    private Long certificateId;
+    @ManyToOne
+    @JoinColumn(name = "certificate_id")
+    private CertificateInfoEntity certificateInfo;
 
-    // @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
+    private List<ChallengeChapterEntity> challengeChapters;
+
+    @OneToMany(mappedBy = "challengeInfo")
+    private List<UserChalllengeEntity> userChallenges;
+
+
+    // @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL, fetch =
+    // FetchType.LAZY, orphanRemoval = true)
     // private List<ChallengeChapterEntity> challengeChapterList;
 }

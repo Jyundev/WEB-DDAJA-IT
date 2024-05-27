@@ -4,12 +4,16 @@ import java.util.List;
 
 import com.web.ddajait.util.JsonListConverter;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,28 +31,34 @@ import lombok.ToString;
 public class ChapterQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "questionId", nullable = false)
+    @Column(nullable = false)
     private Long questionId;
 
-    @Column(name = "chapterId", nullable = false)
-    private Long chapterId;
-
-    @Column(name = "chapter", nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String chapter;
 
-    @Column(name = "question", nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String question;
 
-    @Column(name = "notes", nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String notes;
 
-    @Column(name = "choices", nullable = false)
+    @Column(nullable = false)
     @Convert(converter = JsonListConverter.class)
     private List<String> choices;
 
-    @Column(name = "answer", nullable = false)
+    @Column(nullable = false)
     private int answer;
 
-    @Column(name = "image", length = 255, nullable = true)
+    @Column(length = 255, nullable = true)
     private String image;
+
+    @ManyToOne
+    @JoinColumn(name = "chapter_id")
+    private ChallengeChapterEntity challengeChapter;
+
+    @OneToMany(mappedBy = "chapterQuestion", cascade = CascadeType.ALL)
+    private List<UserWrongQuestionEntity> wrongQuestions;
+
+
 }

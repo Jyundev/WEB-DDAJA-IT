@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,18 +24,20 @@ import lombok.ToString;
 public class UserChalllengeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userChallengeId", nullable = false)
+    @Column(nullable = false)
     private Long userChallengeId;
 
-    @Column(name = "progressRate", length = 10)
+    @Column(length = 10)
     private String progressRate;
 
-    @Column(name = "challengeStep", nullable = false, length = 50)
+    @Column( nullable = false, length = 50)
     private String challengeStep;
 
-    @Column(name = "challengeId", nullable = false)
-    private Long challengeId;
-
-    @Column(name = "userId", nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id",  nullable = false)
+    private UserEntity user;
+    
+    @ManyToOne
+    @JoinColumn(name = "challenge_id")
+    private ChallengeInfoEntity challengeInfo;
 }
