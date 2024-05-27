@@ -20,14 +20,12 @@ public class LoginAuthFailureHandler extends SimpleUrlAuthenticationFailureHandl
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
-        // TODO Auto-generated method stub
-
         log.error("[LoginAuthFailureHandler][onAuthenticationFailure] Start");
+
         exception.printStackTrace();
         writePrintErrorResponse(response, exception);
 
         super.onAuthenticationFailure(request, response, exception);
-
     }
 
     private void writePrintErrorResponse(HttpServletResponse response,
@@ -36,7 +34,7 @@ public class LoginAuthFailureHandler extends SimpleUrlAuthenticationFailureHandl
         AuthenticationTypes authenticationTypes = AuthenticationTypes.valueOf(exception.getClass().getSimpleName());
         String errorMessage = authenticationTypes.getMsg();
         int code = authenticationTypes.getCode();
-        log.error("message: " + errorMessage + " / code: " + code);
+        log.error("message : " + errorMessage + " / code: " + code);
 
         errorMessage = URLEncoder.encode(errorMessage, "UTF-8"); 
         

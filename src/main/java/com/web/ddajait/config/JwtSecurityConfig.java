@@ -8,13 +8,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.web.ddajait.config.jwt.JwtFilter;
 import com.web.ddajait.config.jwt.TokenProvider;
 
-import lombok.RequiredArgsConstructor;
-
 // UsernamePasswordAuthenticationFilter : login 요청을 감시하며, 인증 과정을 진행
 
-@RequiredArgsConstructor
-public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>{
+public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     private final TokenProvider tokenProvider;
+
+    public JwtSecurityConfig(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
     @Override
     public void configure(HttpSecurity http) {
@@ -22,7 +23,6 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
         // security 로직에 JwtFilter 등록
         http.addFilterBefore(
                 new JwtFilter(tokenProvider),
-                UsernamePasswordAuthenticationFilter.class
-        );
+                UsernamePasswordAuthenticationFilter.class);
     }
 }

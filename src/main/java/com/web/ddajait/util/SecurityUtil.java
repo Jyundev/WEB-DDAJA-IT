@@ -13,7 +13,6 @@ public class SecurityUtil {
 
     private SecurityUtil() {}
 
-    // getCurrentUsername 메소드의 역할은 Security Cont
     public static Optional<String> getCurrentUsername() {
 
         // authentication객체가 저장되는 시점은 JwtFilter의 doFilter 메소드에서 
@@ -31,6 +30,8 @@ public class SecurityUtil {
         } else if (authentication.getPrincipal() instanceof String) {
             username = (String) authentication.getPrincipal();
         }
+
+        logger.info("Security Context 인증 정보 : "+username);
 
         return Optional.ofNullable(username);
     }

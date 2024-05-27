@@ -1,17 +1,23 @@
 package com.web.ddajait.service.impl;
 
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.ddajait.config.constant.Role;
 import com.web.ddajait.config.error.custom.DuplicateMemberException;
 import com.web.ddajait.model.dao.UserDao;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.service.UserService;
+import com.web.ddajait.util.EntityUtil;
 
 import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
@@ -28,15 +34,22 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final PasswordEncoder bCryptPasswordEncoder;
 
-
     public UserServiceImpl(UserDao userDao, PasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
+    public List<UserDto> getAllUsers() throws Exception {
+
+        return userDao.getAllUsers().stream()
+                .map(UserDto::from)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
     public void deleteUser(Long id) throws Exception {
-        // TODO Auto-generated method stub
         UserEntity entity = userDao.findById(id);
         userDao.deleteUser(entity.getUserId());
     }
@@ -47,18 +60,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userDao.findByEmail(email);
 
         UserDto userDto = new UserDto();
-        userDto.setAge(userEntity.getAge());
-        userDto.setEmail(userEntity.getEmail());
-        userDto.setGender(userEntity.getGender());
-        userDto.setInterest(userEntity.getInterest());
-        userDto.setIsLogin(userDto.getIsLogin());
-        userDto.setJob(userEntity.getJob());
-        userDto.setNickname(userEntity.getNickname());
-        userDto.setPassword(userEntity.getPassword());
-        userDto.setProfileImage(userEntity.getProfileImage());
-        userDto.setQualifiedCertificate(userEntity.getQualifiedCertificate());
-        userDto.setTier(userEntity.getTier());
-        userDto.setUserId(userEntity.getUserId());
+
+        // BeanUtils.copyProperties(source, target)
+        BeanUtils.copyProperties(userEntity, userDto);
 
         return userDto;
     }
@@ -69,19 +73,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userDao.findById(id);
 
         UserDto userDto = new UserDto();
-        userDto.setAge(userEntity.getAge());
-        userDto.setEmail(userEntity.getEmail());
-        userDto.setGender(userEntity.getGender());
-        userDto.setInterest(userEntity.getInterest());
-        userDto.setIsLogin(userDto.getIsLogin());
-        userDto.setJob(userEntity.getJob());
-        userDto.setNickname(userEntity.getNickname());
-        userDto.setPassword(userEntity.getPassword());
-        userDto.setProfileImage(userEntity.getProfileImage());
-        userDto.setQualifiedCertificate(userEntity.getQualifiedCertificate());
-        userDto.setTier(userEntity.getTier());
-        userDto.setUserId(userEntity.getUserId());
-        userDto.setRole(userEntity.getRole());
+        BeanUtils.copyProperties(userEntity, userDto);
 
         return userDto;
     }
@@ -106,58 +98,67 @@ public class UserServiceImpl implements UserService {
         }
 
         // 권한 설정
-        AuthorityEntity authority = AuthorityEntity.builder()
-                .authorityName("ROLE_USER")
-                .build();
+        Set<AuthorityEntity> authorities = new HashSet<>();
 
+        if (userDto.getNickname().equals(Role.ADMIN.name())) {
+
+            log.info("[UserServiceImpl][createMember] : " + userDto.getNickname());
+            authorities.add(AuthorityEntity.builder()
+                    .authorityName(Role.ADMIN.getKey())
+                    .build());
+            authorities.add(AuthorityEntity.builder()
+                    .authorityName(Role.USER.getKey())
+                    .build());
+        } else {
+            authorities.add(AuthorityEntity.builder()
+                    .authorityName(Role.USER.getKey())
+                    .build());
+        }
         UserEntity userEntity = UserEntity.builder()
                 .email(userDto.getEmail())
                 .password(bCryptPasswordEncoder.encode(userDto.getPassword()))
                 .nickname(userDto.getNickname())
-                .authorities(Collections.singleton(authority))
+                .authorities(authorities)
                 .isLogin(true)
                 .build();
 
-       
         log.info("[UserServiceImpl][createMemberr] userEntity " + userEntity);
         userDao.createMember(userEntity);
 
     }
 
+    // 프로필 수정
     @Override
-    public void updateUser(UserDto dto) throws Exception {
+    @Transactional
+    public void updateUser(UserDto userDto, Long id) throws Exception {
         log.info("[UserServiceImpl][updateUser] Start");
 
-        // 중복회원 처리
-        int emailCheck = countMemberByMemberEmail(dto.getEmail());
-        int nicknameCheck = countMemberByMemberNickname(dto.getNickname());
+        // 기존 사용자 정보 가져오기
+        if (userDao.findById(id) != null) {
+            UserEntity userEntity = userDao.findById(id);
 
-        // 이메일(ID) 중복
-        if (emailCheck > 0) {
-            throw new DuplicateMemberException(dto.getEmail());
+            // 중복회원 처리
+            int emailCheck = countMemberByMemberEmail(userDto.getEmail());
+            int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
+
+            // 이메일(ID) 중복
+            if (emailCheck > 0) {
+                throw new DuplicateMemberException(userDto.getEmail());
+            }
+
+            // 닉네임 중복
+            if (nicknameCheck > 0) {
+                throw new DuplicateMemberException(userDto.getNickname());
+            }
+
+            // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
+            EntityUtil.copyNonNullProperties(userDto, userEntity);
+
+            log.info("[UserServiceImpl][updateUser] userDto : " + userDto);
+            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity);
+
+            userDao.updateUser(userEntity);
         }
-
-        // 닉네임 중복
-        if (nicknameCheck > 0) {
-            throw new DuplicateMemberException(dto.getNickname());
-        }
-
-        UserEntity userEntity = new UserEntity();
-        userEntity.setAge(dto.getAge());
-        userEntity.setEmail(dto.getEmail());
-        userEntity.setGender(dto.getGender());
-        userEntity.setInterest(dto.getInterest());
-        userEntity.setIsLogin(dto.getIsLogin());
-        userEntity.setJob(dto.getJob());
-        userEntity.setNickname(dto.getNickname());
-        userEntity.setPassword(dto.getPassword());
-        userEntity.setProfileImage(dto.getProfileImage());
-        userEntity.setQualifiedCertificate(dto.getQualifiedCertificate());
-        userEntity.setTier(dto.getTier());
-        userEntity.setUserId(dto.getUserId());
-        userEntity.setRole(dto.getRole());
-
-        userDao.updateUser(userEntity);
     }
 
     @Override
@@ -179,14 +180,17 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     public UserDto getMyUserWithAuthorities() throws Exception {
-        return UserDto.from(userDao.getMyUserWithAuthorities());
-        
+        log.info("[UserServiceImpl][getMyUserWithAuthorities] Start ");
+        UserDto userDto =  UserDto.from(userDao.getMyUserWithAuthorities());
+        return userDto;
+
     }
 
     @Override
     public UserDto getUserWithAuthorities(String username) throws Exception {
+        log.info("[UserServiceImpl][getUserWithAuthorities] Start ");
         return UserDto.from(userDao.getUserWithAuthorities(username));
-        
+
     }
 
 }

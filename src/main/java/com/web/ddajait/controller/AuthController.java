@@ -17,14 +17,18 @@ import com.web.ddajait.config.jwt.TokenProvider;
 import com.web.ddajait.model.dto.LoginDto;
 import com.web.ddajait.model.dto.TokenDto;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Auth", description = "Auth API")
 public class AuthController {
-    
+
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -33,11 +37,14 @@ public class AuthController {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
+    @Operation(summary = "로그인", description = "로그인 API 입니다.")
+    @Parameter(name = "username", description = "유저 이메일", example = "Jyundev@gmail.com", required = true)
+    @Parameter(name = "password", description = "비밀번호", example = "1234qwer", required = true)
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.username(), loginDto.password());
+        log.info("[AuthController][authorize] Start");
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                loginDto.username(), loginDto.password());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -49,4 +56,7 @@ public class AuthController {
 
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
+
+
+    
 }

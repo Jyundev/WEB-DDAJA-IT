@@ -46,5 +46,10 @@ Refresh Token: 새로운 Access Token을 재발급해주기 위해 사용하는 
 
 6. 리프레시 토큰을 검증하여 액세스 토큰을 재발급하여 클라이언트에 전달합니다.
 
-jjwt 라이브러리
-token을 만들 때 jjwt 라이브러리를 이용하여 JWT(Json Web Token) 방식으로 생성
+
+----
+
+1. /join api로 서버에 회원 가입 요청
+2. 일반 유저임으로 ROLE_USER 권한으로 db에 저장
+2. /authenticate rest로 해당 계정 jwt token 발급
+3. 위에 발급 받은 jwt와 함께 hasAnyRole 권한이 부여된 /user rest 요청

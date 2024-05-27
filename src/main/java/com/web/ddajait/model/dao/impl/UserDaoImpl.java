@@ -1,5 +1,8 @@
 package com.web.ddajait.model.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +15,20 @@ import com.web.ddajait.util.SecurityUtil;
 import jakarta.servlet.ServletException;
 
 @Service
-public class UserImpl implements UserDao {
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
+    public List<UserEntity> getAllUsers() throws Exception {
+        return userRepository.findAll();
+    }
+
+    @Override
     public UserEntity findById(Long userId) throws Exception {
-        return userRepository.findById(userId).get();
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundMemberException("Member not found"));
     }
 
     @Override
@@ -61,10 +70,9 @@ public class UserImpl implements UserDao {
 
     @Override
     public UserEntity getMyUserWithAuthorities() throws Exception {
-        UserEntity userEntity =       
-        SecurityUtil.getCurrentUsername()
-                    .flatMap(userRepository::findOneWithAuthoritiesByEmail)
-                    .orElseThrow(() -> new NotFoundMemberException("Member not found"));
+        UserEntity userEntity = SecurityUtil.getCurrentUsername()
+                .flatMap(userRepository::findOneWithAuthoritiesByEmail)
+                .orElseThrow(() -> new NotFoundMemberException("Member not found"));
         return userEntity;
     }
 

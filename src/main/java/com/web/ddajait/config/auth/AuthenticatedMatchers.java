@@ -5,22 +5,24 @@ import lombok.NoArgsConstructor;
 //  요청에 대해서 허용을 할 주소
 @NoArgsConstructor
 public class AuthenticatedMatchers {
-    public static final String[] swaggerArray = {
-            "/api-docs",
-            "/swagger-ui-custom.html",
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/api-docs/**",
-            "/swagger-ui.html",
-            "/swagger-custom-ui.html",
-            "/static/**", 
-            "/css/**", 
-            "/js/**", 
-            "/images/**", 
-            "/webjars/**", 
-            "/h2-console/**",
-            "/index"
-
+    public static final String[] ignoringArray = {
+        "/api-docs",
+        "/swagger-ui-custom.html",
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/api-docs/**",
+        "/swagger-ui.html",
+        "/swagger-custom-ui.html",
+        "/static/**", 
+        "/css/**", 
+        "/js/**", 
+        "/images/**", 
+        "/webjars/**", 
+        "/h2-console/**",
+        "/index",
+        "/static/**",
+        "/api/v1/auth/authenticate",
+        "/api/v1/public/join"
 
     };
 }

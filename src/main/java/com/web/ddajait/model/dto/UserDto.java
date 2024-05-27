@@ -1,5 +1,6 @@
 package com.web.ddajait.model.dto;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 import org.hibernate.validator.constraints.URL;
 
 import com.web.ddajait.config.constant.Role;
+import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.UserEntity;
 
 import jakarta.validation.constraints.Email;
@@ -45,7 +47,8 @@ public class UserDto {
 
     private String gender;
 
-    private Boolean isLogin;
+    @Builder.Default
+    private Boolean isLogin = false;
 
     private List<String> interest;
 
@@ -55,10 +58,12 @@ public class UserDto {
     private String profileImage;
 
     @Positive
+    @Builder.Default
     private int tier = 1;
 
     private String qualifiedCertificate;
 
+    @Builder.Default
     private String role = Role.USER.name();
 
     private Set<AuthorityDto> authorityDtoSet;
@@ -68,12 +73,33 @@ public class UserDto {
             return null;
 
         return UserDto.builder()
+                .userId(user.getUserId())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .password(user.getPassword())
+                .age(user.getAge())
+                .gender(user.getGender())
+                .isLogin(user.getIsLogin())
+                .interest(user.getInterest())
+                .job(user.getJob())
+                .profileImage(user.getProfileImage())
+                .tier(user.getTier())
+                .qualifiedCertificate(user.getQualifiedCertificate())
                 .authorityDtoSet(user.getAuthorities().stream()
                         .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
                         .collect(Collectors.toSet()))
                 .build();
     }
+
+    // public UserEntity toEntity() {
+    //     AuthorityEntity authority = AuthorityEntity.builder()
+    //             .authorityName("ROLE_USER")
+    //             .build();
+    //     return UserEntity.builder()
+    //             .email(this.email)
+    //             .password(this.password)
+    //             .nickname(this.nickname)
+    //             .authorities(Collections.singleton(authority))
+    //             .build();
+    // }
 }
