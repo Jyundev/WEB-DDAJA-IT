@@ -10,6 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,30 +29,33 @@ import lombok.ToString;
 public class ChallengeChapterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chapterId", nullable = false)
+    @Column( nullable = false)
     private Long chapterId;
 
-    @Column(name = "missionDay", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String missionDay;
 
-    @Column(name = "chapterNum", nullable = false)
+    @Column(nullable = false)
     private int chapterNum;
 
-    @Column(name = "chapterName", nullable = false, length = 255)
+    @Column( nullable = false, length = 255)
     private String chapterName;
 
-    @Column(name = "chapterLink")
+    @Column()
     @Convert(converter = JsonListConverter.class)
     private List<String> chapterLink;
 
-    @Column(name = "chapterMission", nullable = true, length = 255)
+    @Column( nullable = true, length = 255)
     private String chapterMission;
 
-    @Column(name = "challengeId", nullable = false)
-    private String challengeId;
 
-    // @ManyToOne
-    // @JoinColumn(name = "ChallengeId")
-    // private ChallengeInfoEntity challenges; // FK
+    @OneToMany(mappedBy = "challengeChapter")
+    private List<ChapterQuestionEntity> questions;
+
+    @ManyToOne
+    @JoinColumn(name = "challenge_id")
+    private ChallengeInfoEntity challengeInfo;
+
+
 
 }

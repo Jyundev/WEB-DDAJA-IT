@@ -21,7 +21,6 @@ spring:
       password: qwerasdf1!
       driver-class-name: com.mysql.cj.jdbc.Driver
 
-    
     # sql:
     #   init:
     #     mode: always
@@ -34,8 +33,8 @@ spring:
       ddl-auto: update 
     properties:
       properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+      # hibernate:
+      #   dialect: org.hibernate.dialect.MySQLDialect
           
     # defer-datasource-initialization: true
         

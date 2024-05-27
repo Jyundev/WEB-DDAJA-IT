@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,18 +19,20 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "IncorrectAnswerEntity")
-@Table(name = "incorrectAnswer")
-public class IncorrectAnswerEntity {
+@Entity(name = "UserWrongQuestionEntity")
+@Table(name = "userWrongQuestion")
+public class UserWrongQuestionEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "incorrectId", nullable = false)
+    @Column( nullable = false)
     private Long incorrectId;
 
-    @Column(name = "examId", nullable = false)
-    private Long examId;
+    @ManyToOne
+    @JoinColumn(name = "question_id",  nullable = false)
+    private ChapterQuestionEntity chapterQuestion;
 
-    @Column(name = "userId", nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id",  nullable = false)
+    private UserEntity user;
 }
