@@ -20,9 +20,9 @@ spring:
       password: root1234
       driver-class-name: com.mysql.cj.jdbc.Driver
 
-  # sql:
-  #   init:
-  #     mode: always
+  sql:
+    init:
+      mode: always
 
     #  데이터 베이스 커넥션 
   jpa:
@@ -31,6 +31,9 @@ spring:
     show-sql: true
     properties:
       properties:
+      #  데이터베이스 연결을 초기화하는 것을 미루고 애플리케이션 구동 중에 필요한 시점에서 연결을 수행
+    defer-datasource-initialization: true
+
       # hibernate:
       #   dialect: org.hibernate.dialect.MySQLDialect
           
