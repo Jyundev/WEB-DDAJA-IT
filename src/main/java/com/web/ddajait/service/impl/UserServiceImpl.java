@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
                 .password(bCryptPasswordEncoder.encode(userDto.getPassword()))
                 .nickname(userDto.getNickname())
                 .authorities(authorities)
-                .isLogin(true)
+                .isLogin(false)
                 .build();
 
         log.info("[UserServiceImpl][createMemberr] userEntity " + userEntity);

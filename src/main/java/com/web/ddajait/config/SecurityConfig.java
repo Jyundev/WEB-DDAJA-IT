@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,10 +16,8 @@ import com.web.ddajait.config.handler.LoginAuthSuccessHandler;
 import com.web.ddajait.config.handler.LogoutAuthSuccessHandler;
 import com.web.ddajait.config.jwt.JwtAccessDeniedHandler;
 import com.web.ddajait.config.jwt.JwtAuthenticationEntryPoint;
-import com.web.ddajait.config.jwt.JwtFilter;
 import com.web.ddajait.config.jwt.TokenProvider;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -82,21 +79,22 @@ public class SecurityConfig {
                                                 .requestMatchers("/admin/**", "/api/v1/admin/**")
                                                 .hasAnyAuthority("ROLE_ADMIN")
                                                 // AuthenticatedMatchers URL은 누구나 접근 가능
-                                                .requestMatchers("/api/v1/auth/authenticate", "api/v1/public/join").permitAll() // 로그인 api
+                                                .requestMatchers("/api/v1/auth/authenticate", "api/v1/public/join")
+                                                .permitAll() // 로그인 api
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
                                                 .anyRequest().permitAll())
                                 // // 인증(로그인)에 대한 설정
                                 // .formLogin(formLogin -> formLogin
-                                //                 .loginPage("/loginPage") // Controller에서 로그인 페이지 URL path
-                                //                 /*
-                                //                  * 로그인 화면에서 form 태그의 action 주소(URL path)
-                                //                  * Spring Security가 로그인 검증을 진행함D
-                                //                  * Controller에서는 해당 "/login"을 만들 필요가 없음
-                                //                  */
-                                //                 .loginProcessingUrl("/api/v1/auth/authenticate")
-                                //                 .successHandler(loginAuthSuccessHandler) // 로그인 성공시
-                                //                 .failureHandler(loginAuthFailureHandler) // 로그인 실패시
-                                //                 .permitAll() // 그 외의 모든 URL path는 누구나 접근 가능
+                                // .loginPage("/loginPage") // Controller에서 로그인 페이지 URL path
+                                // /*
+                                // * 로그인 화면에서 form 태그의 action 주소(URL path)
+                                // * Spring Security가 로그인 검증을 진행함D
+                                // * Controller에서는 해당 "/login"을 만들 필요가 없음
+                                // */
+                                // .loginProcessingUrl("/api/v1/auth/authenticate")
+                                // .successHandler(loginAuthSuccessHandler) // 로그인 성공시
+                                // .failureHandler(loginAuthFailureHandler) // 로그인 실패시
+                                // .permitAll() // 그 외의 모든 URL path는 누구나 접근 가능
                                 // )
                                 // 로그아웃에 대한 설정
                                 .logout(logout -> logout
@@ -104,12 +102,11 @@ public class SecurityConfig {
                                                 .logoutSuccessHandler(logoutAuthSuccessHandler) // 로그아웃 성공시
                                                 .permitAll())
                                 // JwtFilter
-                                .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
-
+                                .with(new JwtSecurityConfig(tokenProvider), customizer -> {
+                                });
 
                 return httpSecurity.build();
 
         }
-
 
 }

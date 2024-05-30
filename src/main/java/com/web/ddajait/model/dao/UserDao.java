@@ -1,11 +1,10 @@
 package com.web.ddajait.model.dao;
 
+import java.util.List;
+
 import com.web.ddajait.model.entity.UserEntity;
 
 import jakarta.servlet.ServletException;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface UserDao {
 
@@ -15,16 +14,16 @@ public interface UserDao {
      * @return 특정 유저의 정보
      */
 
-    public UserEntity findById(Long userId) throws Exception;;
+    public UserEntity findById(Long userId) throws Exception;
 
-    public UserEntity findByEmail(String email) throws Exception;;
+    public UserEntity findByEmail(String email) throws Exception;
 
     /**
      * user 테이블에서 모든 유저의 정보를 가져온다.
      * @return 모든 유저의 정보
      */
 
-    public List<UserEntity> getAllUsers() throws Exception;;
+    public List<UserEntity> getAllUsers() throws Exception;
 
 
     /**

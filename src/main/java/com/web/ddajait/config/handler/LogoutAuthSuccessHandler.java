@@ -29,14 +29,12 @@ public class LogoutAuthSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         // TODO Auto-generated method stub
-        // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        // userService.updateIsLoginByEmail(userDetails.getUsername(), false);
 
         if (authentication == null) {
             response.sendRedirect("/index");
         } else {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             try {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                 userService.updateIsLoginByID(userDetails.getUsername(), false);
                 HttpSession session = request.getSession();
                 session.removeAttribute("userId");
