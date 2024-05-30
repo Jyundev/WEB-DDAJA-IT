@@ -4,14 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.handler.ResponseHandler;
+import com.web.ddajait.model.dto.JoinDto;
 import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.service.UserService;
@@ -38,12 +36,18 @@ public class PublicApiController {
     @Parameter(name = "nickname", description = "닉네임 값", example = "Jyundev", required = true)
     @Parameter(name = "password", description = "유저 비밀번호", example = "1234qwer", required = true)
     @PostMapping("/join")
-    public ResponseEntity<ResponseDto<UserDto>> join(@Valid @RequestBody UserDto dto) throws Exception {
-        log.info("[PublicController][join] Start - Email: {}, Nickname: {}", dto.getEmail(), dto.getNickname());
-        userService.createMember(dto);
-        log.info("[PublicController][join] Success - User: {}", dto.getNickname());
+    public ResponseEntity<ResponseDto<UserDto>> join(@Valid @RequestBody JoinDto dto) throws Exception {
+        log.info("[PublicController][join] Start - Email: {}, Nickname: {}", dto.email(), dto.nickname());
+        UserDto user =  UserDto.builder() 
+        .email(dto.email())
+        .nickname(dto.nickname())  
+        .password(dto.password())
+        .build();   
 
-        return ResponseHandler.SUCCESS(dto, "회원가입");
+        userService.createMember(user);
+
+        // log.info("[PublicController][join] Success - User: {}", user.getNickname());
+        return ResponseHandler.SUCCESS(user, "회원가입");
 
     }
 
