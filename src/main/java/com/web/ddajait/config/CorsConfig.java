@@ -1,7 +1,5 @@
 package com.web.ddajait.config;
 
-import java.util.Arrays;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -17,7 +15,8 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // 포트를 명시적으로 설정
+        // config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // 포트를 명시적으로 설정
+        config.addAllowedOriginPattern("http://localhost:*"); // Allow any port on localhost
         source.registerCorsConfiguration("/api/v1/**", config);
         return new CorsFilter(source);
     }
