@@ -1,4 +1,4 @@
-package com.web.ddajait.model.dto;
+package com.web.ddajait.model.dto.CertificateInfo;
 
 import java.util.List;
 
@@ -37,16 +37,19 @@ public class CertificateInfoDto {
     private String difficulty;
     
     @NotBlank
-    private List<String> eligibility;
+    private List<Eligibility> eligibility;
+    // private List<String> eligibility;
 
     @NotBlank
-    private List<String> examContent;
+    private List<ExamContent> examContent;
+    // private List<String> examContent;
 
     @NotBlank
     private List<String> examStandards;
 
     @NotBlank
-    private List<String> passCriteria;
+    private List<Ceriteria> passCriteria;
+    // private List<String> passCriteria;
 
     @NotBlank
     private String registrationLink;
