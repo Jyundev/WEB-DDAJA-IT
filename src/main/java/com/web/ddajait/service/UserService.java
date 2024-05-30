@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.web.ddajait.model.dto.UserDto;
 
+import jakarta.servlet.ServletException;
+
 public interface UserService {
         // 가입 insert
         public void createMember(UserDto dto) throws Exception;
@@ -25,7 +27,7 @@ public interface UserService {
         public int countMemberByMemberNickname(String email) throws Exception;
 
         // 로그인 성공시 >> 로그인 유무 저장
-        public void updateIsLoginByID(String Email, Boolean isLogin) throws Exception;
+        public void updateIsLoginByID(String Email, Boolean isLogin) throws Exception, ServletException;
 
         // 권한 처리
         public UserDto getUserWithAuthorities(String username) throws Exception;

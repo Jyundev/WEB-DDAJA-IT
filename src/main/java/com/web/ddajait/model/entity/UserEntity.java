@@ -56,8 +56,9 @@ public class UserEntity {
     @Column(name = "gender", length = 50)
     private String gender;
 
+    @Builder.Default
     @Column(columnDefinition = "tinyint(1) default 0")
-    private Boolean isLogin;
+    private Boolean isLogin = false;
 
     @Column(name = "interest")
     @Convert(converter = JsonListConverter.class)

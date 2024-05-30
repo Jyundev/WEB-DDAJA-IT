@@ -1,6 +1,5 @@
 package com.web.ddajait.model.dto;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -8,7 +7,6 @@ import java.util.stream.Collectors;
 import org.hibernate.validator.constraints.URL;
 
 import com.web.ddajait.config.constant.Role;
-import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.UserEntity;
 
 import jakarta.validation.constraints.Email;
@@ -92,14 +90,14 @@ public class UserDto {
     }
 
     // public UserEntity toEntity() {
-    //     AuthorityEntity authority = AuthorityEntity.builder()
-    //             .authorityName("ROLE_USER")
-    //             .build();
-    //     return UserEntity.builder()
-    //             .email(this.email)
-    //             .password(this.password)
-    //             .nickname(this.nickname)
-    //             .authorities(Collections.singleton(authority))
-    //             .build();
+    // AuthorityEntity authority = AuthorityEntity.builder()
+    // .authorityName("ROLE_USER")
+    // .build();
+    // return UserEntity.builder()
+    // .email(this.email)
+    // .password(this.password)
+    // .nickname(this.nickname)
+    // .authorities(Collections.singleton(authority))
+    // .build();
     // }
 }
