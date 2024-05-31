@@ -53,28 +53,28 @@ public class CertificateInfoEntity {
     @Column(nullable = true, length = 50)
     private String difficulty;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
-    private List<String> eligibility;
+    private String eligibility;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
-    private List<String> examContent;
+    private String examContent;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
-    private List<String> examStandards;
+    private String examStandards;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
-    private List<String> passCriteria;
+    private String passCriteria;
 
     @Column(nullable = false)
     private String registrationLink;
 
-    @Column()
+    @Column(length = 1000)
     @Convert(converter = JsonListConverter.class)
-    private List<String> relatedJob;
+    private String relatedJob;
 
     @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)
     private List<CertificationRegistrationEntity> certificationRegistrations;

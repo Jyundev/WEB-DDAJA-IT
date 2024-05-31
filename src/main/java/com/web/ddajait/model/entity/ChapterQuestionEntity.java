@@ -43,9 +43,9 @@ public class ChapterQuestionEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String notes;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     @Convert(converter = JsonListConverter.class)
-    private List<String> choices;
+    private String choices;
 
     @Column(nullable = false)
     private int answer;
