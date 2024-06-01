@@ -58,7 +58,7 @@ public class ChallengeInfoEntity {
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<ChallengeChapterEntity> challengeChapters;
 
-    @OneToMany(mappedBy = "challengeInfo")
+    @OneToMany(mappedBy = "challengeInfo",  cascade = CascadeType.ALL)
     private List<UserChalllengeEntity> userChallenges;
 
 

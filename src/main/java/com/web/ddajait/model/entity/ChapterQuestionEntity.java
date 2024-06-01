@@ -43,14 +43,14 @@ public class ChapterQuestionEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String notes;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
     private String choices;
 
     @Column(nullable = false)
     private int answer;
 
-    @Column(length = 255, nullable = true)
+    @Column( columnDefinition = "TEXT", nullable = true)
     private String image;
 
     @ManyToOne

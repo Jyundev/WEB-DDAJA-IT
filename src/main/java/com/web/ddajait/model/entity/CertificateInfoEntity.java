@@ -69,10 +69,10 @@ public class CertificateInfoEntity {
     @Convert(converter = JsonListConverter.class)
     private String passCriteria;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String registrationLink;
 
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
     private String relatedJob;
 
