@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -39,11 +40,12 @@ public class UserApiController {
     UserService userService;
 
     // 프로필 수정
-    @PutMapping("/{id}")
+    @PutMapping("/{email}")
+    @Operation(summary = "프로필 수정", description = "프로필 수정 API 입니다. 이메일을 입력 후 프로필을 수정합니다")
     public ResponseEntity<ResponseDto<UserDto>> updateUser(
-            @Parameter(description = "유저 ID", example = "1") 
-            @PathVariable Long id, @Valid @RequestBody UserDto dto) throws Exception {
-        userService.updateUser(dto, id);
+            @Parameter(description = "유저 Email", example = "Jyundev@gmail.com") 
+            @PathVariable String email, @Valid @RequestBody UserDto dto) throws Exception {
+        userService.updateUser(dto, email);
         return ResponseHandler.SUCCESS(dto, " 프로필 업데이트 성공");
     }
 
@@ -55,7 +57,21 @@ public class UserApiController {
         log.info("[UserApiController][getMyUserInfo] Start");
         return ResponseHandler.SUCCESS(userService.getMyUserWithAuthorities(), "권한 조회");
     }
+    
+
+
+
+    // 개인정보 수집 API
+
+
+    // 챌린지 신청 API
+    
+    // 신청 챌린지 조회 API
+
+
+    
+
+
 
 }
-// 개인정보 수집 API
-// 관심분야, 직업
+

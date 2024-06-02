@@ -27,8 +27,6 @@ import lombok.ToString;
 @Builder
 public class UserDto {
 
-    private Long user_id;
-
     @Email
     @NotBlank
     @Schema(description = "이메일", example = "Jyundev@gmail.com")
@@ -58,29 +56,21 @@ public class UserDto {
     @Schema(description = "직업", example = "학생/직장인/취준생")
     private String job;
 
-    @URL
+    // @URL
     @Schema(description = "프로필이미지", example = "URL")
     private String profileImage;
-
-    @Positive
-    @Builder.Default
-    private int tier = 1;
 
 
     @Schema(description = "취득자격증", example = "['정보처리기사', '리눅스마스터']")
     private String qualifiedCertificate;
 
-    @Builder.Default
-    private String role = Role.USER.name();
 
-    private Set<AuthorityDto> authorityDtoSet;
 
     public static UserDto from(UserEntity user) {
         if (user == null)
             return null;
 
         return UserDto.builder()
-                .user_id(user.getUser_id())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .password(user.getPassword())
@@ -90,23 +80,9 @@ public class UserDto {
                 .interest(user.getInterest())
                 .job(user.getJob())
                 .profileImage(user.getProfileImage())
-                .tier(user.getTier())
                 .qualifiedCertificate(user.getQualifiedCertificate())
-                .authorityDtoSet(user.getAuthorities().stream()
-                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
-                        .collect(Collectors.toSet()))
                 .build();
     }
 
-    // public UserEntity toEntity() {
-    // AuthorityEntity authority = AuthorityEntity.builder()
-    // .authorityName("ROLE_USER")
-    // .build();
-    // return UserEntity.builder()
-    // .email(this.email)
-    // .password(this.password)
-    // .nickname(this.nickname)
-    // .authorities(Collections.singleton(authority))
-    // .build();
-    // }
+
 }

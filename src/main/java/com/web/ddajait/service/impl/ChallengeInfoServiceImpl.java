@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
+   
     private final ChallengeInfoDao challengeInfoDao;
 
     @Override

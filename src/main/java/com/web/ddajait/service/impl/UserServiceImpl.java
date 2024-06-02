@@ -130,12 +130,14 @@ public class UserServiceImpl implements UserService {
     // 프로필 수정
     @Override
     @Transactional
-    public void updateUser(UserDto userDto, Long id) throws Exception {
+    public void updateUser(UserDto userDto, String email) throws Exception {
         log.info("[UserServiceImpl][updateUser] Start");
 
         // 기존 사용자 정보 가져오기
-        if (userDao.findById(id) != null) {
-            UserEntity userEntity = userDao.findById(id);
+        if (userDao.findByEmail(email) != null) {
+            log.info("[UserServiceImpl][updateUser] email : "+ email);
+
+            UserEntity userEntity = userDao.findByEmail(email);
 
             // 중복회원 처리
             int emailCheck = countMemberByMemberEmail(userDto.getEmail());
@@ -154,8 +156,9 @@ public class UserServiceImpl implements UserService {
             // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
             EntityUtil.copyNonNullProperties(userDto, userEntity);
 
-            log.info("[UserServiceImpl][updateUser] userDto : " + userDto);
-            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity);
+            log.info("[UserServiceImpl][updateUser] userDto : " + userDto.getNickname());
+            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity.getNickname());
+            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity.getUser_id());
 
             userDao.updateUser(userEntity);
         }
