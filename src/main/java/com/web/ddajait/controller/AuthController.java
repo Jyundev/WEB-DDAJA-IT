@@ -38,7 +38,8 @@ public class AuthController {
 
     @Operation(summary = "로그인", description = "로그인 API 입니다.")
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenDto> authorize(
+            @Valid @RequestBody LoginDto loginDto) {
         log.info("[AuthController][authorize] Start");
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -55,6 +56,4 @@ public class AuthController {
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
 
-
-    
 }

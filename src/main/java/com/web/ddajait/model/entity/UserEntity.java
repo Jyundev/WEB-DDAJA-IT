@@ -3,11 +3,8 @@ package com.web.ddajait.model.entity;
 import java.util.List;
 import java.util.Set;
 
-import com.web.ddajait.util.JsonListConverter;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -61,7 +58,6 @@ public class UserEntity {
     private Boolean isLogin = false;
 
     @Column(name = "interest", columnDefinition = "TEXT")
-    @Convert(converter = JsonListConverter.class)
     private String interest;
 
     @Column(name = "job", length = 100)

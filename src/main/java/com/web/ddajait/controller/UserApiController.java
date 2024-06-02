@@ -40,19 +40,11 @@ public class UserApiController {
 
     // 프로필 수정
     @PutMapping("/{id}")
-    @Operation(summary = "프로필 수정", description = "프로필 수정 API 입니다.")
-    @Parameter(name = "email", description = "이메일", example = "Jyundev@gmail.com")
-    @Parameter(name = "nickname", description = "닉네임", example = "Jyundev")
-    @Parameter(name = "password", description = "패스워드", example = "1234qwer")
-    @Parameter(name = "age", description = "나이", example = "28")
-    @Parameter(name = "gender", description = "성별", example = "male/female")
-    @Parameter(name = "job", description = "직업", example = "학생/직장인/취준생")
-    @Parameter(name = "interest", description = "관심분야", example = "정보보안/네트워크/운영체제 등")
-    @Parameter(name = "profileImage", description = "프로필이미지", example = "URL")
-    @Parameter(name = "qualifiedCertificate", description = "취득자격증", example = "['정보처리기사', '리눅스마스터']")
-    public ResponseEntity<ResponseDto<UserDto> > updateUser(@Valid @PathVariable Long id, @RequestBody UserDto dto) throws Exception {
+    public ResponseEntity<ResponseDto<UserDto>> updateUser(
+            @Parameter(description = "유저 ID", example = "1") 
+            @PathVariable Long id, @Valid @RequestBody UserDto dto) throws Exception {
         userService.updateUser(dto, id);
-        return ResponseHandler.SUCCESS(dto," 프로필 업데이트 성공");
+        return ResponseHandler.SUCCESS(dto, " 프로필 업데이트 성공");
     }
 
     // 유저,권한 정보를 가져오는 메소드
@@ -64,11 +56,6 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userService.getMyUserWithAuthorities(), "권한 조회");
     }
 
-
-    
 }
 // 개인정보 수집 API
 // 관심분야, 직업
-  
-
-

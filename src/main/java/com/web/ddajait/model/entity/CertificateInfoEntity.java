@@ -4,11 +4,8 @@ import java.util.List;
 // https://ict-nroo.tistory.com/132
 // https://resilient-923.tistory.com/417
 
-import com.web.ddajait.util.JsonListConverter;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -54,26 +51,21 @@ public class CertificateInfoEntity {
     private String difficulty;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    @Convert(converter = JsonListConverter.class)
     private String eligibility;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    @Convert(converter = JsonListConverter.class)
     private String examContent;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    @Convert(converter = JsonListConverter.class)
     private String examStandards;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    @Convert(converter = JsonListConverter.class)
     private String passCriteria;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String registrationLink;
 
     @Column(columnDefinition = "TEXT")
-    @Convert(converter = JsonListConverter.class)
     private String relatedJob;
 
     @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)

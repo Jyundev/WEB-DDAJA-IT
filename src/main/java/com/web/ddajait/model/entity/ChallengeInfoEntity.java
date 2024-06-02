@@ -1,6 +1,11 @@
 package com.web.ddajait.model.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.web.ddajait.model.dto.AuthorityDto;
+import com.web.ddajait.model.dto.ChallengeInfoDto;
+import com.web.ddajait.model.dto.UserDto;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +30,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity(name = "ChallengeInfoEntity")
 @Table(name = "challengeInfo")
 public class ChallengeInfoEntity {
@@ -61,8 +68,17 @@ public class ChallengeInfoEntity {
     @OneToMany(mappedBy = "challengeInfo",  cascade = CascadeType.ALL)
     private List<UserChalllengeEntity> userChallenges;
 
+    
+    // // Entity to Dto 
+    // public static ChallengeInfoDto from(ChallengeInfoEntity entity) {
+    //     if (entity == null)
+    //         return null;
 
-    // @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL, fetch =
-    // FetchType.LAZY, orphanRemoval = true)
-    // private List<ChallengeChapterEntity> challengeChapterList;
+    //     return ChallengeInfoDto.builder()
+    //             .certificateId(entity.getChallengeId())
+    //             .challengeId(entity.getChallengeId())
+    //             .challengeDetail(entity.getChallengeDetail())
+    //             .build();
+    // }
+
 }

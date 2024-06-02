@@ -2,10 +2,7 @@ package com.web.ddajait.model.entity;
 
 import java.util.List;
 
-import com.web.ddajait.util.JsonListConverter;
-
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,7 +45,6 @@ public class ChallengeChapterEntity {
     private String chapterName;
 
     @Column( columnDefinition = "TEXT")
-    @Convert(converter = JsonListConverter.class)
     private String chapterLink;
 
     @Column( nullable = true, length = 255)
