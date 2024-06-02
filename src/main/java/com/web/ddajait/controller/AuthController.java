@@ -18,7 +18,6 @@ import com.web.ddajait.model.dto.LoginDto;
 import com.web.ddajait.model.dto.TokenDto;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +37,6 @@ public class AuthController {
     }
 
     @Operation(summary = "로그인", description = "로그인 API 입니다.")
-    @Parameter(name = "username", description = "유저 이메일", example = "Jyundev@gmail.com", required = true)
-    @Parameter(name = "password", description = "비밀번호", example = "1234qwer", required = true)
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
         log.info("[AuthController][authorize] Start");

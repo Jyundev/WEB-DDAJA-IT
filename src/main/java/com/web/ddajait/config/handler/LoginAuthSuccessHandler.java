@@ -2,7 +2,6 @@ package com.web.ddajait.config.handler;
 
 import java.io.IOException;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class LoginAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-
     private UserService userService;
 
     @Autowired
@@ -41,30 +39,29 @@ public class LoginAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandl
         try {
             userService.updateIsLoginByID(userDetails.getUsername(), true);
             log.info("[LoginAuthSuccessHandler][updateIsLoginByID] Start");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (userDetails.getUsername() == null) {
             response.sendRedirect("/close");
-        }else{
+        } else {
             HttpSession session = request.getSession();
             UserDto dto;
             try {
-            log.info("[LoginAuthSuccessHandler][Session] Start : " + userDetails.getUsername());
+                log.info("[LoginAuthSuccessHandler][Session] Start : " + userDetails.getUsername());
 
                 dto = userService.findByEmail(userDetails.getUsername());
-                session.setAttribute("userId",dto.getUserId());
+                session.setAttribute("userId", dto.getUserId());
                 session.setAttribute("userEmail", dto.getEmail());
-        
+
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
         }
-   
 
         super.onAuthenticationSuccess(request, response, authentication);
     }

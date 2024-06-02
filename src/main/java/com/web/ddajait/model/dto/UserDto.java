@@ -48,7 +48,7 @@ public class UserDto {
     @Builder.Default
     private Boolean isLogin = false;
 
-    private List<String> interest;
+    private String interest;
 
     private String job;
 

@@ -60,9 +60,9 @@ public class UserEntity {
     @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean isLogin = false;
 
-    @Column(name = "interest")
+    @Column(name = "interest", columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
-    private List<String> interest;
+    private String interest;
 
     @Column(name = "job", length = 100)
     private String job;

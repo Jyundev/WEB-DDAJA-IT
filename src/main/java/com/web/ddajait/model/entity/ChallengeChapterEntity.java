@@ -32,8 +32,14 @@ public class ChallengeChapterEntity {
     @Column( nullable = false)
     private Long chapterId;
 
-    @Column(nullable = false, length = 50)
-    private String missionDay;
+    @Column(nullable = false)
+    private int missionDay;
+
+    @Column(nullable = false)
+    private int startDay;
+
+    @Column(nullable = false)
+    private int endDay;
 
     @Column(nullable = false)
     private int chapterNum;
@@ -41,9 +47,9 @@ public class ChallengeChapterEntity {
     @Column( nullable = false, length = 255)
     private String chapterName;
 
-    @Column()
+    @Column( columnDefinition = "TEXT")
     @Convert(converter = JsonListConverter.class)
-    private List<String> chapterLink;
+    private String chapterLink;
 
     @Column( nullable = true, length = 255)
     private String chapterMission;

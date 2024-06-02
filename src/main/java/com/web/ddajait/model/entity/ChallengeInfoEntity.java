@@ -39,9 +39,6 @@ public class ChallengeInfoEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String challengeDetail;
 
-    @Column(nullable = false, length = 255)
-    private String chapter;
-
     @Column(nullable = false, length = 100, columnDefinition = "varchar(100) default '이기적'")
     private String book;
 
@@ -61,7 +58,7 @@ public class ChallengeInfoEntity {
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<ChallengeChapterEntity> challengeChapters;
 
-    @OneToMany(mappedBy = "challengeInfo")
+    @OneToMany(mappedBy = "challengeInfo",  cascade = CascadeType.ALL)
     private List<UserChalllengeEntity> userChallenges;
 
 
