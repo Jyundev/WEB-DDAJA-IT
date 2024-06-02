@@ -18,7 +18,6 @@ import lombok.Setter;
 import lombok.ToString;
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "ChallengeChapterEntity")
@@ -27,7 +26,7 @@ public class ChallengeChapterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long chapterId;
+    private Long chapter_id;
 
     @Column(nullable = false)
     private int missionDay;

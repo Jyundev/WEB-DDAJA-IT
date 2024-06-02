@@ -16,7 +16,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "UserChalllengeEntity")
@@ -25,7 +24,7 @@ public class UserChalllengeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long userChallengeId;
+    private Long userChallenge_id;
 
     @Column(length = 10)
     private String progressRate;

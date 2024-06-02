@@ -20,7 +20,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CertificateInfoEntity")
@@ -30,7 +29,7 @@ public class CertificateInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "certificate_id", nullable = false)
-    private Long certificateId;
+    private Long certificate_id;
 
     @Column(nullable = false, length = 100)
     private String certificateName;
@@ -77,4 +76,5 @@ public class CertificateInfoEntity {
     @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)
     private List<ChallengeInfoEntity> challenges;
 
+    
 }

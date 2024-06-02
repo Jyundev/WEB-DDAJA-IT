@@ -53,7 +53,7 @@ public class LoginAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandl
                 log.info("[LoginAuthSuccessHandler][Session] Start : " + userDetails.getUsername());
 
                 dto = userService.findByEmail(userDetails.getUsername());
-                session.setAttribute("userId", dto.getUserId());
+                session.setAttribute("userId", dto.getUser_id());
                 session.setAttribute("userEmail", dto.getEmail());
 
             } catch (Exception e) {

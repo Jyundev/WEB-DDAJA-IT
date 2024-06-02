@@ -16,7 +16,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "UserCertificateEntity")
@@ -26,7 +25,7 @@ public class UserCertificateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long userCetificateId;
+    private Long userCetificate_id;
 
     @Column( nullable = false)
     private Boolean application;

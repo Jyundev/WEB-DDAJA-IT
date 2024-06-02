@@ -20,7 +20,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "ChapterQuestionEntity")
@@ -29,7 +28,7 @@ public class ChapterQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
-    private Long questionId;
+    private Long question_id;
 
     @Column(nullable = false, length = 255)
     private String chapter;

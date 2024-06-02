@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) throws Exception {
         UserEntity entity = userDao.findById(id);
-        userDao.deleteUser(entity.getUserId());
+        userDao.deleteUser(entity.getUser_id());
     }
 
     @Override

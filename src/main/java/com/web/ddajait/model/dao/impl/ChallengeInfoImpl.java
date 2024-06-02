@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.ChallengeInfoDao;
-import com.web.ddajait.model.dto.ChallengeInfoDto;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.repository.ChallengeInfoRepository;
 
@@ -13,7 +12,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class ChallengeInfoImpl implements ChallengeInfoDao{
+public class ChallengeInfoImpl implements ChallengeInfoDao {
 
     final private ChallengeInfoRepository challengeInfoRepository;
 
@@ -21,5 +20,5 @@ public class ChallengeInfoImpl implements ChallengeInfoDao{
     public List<ChallengeInfoEntity> getAllChallengeInfo() {
         return challengeInfoRepository.findAll();
     }
- 
+
 }

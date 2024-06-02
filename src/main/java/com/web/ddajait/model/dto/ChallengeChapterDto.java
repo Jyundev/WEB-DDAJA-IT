@@ -1,25 +1,31 @@
 package com.web.ddajait.model.dto;
 
-import java.util.List;
+import com.web.ddajait.model.entity.ChallengeChapterEntity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChallengeChapterDto {
-    
-    private Long chapterId;
+
+    private Long chapter_id;
 
     @NotBlank
-    private String missionDay;
+    private int missionDay;
+
+    @NotBlank
+    private int startDay;
+
+    @NotBlank
+    private int endDay;
 
     @NotBlank
     private int chapterNum;
@@ -27,12 +33,29 @@ public class ChallengeChapterDto {
     @NotBlank
     private String chapterName;
 
-    private List<String> chapterLink;
+    private String chapterLink;
 
     @NotBlank
     private String chapterMission;
 
     @NotBlank
-    private String challengeId;
-    
+    private Long challenge_id;
+
+    public static ChallengeChapterDto from(ChallengeChapterEntity entity) {
+        if (entity == null)
+            return null;
+
+        return ChallengeChapterDto.builder()
+                .chapter_id(entity.getChapter_id())
+                .missionDay(entity.getMissionDay())
+                .startDay(entity.getStartDay())
+                .endDay(entity.getEndDay())
+                .chapterNum(entity.getChapterNum())
+                .chapterName(entity.getChapterName())
+                .chapterLink(entity.getChapterLink())
+                .chapterMission(entity.getChapterMission())
+                .challenge_id(entity.getChallengeInfo().getChallenge_id())
+                .build();
+
+    }
 }

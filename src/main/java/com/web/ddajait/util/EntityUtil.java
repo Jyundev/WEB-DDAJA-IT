@@ -15,6 +15,12 @@ import java.beans.PropertyDescriptor;
 public class EntityUtil {
     // 소스 객체에서 대상 객체로 속성을 복사
       public static void copyNonNullProperties(Object source, Object target) {
+        // log.info(source.toString());
+        // log.info(target.toString());
+
+        if (source == null || target == null) {
+            throw new IllegalArgumentException("Source and target must not be null");
+        }
         BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
     }
 
@@ -32,7 +38,7 @@ public class EntityUtil {
         }
         String[] result = new String[emptyNames.size()];
         
-        log.info("[EntityUtil][emptyNames] : "+emptyNames);
+        // log.info("[EntityUtil][emptyNames] : "+emptyNames);
         return emptyNames.toArray(result);
     }
 }

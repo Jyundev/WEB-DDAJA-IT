@@ -22,13 +22,12 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class UserDto {
 
-    private Long userId;
+    private Long user_id;
 
     @Email
     @NotBlank
@@ -81,7 +80,7 @@ public class UserDto {
             return null;
 
         return UserDto.builder()
-                .userId(user.getUserId())
+                .user_id(user.getUser_id())
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .password(user.getPassword())

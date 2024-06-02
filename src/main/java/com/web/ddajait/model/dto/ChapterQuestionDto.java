@@ -1,25 +1,25 @@
 package com.web.ddajait.model.dto;
 
-import java.util.List;
+import com.web.ddajait.model.entity.ChapterQuestionEntity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChapterQuestionDto {
 
-    private Long questionId;
+    private Long question_id;
 
     @NotBlank
-    private Long chapterId;
+    private Long chapter_id;
 
     @NotBlank
     private String chapter;
@@ -31,10 +31,27 @@ public class ChapterQuestionDto {
     private String notes;
 
     @NotBlank
-    private List<String> choices;
+    private String choices;
 
     @NotBlank
     private int answer;
 
+    // @URL
     private String image;
+
+    public static ChapterQuestionDto from(ChapterQuestionEntity entity) {
+        if (entity == null)
+            return null;
+
+        return ChapterQuestionDto.builder()
+                .question_id(entity.getQuestion_id())
+                .chapter_id(entity.getChallengeChapter().getChapter_id())
+                .chapter(entity.getChapter())
+                .question(entity.getQuestion())
+                .notes(entity.getNotes())
+                .choices(entity.getChoices())
+                .answer(entity.getAnswer())
+                .image(entity.getImage())
+                .build();
+    }
 }

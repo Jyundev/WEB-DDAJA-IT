@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,7 +18,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CertificationRegistrationEntity")
@@ -24,7 +25,8 @@ import lombok.ToString;
 public class CertificationRegistrationEntity {
     @Id
     @Column(nullable = false)
-    private Long registrationId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long registration_id;
 
     @Column(nullable = false, length = 255)
     private String certificateName;
@@ -33,10 +35,10 @@ public class CertificationRegistrationEntity {
     private String types;
 
     @Column(nullable = false)
-    private int round;
+    private String round;
 
     @Column(nullable = false)
-    private Timestamp testDay;
+    private String testDay;
 
     @Column(nullable = false)
     private Timestamp receptionStart;
@@ -45,11 +47,10 @@ public class CertificationRegistrationEntity {
     private Timestamp receptionEnd;
 
     @Column(nullable = false)
-    private Timestamp resultDay;
+    private String resultDay;
 
     @ManyToOne
     @JoinColumn(name = "certificate_id")
     private CertificateInfoEntity certificateInfo;
-
 
 }
