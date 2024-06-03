@@ -79,7 +79,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/admin/**", "/api/v1/admin/**")
                                                 .hasAnyAuthority("ROLE_ADMIN")
                                                 // AuthenticatedMatchers URL은 누구나 접근 가능
-                                                .requestMatchers("/api/v1/auth/authenticate", "api/v1/public/join")
+                                                .requestMatchers("/api/v1/auth/authenticate", "/api/v1/public/join")
                                                 .permitAll() // 로그인 api
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
                                                 .anyRequest().permitAll())

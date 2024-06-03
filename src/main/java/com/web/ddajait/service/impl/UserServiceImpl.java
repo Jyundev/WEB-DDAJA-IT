@@ -99,8 +99,10 @@ public class UserServiceImpl implements UserService {
 
         // 권한 설정
         Set<AuthorityEntity> authorities = new HashSet<>();
+        log.info("[UserServiceImpl][createMember] userDto : "+userDto);
 
         if (userDto.getNickname().equals(Role.ADMIN.name())) {
+            log.info("[UserServiceImpl][createMember] userDto equals: "+userDto);
 
             log.info("[UserServiceImpl][createMember] : " + userDto.getNickname());
             authorities.add(AuthorityEntity.builder()

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,6 @@ import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -30,19 +29,16 @@ public class PublicApiController {
 
     @Autowired
     UserService userService;
-    
+
     @Operation(summary = "회원가입", description = "회원가입 API 입니다. email, nickname, password 는 필수이며, age, gender는 선택사항입니다.")
-    @Parameter(name = "email", description = "유저 이메일 값", example = "Jyundev@gmail.com", required = true)
-    @Parameter(name = "nickname", description = "닉네임 값", example = "Jyundev", required = true)
-    @Parameter(name = "password", description = "유저 비밀번호", example = "1234qwer", required = true)
     @PostMapping("/join")
     public ResponseEntity<ResponseDto<UserDto>> join(@Valid @RequestBody JoinDto dto) throws Exception {
-        log.info("[PublicController][join] Start - Email: {}, Nickname: {}", dto.email(), dto.nickname());
-        UserDto user =  UserDto.builder() 
-        .email(dto.email())
-        .nickname(dto.nickname())  
-        .password(dto.password())
-        .build();   
+        log.info("[PublicController][join] Start - Email: {}, Nickname: {}", dto.getEmail(), dto.getNickname());
+        UserDto user = UserDto.builder()
+                .email(dto.getEmail())
+                .nickname(dto.getNickname())
+                .password(dto.getPassword())
+                .build();
 
         userService.createMember(user);
 
@@ -50,7 +46,5 @@ public class PublicApiController {
         return ResponseHandler.SUCCESS(user, "회원가입");
 
     }
-
-
 
 }
