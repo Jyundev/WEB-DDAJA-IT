@@ -85,7 +85,7 @@ public class UserEntity {
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserChalllengeEntity> userChallenges;
+    private List<UserChallengeEntity> userChallenges;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCertificateEntity> userCertifications;

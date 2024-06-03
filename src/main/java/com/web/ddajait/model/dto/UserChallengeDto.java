@@ -1,6 +1,6 @@
 package com.web.ddajait.model.dto;
 
-import com.web.ddajait.model.entity.UserChalllengeEntity;
+import com.web.ddajait.model.entity.UserChallengeEntity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -16,9 +16,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserChalllengeDto {
+public class UserChallengeDto {
 
-    private Long user_challenge_id;
 
     private String progressRate;
 
@@ -31,12 +30,11 @@ public class UserChalllengeDto {
     @NotBlank
     private Long user_id;
 
-    public static UserChalllengeDto from(UserChalllengeEntity entity) {
+    public static UserChallengeDto from(UserChallengeEntity entity) {
         if (entity == null)
             return null;
 
-        return UserChalllengeDto.builder()
-                .user_challenge_id(entity.getUserChallenge_id())
+        return UserChallengeDto.builder()
                 .progressRate(entity.getProgressRate())
                 .challengeStep(entity.getChallengeStep())
                 .challenge_id(entity.getUserChallenge_id())

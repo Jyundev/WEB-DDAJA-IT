@@ -1,25 +1,31 @@
 package com.web.ddajait.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.ResponseDto;
+import com.web.ddajait.model.dto.UserCertificateDto;
+import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,39 +45,94 @@ public class UserApiController {
     @Autowired
     UserService userService;
 
+    HttpSession session;
+
     // 프로필 수정
     @PutMapping("/{email}")
     @Operation(summary = "프로필 수정", description = "프로필 수정 API 입니다. 이메일을 입력 후 프로필을 수정합니다")
     public ResponseEntity<ResponseDto<UserDto>> updateUser(
-            @Parameter(description = "유저 Email", example = "Jyundev@gmail.com") 
-            @PathVariable String email, @Valid @RequestBody UserDto dto) throws Exception {
+            @Parameter(description = "유저 Email", example = "Jyundev@gmail.com") @PathVariable String email,
+            @Valid @RequestBody UserDto dto) throws Exception {
         userService.updateUser(dto, email);
         return ResponseHandler.SUCCESS(dto, " 프로필 업데이트 성공");
     }
 
     // 유저,권한 정보를 가져오는 메소드
-    @GetMapping("/user")
+    @GetMapping("/Auth")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @Operation(summary = "권한조회", description = "권한조회 API 입니다. \"USER\" 또는 \"ADMIN\" 역할을 가진 사용자만 접근할 수 있습니다.")
     public ResponseEntity<ResponseDto<UserDto>> getMyUserInfo() throws Exception {
         log.info("[UserApiController][getMyUserInfo] Start");
         return ResponseHandler.SUCCESS(userService.getMyUserWithAuthorities(), "권한 조회");
     }
-    
 
+    /* 유저 챌린지 */
 
+    @GetMapping("/challenge")
+    @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
+    public ResponseEntity<ResponseDto<List<UserChallengeDto>>> getUserChalengeList() throws Exception {
+        log.info("[UserApiController][getUserChalengeList] Start");
+        return ResponseHandler.SUCCESS(userService.getUserChallengList(), "유저 챌린지 리스트 조회 성공");
+    }
+
+    @GetMapping("/challenge/specific")
+    @Parameter(description = "challegeId", example = "1")
+    @Operation(summary = "특정 유저 챌린지 조회 API", description = "특정 유저 챌린지 조회 API 입니다.")
+    public ResponseEntity<ResponseDto<UserChallengeDto>> getUserChalenge(
+            @RequestParam Long challegeId) throws Exception {
+        log.info("[UserApiController][getUserChalenge] Start");
+
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            throw new Exception("User is not logged in");
+        }
+        Long userChallegeId = userService.findUserCertificateId(challegeId, userId);
+
+        return ResponseHandler.SUCCESS(userService.getUserChalleng(userChallegeId), "유저 챌린지 조회 성공");
+    }
+
+    @PostMapping("/challenge/insert")
+    public ResponseEntity<ResponseDto<UserChallengeDto>> insertUserChallenge(
+            @RequestBody @Valid UserChallengeDto userChallengeDto) throws Exception {
+        userService.insertUserChallenge(userChallengeDto);
+        return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 추가 성공");
+
+    }
+    /* 유저 자격증 */
+
+    @GetMapping("/certificate")
+    @Operation(summary = "유저 자격증 리스트 조회 API", description = "유저 자격증 리스트 조회 API 입니다.")
+    public ResponseEntity<ResponseDto<List<UserCertificateDto>>> getUserCertificateList() throws Exception {
+        log.info("[UserApiController][getUserCertificateList] Start");
+        return ResponseHandler.SUCCESS(userService.getUserCertificateList(), "유저 자격증 리스트 조회 성공");
+    }
+
+    @GetMapping("/certificate/specific")
+    @Parameter(description = "challegeId", example = "1")
+    @Operation(summary = "특정 유저 자격증 조회 API", description = "특정 유저 자격증 조회 API 입니다.")
+    public ResponseEntity<ResponseDto<UserCertificateDto>> getUserCertificate(
+            @RequestParam Long certificateId) throws Exception {
+        log.info("[UserApiController][getUserCertificate] Start");
+
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            throw new Exception("User is not logged in");
+        }
+        Long userCertificateId = userService.findUserCertificateId(certificateId, userId);
+
+        return ResponseHandler.SUCCESS(userService.getUserCertificate(userCertificateId), "유저 자격증 조회 성공");
+    }
+
+    @PostMapping("/certificate/insert")
+    public ResponseEntity<ResponseDto<UserCertificateDto>> insertUserCertificate(
+            @RequestBody @Valid UserCertificateDto userCertificateDto) throws Exception {
+        userService.inserteUserCertificate(userCertificateDto);
+        return ResponseHandler.SUCCESS(userCertificateDto, "유저 챌린지 추가 성공");
+
+    }
 
     // 개인정보 수집 API
 
-
     // 챌린지 신청 API
-    
-    // 신청 챌린지 조회 API
-
-
-    
-
-
 
 }
-

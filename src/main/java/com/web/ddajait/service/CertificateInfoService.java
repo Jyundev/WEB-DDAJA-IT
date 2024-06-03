@@ -8,4 +8,5 @@ public interface CertificateInfoService {
 
     public List<CertificateInfoDto> getAllCertificate();
     
+    public CertificateInfoDto findById(Long id);
 }

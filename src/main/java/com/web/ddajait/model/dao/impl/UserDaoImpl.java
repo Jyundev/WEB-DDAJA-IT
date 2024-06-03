@@ -1,6 +1,7 @@
 package com.web.ddajait.model.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserEntity findById(Long userId) throws Exception {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundMemberException("Member not found"));
+    public Optional<UserEntity> findById(Long userId) throws Exception {
+        return userRepository.findById(userId);
     }
 
     @Override

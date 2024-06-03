@@ -18,9 +18,9 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "UserChalllengeEntity")
+@Entity(name = "UserchallengeEntity")
 @Table(name = "userChallenge")
-public class UserChalllengeEntity {
+public class UserChallengeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)

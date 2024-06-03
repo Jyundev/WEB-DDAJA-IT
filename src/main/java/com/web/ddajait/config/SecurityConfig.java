@@ -5,14 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 import com.web.ddajait.config.auth.AuthenticatedMatchers;
-import com.web.ddajait.config.handler.LoginAuthFailureHandler;
-import com.web.ddajait.config.handler.LoginAuthSuccessHandler;
 import com.web.ddajait.config.handler.LogoutAuthSuccessHandler;
 import com.web.ddajait.config.jwt.JwtAccessDeniedHandler;
 import com.web.ddajait.config.jwt.JwtAuthenticationEntryPoint;
@@ -35,10 +32,7 @@ public class SecurityConfig {
         private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
         private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-        private final LoginAuthSuccessHandler loginAuthSuccessHandler;
-        private final LoginAuthFailureHandler loginAuthFailureHandler;
         private final LogoutAuthSuccessHandler logoutAuthSuccessHandler;
-        private final PasswordEncoder passwordEncoder;
 
         // 비밀번호 암호화에서 사용할 객체
         // @Bean

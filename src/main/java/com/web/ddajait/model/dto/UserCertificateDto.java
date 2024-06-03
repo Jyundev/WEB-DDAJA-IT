@@ -1,7 +1,7 @@
 package com.web.ddajait.model.dto;
 
 import com.web.ddajait.model.entity.UserCertificateEntity;
-import com.web.ddajait.model.entity.UserChalllengeEntity;
+import com.web.ddajait.model.entity.UserChallengeEntity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -17,10 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 public class UserCertificateDto {
-    
-    
-    private Long user_certificate_id;
-    
+        
     @NotBlank
     private Boolean application;
 
@@ -37,7 +34,6 @@ public class UserCertificateDto {
             return null;
 
         return UserCertificateDto.builder()
-                .user_certificate_id(entity.getUserCetificate_id())
                 .userResult(entity.getUserResult())
                 .certificate_id(entity.getCertificateInfo().getCertificate_id())
                 .user_id(entity.getUser().getUser_id())

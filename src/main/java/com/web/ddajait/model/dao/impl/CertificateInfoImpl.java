@@ -1,6 +1,7 @@
 package com.web.ddajait.model.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,20 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class CertificateInfoImpl implements CertificateInfoDao{
+public class CertificateInfoImpl implements CertificateInfoDao {
 
     final private CertificateInfoRepository certificateInfoRepository;
+
     @Override
     public List<CertificateInfoEntity> getAllCertificate() {
         log.info("[CertificateInfoImpl][getAllCertificate] Starts");
-        
+
         return certificateInfoRepository.findAll();
+    }
+
+    @Override
+    public Optional<CertificateInfoEntity>  findById(Long id) {
+        return certificateInfoRepository.findById(id);
     }
 
 }

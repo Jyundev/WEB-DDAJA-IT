@@ -71,6 +71,7 @@ public class UserDto {
             return null;
 
         return UserDto.builder()
+
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .password(user.getPassword())
