@@ -1,24 +1,16 @@
 package com.web.ddajait.model.dto;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.hibernate.validator.constraints.URL;
-
-import com.web.ddajait.config.constant.Role;
 import com.web.ddajait.model.entity.UserEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -60,11 +52,8 @@ public class UserDto {
     @Schema(description = "프로필이미지", example = "URL")
     private String profileImage;
 
-
     @Schema(description = "취득자격증", example = "['정보처리기사', '리눅스마스터']")
     private String qualifiedCertificate;
-
-
 
     public static UserDto from(UserEntity user) {
         if (user == null)
@@ -84,6 +73,5 @@ public class UserDto {
                 .qualifiedCertificate(user.getQualifiedCertificate())
                 .build();
     }
-
 
 }

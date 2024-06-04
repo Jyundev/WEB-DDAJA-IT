@@ -23,7 +23,7 @@ public class UserCertificateImpl implements UserCertificateDao {
     @Override
     public List<UserCertificateEntity> findUserCertificateByUserId(Long id) {
         log.info("[UserCertificateImpl][findUserCertificateByID]");
-        return userCertificateRepository.findByUser_Id(id);
+        return userCertificateRepository.findByUser_User_id(id);
     }
 
     @Override

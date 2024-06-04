@@ -1,9 +1,7 @@
 package com.web.ddajait.model.dao;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.web.ddajait.model.entity.ChallengeChapterEntity;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.model.entity.UserEntity;

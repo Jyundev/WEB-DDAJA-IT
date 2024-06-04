@@ -20,7 +20,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -65,7 +64,6 @@ public class UserEntity {
     @Column( length = 255)
     private String profileImage;
 
-    @Column()
     private int tier;
 
     @Column(columnDefinition = "TEXT")

@@ -1,6 +1,7 @@
 package com.web.ddajait.model.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,12 @@ public class ChallengeInfoImpl implements ChallengeInfoDao {
     @Override
     public List<ChallengeInfoEntity> getAllChallengeInfo() {
         return challengeInfoRepository.findAll();
+    }
+
+    @Override
+    public Optional<ChallengeInfoEntity> findById(Long id) {
+        
+        return challengeInfoRepository.findById(id);
     }
 
 }

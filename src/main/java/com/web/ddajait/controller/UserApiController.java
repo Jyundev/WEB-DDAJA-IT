@@ -86,9 +86,9 @@ public class UserApiController {
         if (userId == null) {
             throw new Exception("User is not logged in");
         }
-        Long userChallegeId = userService.findUserCertificateId(challegeId, userId);
+        UserChallengeDto userChallengeDto = userService.findUserChallengeId(challegeId, userId);
 
-        return ResponseHandler.SUCCESS(userService.getUserChalleng(userChallegeId), "유저 챌린지 조회 성공");
+        return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
     @PostMapping("/challenge/insert")
@@ -118,9 +118,9 @@ public class UserApiController {
         if (userId == null) {
             throw new Exception("User is not logged in");
         }
-        Long userCertificateId = userService.findUserCertificateId(certificateId, userId);
+        UserCertificateDto userCertificateDto = userService.findUserCertificateId(certificateId, userId);
 
-        return ResponseHandler.SUCCESS(userService.getUserCertificate(userCertificateId), "유저 자격증 조회 성공");
+        return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 조회 성공");
     }
 
     @PostMapping("/certificate/insert")
