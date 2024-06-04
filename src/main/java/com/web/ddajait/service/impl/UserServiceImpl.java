@@ -370,20 +370,13 @@ public class UserServiceImpl implements UserService {
         Optional<ChallengeInfoEntity> challengeEntity = challengeInfoDao.findById(challengeId);
 
         if (userEntity.isPresent() && challengeEntity.isPresent()) {
-            UserCertificateEntity userCertificateEntity = userCertificateDao
-                    .findUserCertificateId(certificateInfoEntity.get(), userEntity.get());
-            return UserCertificateDto.from(userCertificateEntity);
+            UserChallengeEntity userChallengeEntity = userchallengeDao
+                    .findUserChallengeId(challengeEntity.get(), userEntity.get());
+            return UserChallengeDto.from(userChallengeEntity);
         } else {
             throw new EntityNotFoundException("UserCertificateEntity Not Found");
         }
     }
 
-    @Override
-    public UserChallengeDto findUserChallengeId(Long challengeId, Long userId) throws Exception {
-        if (userchallengeDao.findUserChallengeId(challengeId, userId).isEmpty()) {
-            throw new Exception("User challenge not found");
-        }
-        return userchallengeDao.findUserChallengeId(challengeId, userId).get();
-    }
 
 }
