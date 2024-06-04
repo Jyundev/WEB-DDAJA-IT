@@ -2,35 +2,37 @@ package com.web.ddajait.model.dto;
 
 import java.sql.Timestamp;
 
+import com.web.ddajait.model.entity.CertificationRegistrationEntity;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CertificationRegistrationDto {
-    private Long registrationId;
+    private Long registration_id;
     
     @NotBlank
-    private Long certificateId;
+    private Long certificate_id;
 
     @NotBlank
     private String certificateName;
 
     @NotBlank
-    private Timestamp Type;
+    private String Type;
 
     @NotBlank
-    private int round;
+    private String round;
 
     @NotBlank
-    private Timestamp testDay;
+    private String testDay;
 
     @NotBlank
     private Timestamp receptionStart;
@@ -39,5 +41,23 @@ public class CertificationRegistrationDto {
     private Timestamp receptionEnd;
 
     @NotBlank
-    private Timestamp resultDay;
+    private String resultDay;
+
+        public static CertificationRegistrationDto from(CertificationRegistrationEntity entity) {
+        if (entity == null)
+            return null;
+
+        return CertificationRegistrationDto.builder()
+                .registration_id(entity.getRegistration_id())
+                .certificate_id(entity.getCertificateInfo().getCertificateId())
+                .certificateName(entity.getCertificateName())
+                .Type(entity.getTypes())
+                .round(entity.getRound())
+                .testDay(entity.getTestDay())
+                .receptionStart(entity.getReceptionStart())
+                .receptionEnd(entity.getReceptionStart())
+                .resultDay(entity.getResultDay())
+                .build();
+
+    }
 }

@@ -2,11 +2,15 @@ package com.web.ddajait.service;
 
 import java.util.List;
 
+import com.web.ddajait.model.dto.UserCertificateDto;
+import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 
 import jakarta.servlet.ServletException;
 
 public interface UserService {
+        /* 기본 기능 */
+
         // 가입 insert
         public void createMember(UserDto dto) throws Exception;
 
@@ -16,7 +20,7 @@ public interface UserService {
         public UserDto findByEmail(String email) throws Exception;
 
         // 프로필 수정 update
-        public void updateUser(UserDto dto, Long id) throws Exception;
+        public void updateUser(UserDto dto, String Email) throws Exception;
 
         // 회원 탈퇴 delete
         public void deleteUser(Long id) throws Exception;
@@ -34,6 +38,45 @@ public interface UserService {
 
         public UserDto getMyUserWithAuthorities() throws Exception;
 
-        public List<UserDto> getAllUsers() throws Exception;;
+        public List<UserDto> getAllUsers() throws Exception;
+
+        // 유저 id (pk) 반환
+        public Long getUserId(String email) throws Exception;
+
+        /* 자격증 */
+
+        // 유저 자격증 정보 조회
+        public List<UserCertificateDto> getUserCertificateList() throws Exception;
+
+        // 자격증 정보 조회
+        public UserCertificateDto getUserCertificate(Long userCertificateId) throws Exception;
+
+        // 자격증 ID 조회 
+        public UserCertificateDto findUserCertificateId(Long userCertificateId, Long userId) throws Exception;
+
+        // 자격증 정보 업데이트
+        public void updateUserCertificate(UserCertificateDto dto, Long userCertificateId) throws Exception;
+
+        // 자격증 정보 추가
+        public void inserteUserCertificate(UserCertificateDto dto) throws Exception;
+
+        
+
+        /* 챌린지 */
+
+        // 유저 챌린지 정보 조회
+        public List<UserChallengeDto> getUserChallengList() throws Exception;
+
+        // 챌린지 정보 조회
+        public UserChallengeDto getUserChalleng(Long userChallengeId) throws Exception;
+
+        // 챌린지 ID 조회 
+        public UserChallengeDto findUserChallengeId(Long challengeId, Long userId) throws Exception;
+
+        // 챌린지 정보 업데이트
+        public void updateUserChallenge(UserChallengeDto dto, Long userChallengeId) throws Exception;
+
+        // 챌린지 정보 추가
+        public void insertUserChallenge(UserChallengeDto dto) throws Exception;
 
 }

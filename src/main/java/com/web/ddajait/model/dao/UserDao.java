@@ -1,6 +1,7 @@
 package com.web.ddajait.model.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.web.ddajait.model.entity.UserEntity;
 
@@ -14,7 +15,7 @@ public interface UserDao {
      * @return 특정 유저의 정보
      */
 
-    public UserEntity findById(Long userId) throws Exception;
+    public Optional<UserEntity> findById(Long userId) throws Exception;
 
     public UserEntity findByEmail(String email) throws Exception;
 

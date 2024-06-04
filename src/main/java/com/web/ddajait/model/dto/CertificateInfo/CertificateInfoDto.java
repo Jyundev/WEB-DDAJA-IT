@@ -1,6 +1,6 @@
 package com.web.ddajait.model.dto.CertificateInfo;
 
-import java.util.List;
+import com.web.ddajait.model.entity.CertificateInfoEntity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,16 +8,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CertificateInfoDto {
 
-    private Long certificateId;
+    private Long certificate_id;
 
     @NotBlank
     private String certificateName;
@@ -35,26 +34,46 @@ public class CertificateInfoDto {
     private String overview;
 
     private String difficulty;
-    
+
     @NotBlank
-    private List<Eligibility> eligibility;
+    private String eligibility;
     // private List<String> eligibility;
 
     @NotBlank
-    private List<ExamContent> examContent;
+    private String examContent;
     // private List<String> examContent;
 
     @NotBlank
-    private List<String> examStandards;
+    private String examStandards;
 
     @NotBlank
-    private List<Ceriteria> passCriteria;
-    // private List<String> passCriteria;
+    private String passCriteria;
 
     @NotBlank
     private String registrationLink;
 
-    private List<String> relatedJob;
+    private String relatedJob;
 
- 
+    public static CertificateInfoDto from(CertificateInfoEntity entity) {
+        if (entity == null)
+            return null;
+
+        return CertificateInfoDto.builder()
+                .certificate_id(entity.getCertificateId())
+                .certificateName(entity.getCertificateName())
+                .certificateFullName(entity.getCertificateFullName())
+                .field(entity.getField())
+                .type(entity.getTypes())
+                .overview(entity.getOverview())
+                .difficulty(entity.getDifficulty())
+                .eligibility(entity.getEligibility())
+                .examContent(entity.getExamContent())
+                .examStandards(entity.getExamStandards())
+                .passCriteria(entity.getPassCriteria())
+                .registrationLink(entity.getRegistrationLink())
+                .relatedJob(entity.getRelatedJob())
+                .build();
+
+    }
+
 }

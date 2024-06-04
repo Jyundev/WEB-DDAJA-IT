@@ -2,11 +2,8 @@ package com.web.ddajait.model.entity;
 
 import java.util.List;
 
-import com.web.ddajait.util.JsonListConverter;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +20,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "ChapterQuestionEntity")
@@ -32,7 +28,7 @@ public class ChapterQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
-    private Long questionId;
+    private Long question_id;
 
     @Column(nullable = false, length = 255)
     private String chapter;
@@ -43,14 +39,13 @@ public class ChapterQuestionEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String notes;
 
-    @Column(nullable = false)
-    @Convert(converter = JsonListConverter.class)
-    private List<String> choices;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String choices;
 
     @Column(nullable = false)
     private int answer;
 
-    @Column(length = 255, nullable = true)
+    @Column( columnDefinition = "TEXT", nullable = true)
     private String image;
 
     @ManyToOne

@@ -4,11 +4,8 @@ import java.util.List;
 // https://ict-nroo.tistory.com/132
 // https://resilient-923.tistory.com/417
 
-import com.web.ddajait.util.JsonListConverter;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,11 +16,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CertificateInfoEntity")
@@ -32,7 +27,7 @@ public class CertificateInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "certificate_id", nullable = false)
+    @Column(name = "certificateId", nullable = false)
     private Long certificateId;
 
     @Column(nullable = false, length = 100)
@@ -53,28 +48,23 @@ public class CertificateInfoEntity {
     @Column(nullable = true, length = 50)
     private String difficulty;
 
-    @Column(nullable = false)
-    @Convert(converter = JsonListConverter.class)
-    private List<String> eligibility;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String eligibility;
 
-    @Column(nullable = false)
-    @Convert(converter = JsonListConverter.class)
-    private List<String> examContent;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String examContent;
 
-    @Column(nullable = false)
-    @Convert(converter = JsonListConverter.class)
-    private List<String> examStandards;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String examStandards;
 
-    @Column(nullable = false)
-    @Convert(converter = JsonListConverter.class)
-    private List<String> passCriteria;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String passCriteria;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String registrationLink;
 
-    @Column()
-    @Convert(converter = JsonListConverter.class)
-    private List<String> relatedJob;
+    @Column(columnDefinition = "TEXT")
+    private String relatedJob;
 
     @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)
     private List<CertificationRegistrationEntity> certificationRegistrations;
@@ -85,4 +75,5 @@ public class CertificateInfoEntity {
     @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)
     private List<ChallengeInfoEntity> challenges;
 
+    
 }

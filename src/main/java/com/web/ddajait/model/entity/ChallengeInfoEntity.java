@@ -13,17 +13,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity(name = "ChallengeInfoEntity")
 @Table(name = "challengeInfo")
 public class ChallengeInfoEntity {
@@ -39,9 +38,6 @@ public class ChallengeInfoEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String challengeDetail;
 
-    @Column(nullable = false, length = 255)
-    private String chapter;
-
     @Column(nullable = false, length = 100, columnDefinition = "varchar(100) default '이기적'")
     private String book;
 
@@ -55,17 +51,15 @@ public class ChallengeInfoEntity {
     private String totalprogressRate;
 
     @ManyToOne
-    @JoinColumn(name = "certificate_id")
+    @JoinColumn(name = "certificateId")
     private CertificateInfoEntity certificateInfo;
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<ChallengeChapterEntity> challengeChapters;
 
-    @OneToMany(mappedBy = "challengeInfo")
-    private List<UserChalllengeEntity> userChallenges;
+    @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
+    private List<UserChallengeEntity> userChallenges;
 
 
-    // @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL, fetch =
-    // FetchType.LAZY, orphanRemoval = true)
-    // private List<ChallengeChapterEntity> challengeChapterList;
+
 }

@@ -12,20 +12,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "UserChalllengeEntity")
+@Entity(name = "UserchallengeEntity")
 @Table(name = "userChallenge")
-public class UserChalllengeEntity {
+public class UserChallengeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long userChallengeId;
+    private Long userChallenge_id;
 
     @Column(length = 10)
     private String progressRate;

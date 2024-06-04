@@ -1,30 +1,36 @@
 package com.web.ddajait.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import com.web.ddajait.model.entity.UserCertificateEntity;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserCertificateDto {
-    
-    
-    private Long userCetificateId;
-    
-    @NotBlank
+        
     private Boolean application;
 
     private Boolean userResult;
 
-    @NotBlank
-    private Long certificateId;
+    @NotNull
+    private Long certificate_id;
 
-    @NotBlank
-    private Long userId;
+
+        public static UserCertificateDto from(UserCertificateEntity entity) {
+        if (entity == null)
+            return null;
+
+        return UserCertificateDto.builder()
+                .userResult(entity.getUserResult())
+                .certificate_id(entity.getCertificateInfo().getCertificateId())
+                .build();
+    }
 }
