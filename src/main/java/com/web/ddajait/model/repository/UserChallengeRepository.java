@@ -11,7 +11,7 @@ import com.web.ddajait.model.entity.UserEntity;
 
 public interface UserChallengeRepository extends JpaRepository<UserChallengeEntity, Long> {
 
-    public List<UserChallengeEntity> findByUser_User_id(Long userId);
+    public List<UserChallengeEntity> findByUser_UserId(Long userId);
 
     // user_challenge_id 찾기
     // @Query(value = "SELECT user_challenge_id FROM user_certificate WHERE user_id

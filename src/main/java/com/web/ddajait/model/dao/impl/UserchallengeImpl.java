@@ -22,7 +22,7 @@ public class UserchallengeImpl implements UserchallengeDao {
 
     @Override
     public List<UserChallengeEntity> findUserChallengeByUserId(Long id) {
-        return userChallengeRepository.findByUser_User_id(id);
+        return userChallengeRepository.findByUser_UserId(id);
     }
 
     @Override

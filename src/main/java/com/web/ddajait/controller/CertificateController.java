@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("api/v1/certificate")
-@Tag(name = "Certoficate", description = "Certoficate API")
+@Tag(name = "Certificate", description = "Certoficate API")
 @Slf4j
 @AllArgsConstructor
 public class CertificateController {

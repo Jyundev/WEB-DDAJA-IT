@@ -80,4 +80,5 @@ public class UserDaoImpl implements UserDao {
         return userRepository.findOneWithAuthoritiesByEmail(email).orElse(null);
     }
 
+
 }

@@ -33,7 +33,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long user_id;
+    private Long userId;
 
     @Column(nullable = false, length = 255)
     private String email;
@@ -77,7 +77,7 @@ public class UserEntity {
     // 그 관계를 관리하는 user_authority 테이블을 생성
     @ManyToMany
     @JoinTable(name = "user_authority", joinColumns = {
-            @JoinColumn(name = "user_id", referencedColumnName = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "userId", referencedColumnName = "userId") }, inverseJoinColumns = {
                     @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
     private Set<AuthorityEntity> authorities;
 

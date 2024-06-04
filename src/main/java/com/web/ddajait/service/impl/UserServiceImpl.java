@@ -29,15 +29,18 @@ import com.web.ddajait.model.entity.UserCertificateEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.service.UserService;
+import com.web.ddajait.util.CommonUtils;
 import com.web.ddajait.util.EntityUtil;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
@@ -49,20 +52,20 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder bCryptPasswordEncoder;
     private final HttpSession httpSession;
 
-    public UserServiceImpl(UserDao userDao,
-            UserCertificateDao userCertificateDao,
-            UserchallengeDao UserchallengeDao,
-            CertificateInfoDao certificateInfoDao,
-            ChallengeInfoDao challengeInfoDao,
-            PasswordEncoder bCryptPasswordEncoder, HttpSession httpSession) {
-        this.userDao = userDao;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userCertificateDao = userCertificateDao;
-        this.certificateInfoDao = certificateInfoDao;
-        this.challengeInfoDao = challengeInfoDao;
-        this.userchallengeDao = UserchallengeDao;
-        this.httpSession = httpSession;
-    }
+    // public UserServiceImpl(UserDao userDao,
+    // UserCertificateDao userCertificateDao,
+    // UserchallengeDao UserchallengeDao,
+    // CertificateInfoDao certificateInfoDao,
+    // ChallengeInfoDao challengeInfoDao,
+    // PasswordEncoder bCryptPasswordEncoder, HttpSession httpSession) {
+    // this.userDao = userDao;
+    // this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    // this.userCertificateDao = userCertificateDao;
+    // this.certificateInfoDao = certificateInfoDao;
+    // this.challengeInfoDao = challengeInfoDao;
+    // this.userchallengeDao = UserchallengeDao;
+    // this.httpSession = httpSession;
+    // }
 
     @Override
     public List<UserDto> getAllUsers() throws Exception {
@@ -77,7 +80,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) throws Exception {
         Optional<UserEntity> entity = userDao.findById(id);
         if (entity.isPresent()) {
-            userDao.deleteUser(entity.get().getUser_id());
+            userDao.deleteUser(entity.get().getUserId());
 
         } else {
             throw new EntityNotFoundException("UserEntity Not Found");
@@ -159,8 +162,6 @@ public class UserServiceImpl implements UserService {
 
         log.info("[UserServiceImpl][createMemberr] userEntity " + userEntity);
 
-        httpSession.setAttribute("userId", userEntity.getUser_id());
-
         userDao.createMember(userEntity);
 
     }
@@ -199,7 +200,7 @@ public class UserServiceImpl implements UserService {
 
             log.info("[UserServiceImpl][updateUser] userDto : " + userDto.getNickname());
             log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity.getNickname());
-            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity.getUser_id());
+            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity.getUserId());
 
             userDao.updateUser(userEntity);
         }
@@ -275,11 +276,13 @@ public class UserServiceImpl implements UserService {
 
         UserCertificateEntity entity = new UserCertificateEntity();
 
+        CommonUtils.checkSession(httpSession);
         Long user_id = (Long) httpSession.getAttribute("userId");
 
         if (user_id != null) {
-            dto.setUser_id(user_id);
             EntityUtil.copyNonNullProperties(dto, entity);
+            entity.setUser(userDao.findById(user_id).get());
+            entity.setCertificateInfo(certificateInfoDao.findById(dto.getCertificate_id()).get());
             userCertificateDao.insertUserrCertificate(entity);
         } else {
             throw new NotFoundMemberException();
@@ -325,8 +328,11 @@ public class UserServiceImpl implements UserService {
         Long user_id = (Long) httpSession.getAttribute("userId");
         if (user_id != null) {
             UserChallengeEntity entity = new UserChallengeEntity();
-            dto.setUser_id(user_id);
             EntityUtil.copyNonNullProperties(dto, entity);
+            entity.setUser(userDao.findById(user_id).get());
+            log.info("[UserServiceImpl][insertUserChallenge] ChallengeId : "+dto.getChallenge_id());
+
+            entity.setChallengeInfo(challengeInfoDao.findById(dto.getChallenge_id()).get());
             userchallengeDao.insertUserChallenge(entity);
         } else {
             throw new NotFoundMemberException();
@@ -362,7 +368,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
     @Override
     public UserChallengeDto findUserChallengeId(Long challengeId, Long userId) throws Exception {
 
@@ -378,5 +383,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Long getUserId(String email) throws Exception {
+        return userDao.findByEmail(email).getUserId();
+    }
 
 }

@@ -76,8 +76,7 @@ public class UserApiController {
     }
 
     @GetMapping("/challenge/specific")
-    @Parameter(description = "challegeId", example = "1")
-    @Operation(summary = "특정 유저 챌린지 조회 API", description = "특정 유저 챌린지 조회 API 입니다.")
+    @Operation(summary = "특정 챌린지 상테 조회 API", description = "로그인 유저의 특정 챌린지 상태 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> getUserChalenge(
             @RequestParam Long challegeId) throws Exception {
         log.info("[UserApiController][getUserChalenge] Start");
@@ -92,6 +91,7 @@ public class UserApiController {
     }
 
     @PostMapping("/challenge/insert")
+    @Operation(summary = "유저 챌린지 신청 API", description = "유저 챌린지 신청 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> insertUserChallenge(
             @RequestBody @Valid UserChallengeDto userChallengeDto) throws Exception {
         userService.insertUserChallenge(userChallengeDto);
@@ -124,10 +124,11 @@ public class UserApiController {
     }
 
     @PostMapping("/certificate/insert")
+    @Operation(summary = "유저 자격증 추가 API", description = "유저 자격증 추가 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> insertUserCertificate(
             @RequestBody @Valid UserCertificateDto userCertificateDto) throws Exception {
         userService.inserteUserCertificate(userCertificateDto);
-        return ResponseHandler.SUCCESS(userCertificateDto, "유저 챌린지 추가 성공");
+        return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 추가 성공");
 
     }
 

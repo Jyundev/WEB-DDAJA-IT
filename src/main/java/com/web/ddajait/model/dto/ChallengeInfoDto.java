@@ -3,6 +3,7 @@ package com.web.ddajait.model.dto;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class ChallengeInfoDto {
 
     private String memberPassRate;
 
-    @NotBlank
+    @NotNull
     private Long certificate_id;
 
     @NotBlank
@@ -44,13 +45,13 @@ public class ChallengeInfoDto {
             return null;
 
         return ChallengeInfoDto.builder()
-                .challenge_id(entity.getChallenge_id())
+                .challenge_id(entity.getChallengeId())
                 .challengeName(entity.getChallengeName())
                 .challengeDetail(entity.getChallengeDetail())
                 .book(entity.getBook())
                 .passRate(entity.getPassRate())
                 .memberPassRate(entity.getMemberPassRate())
-                .certificate_id(entity.getCertificateInfo().getCertificate_id())
+                .certificate_id(entity.getCertificateInfo().getCertificateId())
                 .totalprogressRate(entity.getTotalprogressRate())
                 .build();
     }

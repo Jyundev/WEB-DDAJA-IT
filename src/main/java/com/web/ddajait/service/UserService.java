@@ -40,6 +40,9 @@ public interface UserService {
 
         public List<UserDto> getAllUsers() throws Exception;
 
+        // 유저 id (pk) 반환
+        public Long getUserId(String email) throws Exception;
+
         /* 자격증 */
 
         // 유저 자격증 정보 조회

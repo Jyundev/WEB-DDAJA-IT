@@ -54,7 +54,7 @@ public class ChallengeChapterDto {
                 .chapterName(entity.getChapterName())
                 .chapterLink(entity.getChapterLink())
                 .chapterMission(entity.getChapterMission())
-                .challenge_id(entity.getChallengeInfo().getChallenge_id())
+                .challenge_id(entity.getChallengeInfo().getChallengeId())
                 .build();
 
     }

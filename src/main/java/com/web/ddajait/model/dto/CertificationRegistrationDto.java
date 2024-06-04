@@ -3,7 +3,6 @@ package com.web.ddajait.model.dto;
 import java.sql.Timestamp;
 
 import com.web.ddajait.model.entity.CertificationRegistrationEntity;
-import com.web.ddajait.model.entity.ChallengeChapterEntity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -51,7 +49,7 @@ public class CertificationRegistrationDto {
 
         return CertificationRegistrationDto.builder()
                 .registration_id(entity.getRegistration_id())
-                .certificate_id(entity.getCertificateInfo().getCertificate_id())
+                .certificate_id(entity.getCertificateInfo().getCertificateId())
                 .certificateName(entity.getCertificateName())
                 .Type(entity.getTypes())
                 .round(entity.getRound())

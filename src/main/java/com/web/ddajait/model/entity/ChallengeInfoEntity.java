@@ -17,7 +17,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -31,7 +30,7 @@ public class ChallengeInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long challenge_id;
+    private Long challengeId;
 
     @Column(nullable = false, length = 100)
     private String challengeName;
@@ -52,7 +51,7 @@ public class ChallengeInfoEntity {
     private String totalprogressRate;
 
     @ManyToOne
-    @JoinColumn(name = "certificate_id")
+    @JoinColumn(name = "certificateId")
     private CertificateInfoEntity certificateInfo;
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)

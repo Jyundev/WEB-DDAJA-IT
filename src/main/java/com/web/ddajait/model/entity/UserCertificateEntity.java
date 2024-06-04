@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -25,7 +24,7 @@ public class UserCertificateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long userCetificate_id;
+    private Long userCetificateId;
 
     @Column( nullable = false)
     private Boolean application;
@@ -34,10 +33,10 @@ public class UserCertificateEntity {
     private Boolean userResult;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",  nullable = false)
+    @JoinColumn(name = "userId",  nullable = false)
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "certificate_id")
+    @JoinColumn(name = "certificateId")
     private CertificateInfoEntity certificateInfo;
 }

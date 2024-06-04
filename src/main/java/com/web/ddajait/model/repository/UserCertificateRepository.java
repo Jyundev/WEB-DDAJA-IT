@@ -11,7 +11,7 @@ import com.web.ddajait.model.entity.UserEntity;
 
 public interface UserCertificateRepository extends JpaRepository<UserCertificateEntity, Long> {
 
-    public List<UserCertificateEntity> findByUser_User_id(Long userId);
+    public List<UserCertificateEntity> findByUser_UserId(Long userId);
 
     // @Query(value = "SELECT user_certificate_id FROM user_certificate WHERE
     // user_id = :user_id AND certificate_id = :certificate_id", nativeQuery = true)

@@ -59,7 +59,7 @@ public class CertificateInfoDto {
             return null;
 
         return CertificateInfoDto.builder()
-                .certificate_id(entity.getCertificate_id())
+                .certificate_id(entity.getCertificateId())
                 .certificateName(entity.getCertificateName())
                 .certificateFullName(entity.getCertificateFullName())
                 .field(entity.getField())

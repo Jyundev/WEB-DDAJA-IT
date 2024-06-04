@@ -3,6 +3,7 @@ package com.web.ddajait.model.dto;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,11 +25,10 @@ public class UserChallengeDto {
     @NotBlank
     private String challengeStep;
 
-    @NotBlank
+    @NotNull
     private Long challenge_id;
 
-    @NotBlank
-    private Long user_id;
+
 
     public static UserChallengeDto from(UserChallengeEntity entity) {
         if (entity == null)
@@ -38,7 +38,6 @@ public class UserChallengeDto {
                 .progressRate(entity.getProgressRate())
                 .challengeStep(entity.getChallengeStep())
                 .challenge_id(entity.getUserChallenge_id())
-                .user_id(entity.getUser().getUser_id())
                 .build();
     }
 }

@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -28,8 +27,8 @@ public class CertificateInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "certificate_id", nullable = false)
-    private Long certificate_id;
+    @Column(name = "certificateId", nullable = false)
+    private Long certificateId;
 
     @Column(nullable = false, length = 100)
     private String certificateName;
