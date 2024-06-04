@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.web.ddajait.config.jwt.JwtFilter;
 import com.web.ddajait.service.UserService;
 
 import jakarta.servlet.ServletException;
@@ -28,23 +29,18 @@ public class LogoutAuthSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        // TODO Auto-generated method stub
 
-        if (authentication == null) {
-            response.sendRedirect("/index");
-        } else {
-            try {
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                userService.updateIsLoginByID(userDetails.getUsername(), false);
-                HttpSession session = request.getSession();
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // JWT 제거 
+            response.setHeader(JwtFilter.AUTHORIZATION_HEADER, ""); 
+
+            HttpSession session = request.getSession(false); // 세션이 없을 수도 있으므로 false 전달
+            if (session != null) {
                 session.removeAttribute("userId");
-                session.removeAttribute("userEmail");
-
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                session.invalidate();
             }
-
         }
 
     }

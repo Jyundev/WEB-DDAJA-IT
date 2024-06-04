@@ -22,6 +22,7 @@ import com.web.ddajait.model.dao.UserchallengeDao;
 import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
+import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
@@ -137,10 +138,10 @@ public class UserServiceImpl implements UserService {
 
         // 권한 설정
         Set<AuthorityEntity> authorities = new HashSet<>();
-        log.info("[UserServiceImpl][createMember] userDto : "+userDto);
+        log.info("[UserServiceImpl][createMember] userDto : " + userDto);
 
         if (userDto.getNickname().equals(Role.ADMIN.name())) {
-            log.info("[UserServiceImpl][createMember] userDto equals: "+userDto);
+            log.info("[UserServiceImpl][createMember] userDto equals: " + userDto);
 
             log.info("[UserServiceImpl][createMember] : " + userDto.getNickname());
             authorities.add(AuthorityEntity.builder()
@@ -278,8 +279,7 @@ public class UserServiceImpl implements UserService {
 
         UserCertificateEntity entity = new UserCertificateEntity();
 
-        CommonUtils.checkSession(httpSession);
-        Long user_id = (Long) httpSession.getAttribute("userId");
+        Long user_id = CommonUtils.checkSessionId(httpSession);
 
         if (user_id != null) {
             EntityUtil.copyNonNullProperties(dto, entity);
@@ -332,7 +332,7 @@ public class UserServiceImpl implements UserService {
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(user_id).get());
-            log.info("[UserServiceImpl][insertUserChallenge] ChallengeId : "+dto.getChallenge_id());
+            log.info("[UserServiceImpl][insertUserChallenge] ChallengeId : " + dto.getChallenge_id());
 
             entity.setChallengeInfo(challengeInfoDao.findById(dto.getChallenge_id()).get());
             userchallengeDao.insertUserChallenge(entity);
@@ -388,6 +388,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long getUserId(String email) throws Exception {
         return userDao.findByEmail(email).getUserId();
+    }
+
+    @Override
+    public UserDto addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception {
+        log.info("[UserServiceImpl][getAddUserInfo] Starts");
+
+        Optional<UserEntity> entity = userDao.findById(userId);
+        if (entity.isPresent()) {
+            log.info("[UserServiceImpl][getAddUserInfo]  " + entity);
+            UserEntity userEntity = entity.get();
+            userEntity.setGender(dto.getGender());
+            userEntity.setInterest(dto.getInterest());
+            userEntity.setAge(dto.getAge());
+            userEntity.setProfileImage(dto.getImageUrl());
+
+            userDao.updateUser(userEntity);
+
+        } else {
+            throw new NotFoundMemberException();
+        }
+        
+
+        return null;
     }
 
 }

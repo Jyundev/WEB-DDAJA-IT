@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CorsFilter;
 
 import com.web.ddajait.config.auth.AuthenticatedMatchers;
@@ -95,12 +96,20 @@ public class SecurityConfig {
                                                 .logoutUrl("/logout") // 로그아웃 요청 URL path
                                                 .logoutSuccessHandler(logoutAuthSuccessHandler) // 로그아웃 성공시
                                                 .permitAll())
+                                .sessionManagement(session -> session
+                                                .maximumSessions(1)
+                                                .maxSessionsPreventsLogin(true))
                                 // JwtFilter
                                 .with(new JwtSecurityConfig(tokenProvider), customizer -> {
                                 });
 
                 return httpSecurity.build();
 
+        }
+
+        @Bean
+        public HttpSessionEventPublisher httpSessionEventPublisher() {
+                return new HttpSessionEventPublisher();
         }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
+import com.web.ddajait.model.dto.UserPrivateInfoDto;
 
 import jakarta.servlet.ServletException;
 
@@ -18,6 +19,9 @@ public interface UserService {
         public UserDto findById(Long id) throws Exception;
 
         public UserDto findByEmail(String email) throws Exception;
+
+        // 추가 정보 수집 
+        public UserDto addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception;
 
         // 프로필 수정 update
         public void updateUser(UserDto dto, String Email) throws Exception;

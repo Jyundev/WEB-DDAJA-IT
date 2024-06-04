@@ -20,7 +20,9 @@ import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
+import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.service.UserService;
+import com.web.ddajait.util.CommonUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,6 +48,22 @@ public class UserApiController {
     UserService userService;
 
     HttpSession session;
+
+    // 추가 정보 수집
+    @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다.")
+    @PostMapping("/info")
+    public ResponseEntity<ResponseDto<UserPrivateInfoDto>> getUserInfo(
+            @Valid @RequestBody UserPrivateInfoDto dto) throws Exception {
+
+        log.info("[PublicController][UserPrivateInfoDto] Start - Gender: {}, Interst: {}", dto.getGender(),
+                dto.getInterest());
+
+        Long user_id = CommonUtils.checkSessionId(session);
+        userService.addUserInfo(user_id, dto);
+
+        return ResponseHandler.SUCCESS(dto, "회원가입");
+
+    }
 
     // 프로필 수정
     @PutMapping("/{email}")

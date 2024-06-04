@@ -62,10 +62,14 @@ public class AuthController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
+        // 세션 관리 
         Long userId = userService.getUserId(authentication.getName());
         session.setAttribute("userId", userId);
 
-        CommonUtils.checkSession(session);
+        // 세션 타임아웃을 설정하는 메서드 (1800초 == 30분)
+        session.setMaxInactiveInterval(60 * 30);
+        
+        CommonUtils.checkSessionId(session);
         
 
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);

@@ -19,13 +19,15 @@ public class CommonUtils {
         return fileName + "_" + now + fileExtension;
     }
 
-    public static void checkSession(HttpSession session) {
+    public static Long checkSessionId(HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         if (userId != null) {
             System.out.println("User ID from session: " + userId);
         } else {
             System.out.println("No User ID found in session.");
         }
+
+        return userId;
     }
 
 }
