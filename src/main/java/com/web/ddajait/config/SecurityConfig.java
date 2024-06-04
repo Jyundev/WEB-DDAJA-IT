@@ -96,9 +96,9 @@ public class SecurityConfig {
                                                 .logoutUrl("/logout") // 로그아웃 요청 URL path
                                                 .logoutSuccessHandler(logoutAuthSuccessHandler) // 로그아웃 성공시
                                                 .permitAll())
-                                .sessionManagement(session -> session
-                                                .maximumSessions(1)
-                                                .maxSessionsPreventsLogin(true))
+                                // .sessionManagement(session -> session
+                                //                 .maximumSessions(1)
+                                //                 .maxSessionsPreventsLogin(true))
                                 // JwtFilter
                                 .with(new JwtSecurityConfig(tokenProvider), customizer -> {
                                 });

@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
@@ -31,7 +30,10 @@ public class ChapterQuestionEntity {
     private Long question_id;
 
     @Column(nullable = false, length = 255)
-    private String chapter;
+    private String certificateName;
+
+    @Column(nullable = false, length = 255)
+    private String chapterName;
 
     @Column(nullable = false, length = 255)
     private String question;

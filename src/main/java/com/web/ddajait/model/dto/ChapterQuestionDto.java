@@ -22,8 +22,11 @@ public class ChapterQuestionDto {
     private Long chapter_id;
 
     @NotBlank
-    private String chapter;
+    private String chapterName;
 
+    @NotBlank
+    private String certification_name;
+    
     @NotBlank
     private String question;
 
@@ -46,7 +49,8 @@ public class ChapterQuestionDto {
         return ChapterQuestionDto.builder()
                 .question_id(entity.getQuestion_id())
                 .chapter_id(entity.getChallengeChapter().getChapter_id())
-                .chapter(entity.getChapter())
+                .chapterName(entity.getChapterName())
+                .certification_name(entity.getCertificateName())
                 .question(entity.getQuestion())
                 .notes(entity.getNotes())
                 .choices(entity.getChoices())
