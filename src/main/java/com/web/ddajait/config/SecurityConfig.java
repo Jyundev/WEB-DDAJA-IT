@@ -78,22 +78,9 @@ public class SecurityConfig {
                                                 .permitAll() // 로그인 api
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
                                                 .anyRequest().permitAll())
-                                // // 인증(로그인)에 대한 설정
-                                // .formLogin(formLogin -> formLogin
-                                // .loginPage("/loginPage") // Controller에서 로그인 페이지 URL path
-                                // /*
-                                // * 로그인 화면에서 form 태그의 action 주소(URL path)
-                                // * Spring Security가 로그인 검증을 진행함D
-                                // * Controller에서는 해당 "/login"을 만들 필요가 없음
-                                // */
-                                // .loginProcessingUrl("/api/v1/auth/authenticate")
-                                // .successHandler(loginAuthSuccessHandler) // 로그인 성공시
-                                // .failureHandler(loginAuthFailureHandler) // 로그인 실패시
-                                // .permitAll() // 그 외의 모든 URL path는 누구나 접근 가능
-                                // )
                                 // 로그아웃에 대한 설정
                                 .logout(logout -> logout
-                                                .logoutUrl("/logout") // 로그아웃 요청 URL path
+                                                .logoutUrl("/api/v1/logout") // 로그아웃 요청 URL path
                                                 .logoutSuccessHandler(logoutAuthSuccessHandler) // 로그아웃 성공시
                                                 .permitAll())
                                 // .sessionManagement(session -> session
@@ -102,7 +89,7 @@ public class SecurityConfig {
                                 // JwtFilter
                                 .with(new JwtSecurityConfig(tokenProvider), customizer -> {
                                 });
-
+                                
                 return httpSecurity.build();
 
         }
