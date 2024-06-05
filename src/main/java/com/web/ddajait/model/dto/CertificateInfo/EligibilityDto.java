@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Eligibility {
-    private String type;
-    private List<String> condition;
+public class EligibilityDto {
+    private List<StandardDto> standardList;
 }

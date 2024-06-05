@@ -56,7 +56,7 @@ public class UserEntity {
     private Boolean isLogin = false;
 
     @Column( columnDefinition = "TEXT")
-    private String interest;
+    private List<String> interest;
 
     @Column( length = 100)
     private String job;
@@ -67,7 +67,7 @@ public class UserEntity {
     private int tier;
 
     @Column(columnDefinition = "TEXT")
-    private String qualifiedCertificate;
+    private List<String> qualifiedCertificate;
 
     // 일반사용자 / 관리자를 구분용
     @Column( length = 50)

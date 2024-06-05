@@ -401,7 +401,7 @@ public class UserServiceImpl implements UserService {
             userEntity.setGender(dto.getGender());
             userEntity.setInterest(dto.getInterest());
             userEntity.setAge(dto.getAge());
-            userEntity.setProfileImage(dto.getImageUrl());
+            userEntity.setQualifiedCertificate(dto.getQualified_certificate());
 
             userDao.updateUser(userEntity);
 

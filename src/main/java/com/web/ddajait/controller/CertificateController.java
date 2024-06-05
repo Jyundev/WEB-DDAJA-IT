@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.ddajait.model.dto.CertificationRegistrationDto;
 import com.web.ddajait.model.dto.CertificateInfo.CertificateInfoDto;
 import com.web.ddajait.service.CertificateInfoService;
@@ -25,6 +26,7 @@ public class CertificateController {
 
     private final CertificateInfoService certificateInfoService;
     private final CertificationRegistrationService certificationRegistrationService;
+    private final ObjectMapper mapper;
 
     @GetMapping("/all")
     @Operation(summary = "모든 자격증 데이터", description = "모든 자격증 데이터를 가져오는 API 입니다.")
