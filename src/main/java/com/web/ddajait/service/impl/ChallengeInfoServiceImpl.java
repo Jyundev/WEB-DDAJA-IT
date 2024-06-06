@@ -1,13 +1,13 @@
 package com.web.ddajait.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dto.ChallengeInfoDto;
+import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.service.ChallengeInfoSercive;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -30,15 +30,14 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
     }
 
     @Override
-    public Optional<ChallengeInfoDto> findById(Long id) throws Exception{
+    public ChallengeInfoDto findById(Long id) throws Exception {
         if (challengeInfoDao.findById(id).isPresent()) {
-            return Optional.empty();
+            ChallengeInfoEntity entity = challengeInfoDao.findById(id).get();
+            return ChallengeInfoDto.from(entity);
+        } else {
+            throw new EntityNotFoundException("Not found ChallengeInfoEntity");
         }
-        else {
-            new EntityNotFoundException();
 
-        }
-        return null;
     }
 
 }

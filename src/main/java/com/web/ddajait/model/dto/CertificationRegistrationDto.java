@@ -2,8 +2,11 @@ package com.web.ddajait.model.dto;
 
 import java.sql.Timestamp;
 
+import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.CertificationRegistrationEntity;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +20,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class CertificationRegistrationDto {
-    private Long registration_id;
-    
+
     @NotBlank
-    private Long certificate_id;
+    @Schema(description = "자격증 정보", example = "정보보안/네트워크/운영체제 등")
+    @Hidden
+    private CertificateInfoEntity challengeInfo;
 
     @NotBlank
     private String certificateName;
@@ -43,13 +47,12 @@ public class CertificationRegistrationDto {
     @NotBlank
     private String resultDay;
 
-        public static CertificationRegistrationDto from(CertificationRegistrationEntity entity) {
+    public static CertificationRegistrationDto from(CertificationRegistrationEntity entity) {
         if (entity == null)
             return null;
 
         return CertificationRegistrationDto.builder()
-                .registration_id(entity.getRegistration_id())
-                .certificate_id(entity.getCertificateInfo().getCertificateId())
+                .challengeInfo(entity.getCertificateInfo())
                 .certificateName(entity.getCertificateName())
                 .Type(entity.getTypes())
                 .round(entity.getRound())

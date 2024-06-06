@@ -1,7 +1,11 @@
 package com.web.ddajait.model.dto;
 
+import java.sql.Timestamp;
+
+import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,6 +23,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ChallengeInfoDto {
 
+    @Hidden
     private Long challenge_id;
 
     @NotBlank
@@ -34,10 +39,17 @@ public class ChallengeInfoDto {
 
     private String memberPassRate;
 
-    @NotNull
-    private Long certificate_id;
+    @NotBlank
+    private Timestamp startDay;
 
     @NotBlank
+    private Timestamp endDay;
+
+    private String thumbnail;
+
+    @NotNull
+    private CertificateInfoEntity challengeInfo;
+
     private String totalprogressRate;
 
     public static ChallengeInfoDto from(ChallengeInfoEntity entity) {
@@ -51,7 +63,7 @@ public class ChallengeInfoDto {
                 .book(entity.getBook())
                 .passRate(entity.getPassRate())
                 .memberPassRate(entity.getMemberPassRate())
-                .certificate_id(entity.getCertificateInfo().getCertificateId())
+                .challengeInfo(entity.getCertificateInfo())
                 .totalprogressRate(entity.getTotalprogressRate())
                 .build();
     }

@@ -2,8 +2,11 @@ package com.web.ddajait.model.entity;
 
 import java.util.List;
 
+import com.web.ddajait.util.ListToJsonConverter;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,8 +44,9 @@ public class PartQuestionEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String notes;
 
+    @Convert(converter = ListToJsonConverter.class)
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String choices;
+    private List<String> choices;
 
     @Column(nullable = false)
     private int answer;

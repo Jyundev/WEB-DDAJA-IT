@@ -284,7 +284,7 @@ public class UserServiceImpl implements UserService {
         if (user_id != null) {
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(user_id).get());
-            entity.setCertificateInfo(certificateInfoDao.findById(dto.getCertificate_id()).get());
+            entity.setCertificateInfo(dto.getCertificateInfo());
             userCertificateDao.insertUserrCertificate(entity);
         } else {
             throw new NotFoundMemberException();
@@ -332,9 +332,10 @@ public class UserServiceImpl implements UserService {
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(user_id).get());
-            log.info("[UserServiceImpl][insertUserChallenge] ChallengeId : " + dto.getChallenge_id());
+            // log.info("[UserServiceImpl][insertUserChallenge] ChallengeId : " +
+            // dto.getChallengeInfo());
 
-            entity.setChallengeInfo(challengeInfoDao.findById(dto.getChallenge_id()).get());
+            entity.setChallengeInfo(dto.getChallengeInfo());
             userchallengeDao.insertUserChallenge(entity);
         } else {
             throw new NotFoundMemberException();
@@ -409,7 +410,6 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new NotFoundMemberException();
         }
-        
 
         return null;
     }

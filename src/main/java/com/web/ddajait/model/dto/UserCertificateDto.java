@@ -1,5 +1,6 @@
 package com.web.ddajait.model.dto;
 
+import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.UserCertificateEntity;
 
 import jakarta.validation.constraints.NotNull;
@@ -15,22 +16,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class UserCertificateDto {
-        
+
     private Boolean application;
 
     private Boolean userResult;
 
     @NotNull
-    private Long certificate_id;
+    private CertificateInfoEntity certificateInfo;
 
-
-        public static UserCertificateDto from(UserCertificateEntity entity) {
+    public static UserCertificateDto from(UserCertificateEntity entity) {
         if (entity == null)
             return null;
 
         return UserCertificateDto.builder()
                 .userResult(entity.getUserResult())
-                .certificate_id(entity.getCertificateInfo().getCertificateId())
+                .certificateInfo(entity.getCertificateInfo())
                 .build();
     }
 }
