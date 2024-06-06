@@ -55,7 +55,7 @@ public class ChallengeInfoEntity {
     private CertificateInfoEntity certificateInfo;
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
-    private List<ChallengeChapterEntity> challengeChapters;
+    private List<ChallengePartEntity> challengeParts;
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<UserChallengeEntity> userChallenges;

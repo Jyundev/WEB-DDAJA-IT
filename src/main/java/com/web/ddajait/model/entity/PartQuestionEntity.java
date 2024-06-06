@@ -21,9 +21,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "ChapterQuestionEntity")
-@Table(name = "chapterQuestion")
-public class ChapterQuestionEntity {
+@Entity(name = "PartQuestionEntity")
+@Table(name = "partQuestion")
+public class PartQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
@@ -33,7 +33,7 @@ public class ChapterQuestionEntity {
     private String certificateName;
 
     @Column(nullable = false, length = 255)
-    private String chapterName;
+    private String partName;
 
     @Column(nullable = false, length = 255)
     private String question;
@@ -51,10 +51,10 @@ public class ChapterQuestionEntity {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "chapter_id")
-    private ChallengeChapterEntity challengeChapter;
+    @JoinColumn(name = "part_id")
+    private ChallengePartEntity challengePart;
 
-    @OneToMany(mappedBy = "chapterQuestion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "partQuestion", cascade = CascadeType.ALL)
     private List<UserWrongQuestionEntity> wrongQuestions;
 
 

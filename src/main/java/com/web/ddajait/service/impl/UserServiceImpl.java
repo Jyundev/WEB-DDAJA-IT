@@ -400,6 +400,7 @@ public class UserServiceImpl implements UserService {
             UserEntity userEntity = entity.get();
             userEntity.setGender(dto.getGender());
             userEntity.setInterest(dto.getInterest());
+            userEntity.setJob(dto.getJob());
             userEntity.setAge(dto.getAge());
             userEntity.setQualifiedCertificate(dto.getQualified_certificate());
 

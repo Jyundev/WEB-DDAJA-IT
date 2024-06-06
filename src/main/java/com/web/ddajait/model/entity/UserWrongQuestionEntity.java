@@ -29,7 +29,7 @@ public class UserWrongQuestionEntity {
 
     @ManyToOne
     @JoinColumn(name = "question_id",  nullable = false)
-    private ChapterQuestionEntity chapterQuestion;
+    private PartQuestionEntity partQuestion;
 
     @ManyToOne
     @JoinColumn(name = "user_id",  nullable = false)

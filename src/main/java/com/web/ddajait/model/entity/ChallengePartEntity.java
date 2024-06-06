@@ -15,42 +15,53 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.sql.Timestamp;
+
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "ChallengeChapterEntity")
-@Table(name = "challengeChapter")
-public class ChallengeChapterEntity {
+@Entity(name = "ChallengePartEntity")
+@Table(name = "challengePart")
+public class ChallengePartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long chapter_id;
+    private Long part_id;
 
     @Column(nullable = false)
-    private int missionDay;
+    private Timestamp missionDay;
 
     @Column(nullable = false)
-    private int startDay;
+    private Timestamp startDay;
 
     @Column(nullable = false)
-    private int endDay;
+    private Timestamp endDay;
 
     @Column(nullable = false)
-    private int chapterNum;
-
-    @Column( nullable = false, length = 255)
-    private String chapterName;
+    private int partNum;
 
     @Column( columnDefinition = "TEXT")
-    private String chapterLink;
+    private String partName;
 
-    @Column( nullable = true, length = 255)
-    private String chapterMission;
+    @Column( columnDefinition = "TEXT")
+    private String chapterName;
+    
+    @Column( columnDefinition = "TEXT")
+    private String sessionName;
 
+    @Column( columnDefinition = "TEXT")
+    private String partLink;
 
-    @OneToMany(mappedBy = "challengeChapter")
-    private List<ChapterQuestionEntity> questions;
+    @Column( columnDefinition = "TEXT")
+    private String partMission;
+
+    @Column( columnDefinition = "TEXT")
+    private String memo;
+
+    @OneToMany(mappedBy = "challengePart")
+    private List<PartQuestionEntity> questions;
 
     @ManyToOne
     @JoinColumn(name = "challenge_id")

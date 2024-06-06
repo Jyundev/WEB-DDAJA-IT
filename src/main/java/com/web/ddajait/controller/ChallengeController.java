@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.ddajait.model.dto.ChallengeChapterDto;
+import com.web.ddajait.model.dto.ChallengePartDto;
 import com.web.ddajait.model.dto.ChallengeInfoDto;
-import com.web.ddajait.service.ChallengeChapterService;
+import com.web.ddajait.service.ChallengePartService;
 import com.web.ddajait.service.ChallengeInfoSercive;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ChallengeController {
 
     private final ChallengeInfoSercive challengeInfoSercive;
-    private final ChallengeChapterService challengeChapterService;
+    private final ChallengePartService challengePartService;
 
     @Operation(summary = "모든 챌린지 데이터", description = "모든 챌린지 데이터를 가져오는 API 입니다.")
     @GetMapping("/all")
@@ -37,12 +37,12 @@ public class ChallengeController {
 
 
     @Operation(summary = "모든 챌린지 챕터 데이터", description = "모든 챌린지 챕터 데이터를 가져오는 API 입니다.")
-    @GetMapping("/chapter/all")
-    public List<ChallengeChapterDto> getChallengeChapterInfo() throws Exception {
+    @GetMapping("/part/all")
+    public List<ChallengePartDto> getchallengePartInfo() throws Exception {
 
-        log.info("[ChallengeController][getChallengeChapterInfo] Starts");
+        log.info("[ChallengeController][getchallengePartInfo] Starts");
 
-        return challengeChapterService.getAllChallengeChapterInfo();
+        return challengePartService.getAllchallengePartInfo();
     }
 
 }

@@ -30,7 +30,7 @@ public class UserWrongQuestionDto {
 
         return UserWrongQuestionDto.builder()
                 .incorrect_id(entity.getIncorrectId())
-                .question_id(entity.getChapterQuestion().getQuestion_id())
+                .question_id(entity.getPartQuestion().getQuestion_id())
                 .user_id(entity.getUser().getUserId())
                 .build();
     }
