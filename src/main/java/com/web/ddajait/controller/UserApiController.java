@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserCertificateDto;
+import com.web.ddajait.model.dto.UserChallenge;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.service.UserService;
 import com.web.ddajait.util.CommonUtils;
+import com.web.ddajait.util.EntityUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -110,10 +112,12 @@ public class UserApiController {
 
     @PostMapping("/challenge/insert")
     @Operation(summary = "유저 챌린지 신청 API", description = "유저 챌린지 신청 API 입니다.")
-    public ResponseEntity<ResponseDto<UserChallengeDto>> insertUserChallenge(
-            @RequestBody @Valid UserChallengeDto userChallengeDto) throws Exception {
-        userService.insertUserChallenge(userChallengeDto);
-        return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 추가 성공");
+    public ResponseEntity<ResponseDto<UserChallenge>> insertUserChallenge(
+            @RequestBody @Valid UserChallenge userChallenge) throws Exception {
+        UserChallengeDto dto = new UserChallengeDto();
+        EntityUtil.copyNonNullProperties(userChallenge, dto);
+        userService.insertUserChallenge(dto);
+        return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 추가 성공");
 
     }
     /* 유저 자격증 */

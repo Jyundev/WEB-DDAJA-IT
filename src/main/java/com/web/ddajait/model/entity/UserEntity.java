@@ -53,7 +53,7 @@ public class UserEntity {
     private int age;
 
     @Column(length = 50)
-    private String gender;
+    private List<String> gender;
 
     @Builder.Default
     @Column(columnDefinition = "tinyint(1) default 0")
@@ -64,7 +64,7 @@ public class UserEntity {
     private List<String> interest;
 
     @Column(length = 50)
-    private String job;
+    private List<String> job;
 
     @Column(columnDefinition = "TEXT")
     private String profileImage;

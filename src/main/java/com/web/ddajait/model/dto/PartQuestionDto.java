@@ -1,5 +1,7 @@
 package com.web.ddajait.model.dto;
 
+import java.util.List;
+
 import com.web.ddajait.model.entity.ChallengePartEntity;
 import com.web.ddajait.model.entity.PartQuestionEntity;
 
@@ -9,8 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -50,7 +50,7 @@ public class PartQuestionDto {
             return null;
 
         return PartQuestionDto.builder()
-                .question_id(entity.getQuestion_id())
+                .question_id(entity.getQuestionId())
                 .part_id(entity.getChallengePart())
                 .partName(entity.getPartName())
                 .certification_name(entity.getCertificateName())

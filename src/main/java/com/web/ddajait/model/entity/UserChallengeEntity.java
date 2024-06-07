@@ -1,6 +1,11 @@
 package com.web.ddajait.model.entity;
 
+import java.util.Map;
+
+import com.web.ddajait.util.MapToJsonCoMnverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,15 +31,16 @@ public class UserChallengeEntity {
     private Long userChallenge_id;
 
     @Column(length = 10)
-    private String progressRate;
+    private int progressRate;
 
-    @Column( nullable = false, length = 50)
-    private String challengeStep;
+    @Column(nullable = false, length = 50)
+    @Convert(converter = MapToJsonCoMnverter.class)
+    private Map<String, Object> challengeSatus;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",  nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
-    
+
     @ManyToOne
     @JoinColumn(name = "challenge_id")
     private ChallengeInfoEntity challengeInfo;

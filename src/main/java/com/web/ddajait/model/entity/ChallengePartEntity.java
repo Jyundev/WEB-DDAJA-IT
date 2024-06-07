@@ -1,5 +1,6 @@
 package com.web.ddajait.model.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -15,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.sql.Timestamp;
 
 
 @Getter
@@ -28,7 +28,7 @@ public class ChallengePartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long part_id;
+    private Long partId;
 
     @Column(nullable = false)
     private Timestamp missionDay;

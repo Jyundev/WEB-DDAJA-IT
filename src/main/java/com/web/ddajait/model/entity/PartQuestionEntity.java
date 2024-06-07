@@ -30,7 +30,7 @@ public class PartQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
-    private Long question_id;
+    private Long questionId;
 
     @Column(nullable = false, length = 255)
     private String certificateName;

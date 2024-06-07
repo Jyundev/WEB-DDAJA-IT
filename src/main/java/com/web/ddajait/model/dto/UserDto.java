@@ -38,7 +38,7 @@ public class UserDto {
     private int age;
 
     @Schema(description = "성별", example = "male/female")
-    private String gender;
+    private List<String> gender;
 
     @Builder.Default
     private Boolean isLogin = false;
@@ -47,7 +47,7 @@ public class UserDto {
     private List<String> interest;
 
     @Schema(description = "직업", example = "학생/직장인/취준생")
-    private String job;
+    private List<String> job;
 
     // @URL
     @Schema(description = "프로필이미지", example = "URL")
