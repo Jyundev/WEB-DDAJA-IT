@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.web.ddajait.model.entity.ChallengePartEntity;
 
+import com.web.ddajait.model.entity.ChallengePartEntity;
+
 public interface ChallengePartDao {
 
     public List<ChallengePartEntity> getAllChallenge();
