@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class ChallengePartServiceImpl implements ChallengePartService {
+public class challengePartServiceImpl implements ChallengePartService {
 
     final private ChallengePartDao challengePartDao;
 
@@ -101,3 +101,4 @@ public class ChallengePartServiceImpl implements ChallengePartService {
         return null;
     }
 }
+// test
