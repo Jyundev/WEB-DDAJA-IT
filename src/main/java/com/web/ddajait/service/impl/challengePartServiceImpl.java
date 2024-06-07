@@ -13,15 +13,15 @@ import com.web.ddajait.model.entity.ChallengePartEntity;
 import com.web.ddajait.service.ChallengePartService;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ChallengePartServiceImpl implements ChallengePartService {
 
-    final private ChallengePartDao challengePartDao;
+    private final ChallengePartDao challengePartDao;
 
     @Override
     public List<ChallengePartDto> getAllchallengePartInfo() {
@@ -35,47 +35,47 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     @Override
     public Certificate getChallengePart(Long challengeId) {
         // List<ChallengePartEntity> challengePartEntities =
-        // 
+        //
         // challengePartDao.findChallengePartByChallengeId(challengeId);
 
         // log.info("[challengePartServiceImpl][getChallengePart] Starts");
 
         // if (!challengePartEntities.isEmpty()) {
-        // 
+        //
         // info("[challengePartServiceImpl][getChallengePart] challengePartEntities
         // ePartEntities);
         // List<Step> steps = challengePartEntities.stream()
-        // 
- 
-        //  data.getPartNum();
+        //
+
+        // ta.getPartNum();
         // Timestamp startDay = data.getStartDay();
-        //  = data.getEndDay();
- 
+        // data.getEndDay();
+
         // long millisecondsDifference = endDay.getTime() - startDay.getTime();
         // nce = millisecondsDifference / (1000 * 60 * 60 * 24);
 
         // t = new ArrayList<>();
- 
-        //  daysDifference; i++) {
+
+        // ysDifference; i++) {
         // y(i, data.getPartMission());
         // dayList.add(day);
-        // 
- 
+        //
+
         // tep(stepNumber, dayList);
         // })
         // lect(Collectors.toList()
         // ;
- 
+
         // String certificateName =
         // lengePartEntities.get(0).getChallengeInfo().getCertificateInfo()
         // CertificateName();
- 
+
         // ist<String> nameList = new ArrayList<>();
         // // for (int i = 0; i < challengePartEntities.size(); i++) {
         // ameList.add(certificateName);
         // // }
- 
-        // 
+
+        //
         // ificate certificate
 
         // log.info("[ChallengePartServiceImpl][getChallengePart] createChalllengeData :
@@ -101,12 +101,11 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
         }
 
+    }
 
-        
     @Override
     public List<PartQuestionDto> getPartQuestionDtos(Long partId) {
-
+        // TODO Auto-generated method stub
         return null;
     }
 }
-// test
