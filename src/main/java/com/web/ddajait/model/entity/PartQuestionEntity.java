@@ -2,8 +2,11 @@ package com.web.ddajait.model.entity;
 
 import java.util.List;
 
+import com.web.ddajait.util.ListToJsonConverter;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,19 +24,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "ChapterQuestionEntity")
-@Table(name = "chapterQuestion")
-public class ChapterQuestionEntity {
+@Entity(name = "PartQuestionEntity")
+@Table(name = "partQuestion")
+public class PartQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
-    private Long question_id;
+    private Long questionId;
 
     @Column(nullable = false, length = 255)
     private String certificateName;
 
     @Column(nullable = false, length = 255)
-    private String chapterName;
+    private String partName;
 
     @Column(nullable = false, length = 255)
     private String question;
@@ -41,8 +44,9 @@ public class ChapterQuestionEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String notes;
 
+    @Convert(converter = ListToJsonConverter.class)
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String choices;
+    private List<String> choices;
 
     @Column(nullable = false)
     private int answer;
@@ -51,10 +55,14 @@ public class ChapterQuestionEntity {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "chapter_id")
-    private ChallengeChapterEntity challengeChapter;
+    @JoinColumn(name = "challenge_part_Id")
+    private ChallengePartEntity challengePart;
+    
+    @ManyToOne
+    @JoinColumn(name = "certificate_part_id")
+    private CertificatePartEntity certificatePartInfo;
 
-    @OneToMany(mappedBy = "chapterQuestion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "partQuestion", cascade = CascadeType.ALL)
     private List<UserWrongQuestionEntity> wrongQuestions;
 
 

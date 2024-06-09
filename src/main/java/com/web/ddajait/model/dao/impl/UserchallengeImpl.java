@@ -1,6 +1,7 @@
 package com.web.ddajait.model.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 public class UserchallengeImpl implements UserchallengeDao {
+
+
 
     private final UserChallengeRepository userChallengeRepository;
 
@@ -46,6 +49,12 @@ public class UserchallengeImpl implements UserchallengeDao {
     @Override
     public UserChallengeEntity findUserChallengeId(ChallengeInfoEntity challengeInfoEntity, UserEntity userEntity) {
         return userChallengeRepository.findByUserAndChallengeInfo(userEntity, challengeInfoEntity).orElse(null);
+    }
+
+    @Override
+    public Optional<UserChallengeEntity> findByUserIdChallengeId(Long userId, Long challengeId) {
+
+        return userChallengeRepository.findByUser_UserIdAndChallengeInfo_ChallengeId(userId, challengeId);
     }
 
 }

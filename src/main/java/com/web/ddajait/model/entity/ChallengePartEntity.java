@@ -1,5 +1,6 @@
 package com.web.ddajait.model.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -15,47 +16,51 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "ChallengeChapterEntity")
-@Table(name = "challengeChapter")
-public class ChallengeChapterEntity {
+@Entity(name = "ChallengePartEntity")
+@Table(name = "challengePart")
+public class ChallengePartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long chapter_id;
+    private Long challengePartId;
 
     @Column(nullable = false)
-    private int missionDay;
+    private int day;
 
     @Column(nullable = false)
-    private int startDay;
-
-    @Column(nullable = false)
-    private int endDay;
-
-    @Column(nullable = false)
-    private int chapterNum;
-
-    @Column( nullable = false, length = 255)
-    private String chapterName;
+    private int partNum;
 
     @Column( columnDefinition = "TEXT")
-    private String chapterLink;
+    private String partName;
 
-    @Column( nullable = true, length = 255)
-    private String chapterMission;
+    @Column( columnDefinition = "TEXT")
+    private String chapterName;
+    
+    @Column( columnDefinition = "TEXT")
+    private String sectionName;
 
+    @Column( columnDefinition = "TEXT")
+    private String partLink;
 
-    @OneToMany(mappedBy = "challengeChapter")
-    private List<ChapterQuestionEntity> questions;
+    @Column( columnDefinition = "TEXT")
+    private String memo;
+
+    @OneToMany(mappedBy = "challengePart")
+    private List<PartQuestionEntity> questions;
 
     @ManyToOne
     @JoinColumn(name = "challenge_id")
     private ChallengeInfoEntity challengeInfo;
 
+    @ManyToOne
+    @JoinColumn(name = "certificate_part_id")
+    private CertificatePartEntity certificatePartInfo;
 
 
 }

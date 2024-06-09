@@ -1,6 +1,7 @@
 package com.web.ddajait.model.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
@@ -15,6 +16,9 @@ public interface UserchallengeDao {
 
     // 데이터 찾기
     public UserChallengeEntity findUserChallengeId(ChallengeInfoEntity challengeInfoEntity, UserEntity userEntity);
+
+    // 데이터 찾기
+    public Optional<UserChallengeEntity> findByUserIdChallengeId(Long userId, Long challengeId);
 
     // 데이터 업데이트
     public void updateUserChallenge(UserChallengeEntity entity);

@@ -21,4 +21,6 @@ public interface UserChallengeRepository extends JpaRepository<UserChallengeEnti
 
     Optional<UserChallengeEntity> findByUserAndChallengeInfo(UserEntity user, ChallengeInfoEntity challenge);
 
+    Optional<UserChallengeEntity> findByUser_UserIdAndChallengeInfo_ChallengeId(Long userId, Long challengeID);
+
 }

@@ -1,8 +1,10 @@
 package com.web.ddajait.model.dto;
 
+import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.model.entity.UserWrongQuestionEntity;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,17 +23,13 @@ public class UserWrongQuestionDto {
     @NotBlank
     private Long question_id;
 
-    @NotBlank
-    private Long user_id;
-
     public static UserWrongQuestionDto from(UserWrongQuestionEntity entity) {
         if (entity == null)
             return null;
 
         return UserWrongQuestionDto.builder()
                 .incorrect_id(entity.getIncorrectId())
-                .question_id(entity.getChapterQuestion().getQuestion_id())
-                .user_id(entity.getUser().getUserId())
+                .question_id(entity.getPartQuestion().getQuestionId())
                 .build();
     }
 }

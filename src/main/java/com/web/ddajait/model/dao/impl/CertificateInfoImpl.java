@@ -27,7 +27,7 @@ public class CertificateInfoImpl implements CertificateInfoDao {
     }
 
     @Override
-    public Optional<CertificateInfoEntity>  findById(Long id) {
+    public Optional<CertificateInfoEntity> findById(Long id) {
         return certificateInfoRepository.findById(id);
     }
 

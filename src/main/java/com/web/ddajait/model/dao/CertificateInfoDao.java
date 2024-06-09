@@ -10,4 +10,6 @@ public interface CertificateInfoDao {
     public List<CertificateInfoEntity> getAllCertificate();
 
     public Optional<CertificateInfoEntity> findById(Long id);
+
+
 }

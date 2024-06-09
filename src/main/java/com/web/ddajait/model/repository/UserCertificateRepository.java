@@ -5,9 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.UserCertificateEntity;
-import com.web.ddajait.model.entity.UserEntity;
 
 public interface UserCertificateRepository extends JpaRepository<UserCertificateEntity, Long> {
 
@@ -18,7 +16,7 @@ public interface UserCertificateRepository extends JpaRepository<UserCertificate
     // Optional<Long> findUserCertificateByUserIdAndCertificateId(@Param("user_id")
     // Long userId, @Param("certificate_id") Long certificateId);
 
-    Optional<UserCertificateEntity> findByUserAndCertificateInfo(UserEntity user,
-            CertificateInfoEntity certificateInfo);
+    Optional<UserCertificateEntity> findByUser_UserIdAndCertificateInfo_CertificateId(Long userId,
+            Long certificateId);
 
 }

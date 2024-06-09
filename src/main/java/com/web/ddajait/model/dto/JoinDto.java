@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
 public record JoinDto(
+    
     @Schema(description = "유저 이메일 값", example = "Jyundev@gmail.com", required = true)
     @NotBlank
     String email,

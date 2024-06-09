@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -38,7 +39,7 @@ public class ChallengeInfoEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String challengeDetail;
 
-    @Column(nullable = false, length = 100, columnDefinition = "varchar(100) default '이기적'")
+    @Column(nullable = false, length = 50)
     private String book;
 
     @Column(nullable = true, length = 10)
@@ -50,12 +51,21 @@ public class ChallengeInfoEntity {
     @Column(nullable = true, length = 10)
     private String totalprogressRate;
 
+    @Column(nullable = false, length = 10)
+    private Timestamp startDay;
+
+    @Column(nullable = false, length = 10)
+    private Timestamp endDay;
+
+    @Column(nullable = true, columnDefinition = "TEXT")
+    private String thumbnail;
+
     @ManyToOne
     @JoinColumn(name = "certificateId")
     private CertificateInfoEntity certificateInfo;
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
-    private List<ChallengeChapterEntity> challengeChapters;
+    private List<ChallengePartEntity> challengeParts;
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<UserChallengeEntity> userChallenges;

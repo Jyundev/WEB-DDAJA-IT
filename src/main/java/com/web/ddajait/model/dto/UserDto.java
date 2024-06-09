@@ -1,5 +1,7 @@
 package com.web.ddajait.model.dto;
 
+import java.util.List;
+
 import com.web.ddajait.model.entity.UserEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,7 +13,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -37,23 +38,23 @@ public class UserDto {
     private int age;
 
     @Schema(description = "성별", example = "male/female")
-    private String gender;
+    private List<String> gender;
 
     @Builder.Default
     private Boolean isLogin = false;
 
     @Schema(description = "관심분야", example = "정보보안/네트워크/운영체제 등")
-    private String interest;
+    private List<String> interest;
 
     @Schema(description = "직업", example = "학생/직장인/취준생")
-    private String job;
+    private List<String> job;
 
     // @URL
     @Schema(description = "프로필이미지", example = "URL")
     private String profileImage;
 
     @Schema(description = "취득자격증", example = "['정보처리기사', '리눅스마스터']")
-    private String qualifiedCertificate;
+    private List<String> qualifiedCertificate;
 
     public static UserDto from(UserEntity user) {
         if (user == null)

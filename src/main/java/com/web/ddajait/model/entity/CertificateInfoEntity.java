@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -48,16 +49,20 @@ public class CertificateInfoEntity {
     @Column(nullable = true, length = 50)
     private String difficulty;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Lob
+    @Column(nullable = false, columnDefinition = "json")
     private String eligibility;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Lob
+    @Column(nullable = false, columnDefinition = "json")
     private String examContent;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Lob
+    @Column(nullable = false, columnDefinition = "json")
     private String examStandards;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Lob
+    @Column(nullable = false, columnDefinition = "json")
     private String passCriteria;
 
     @Column(nullable = false, columnDefinition = "TEXT")
