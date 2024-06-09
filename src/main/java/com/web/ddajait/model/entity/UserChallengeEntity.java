@@ -2,7 +2,7 @@ package com.web.ddajait.model.entity;
 
 import java.util.Map;
 
-import com.web.ddajait.util.MapToJsonCoMnverter;
+import com.web.ddajait.util.MapToJsonConverter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -34,7 +34,7 @@ public class UserChallengeEntity {
     private int progressRate;
 
     @Column(nullable = false, length = 50)
-    @Convert(converter = MapToJsonCoMnverter.class)
+    @Convert(converter = MapToJsonConverter.class)
     private Map<String, Object> challengeSatus;
 
     @ManyToOne

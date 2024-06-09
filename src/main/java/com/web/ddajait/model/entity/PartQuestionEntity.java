@@ -55,8 +55,12 @@ public class PartQuestionEntity {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "part_id")
+    @JoinColumn(name = "challenge_part_Id")
     private ChallengePartEntity challengePart;
+    
+    @ManyToOne
+    @JoinColumn(name = "certificate_part_id")
+    private CertificatePartEntity certificatePartInfo;
 
     @OneToMany(mappedBy = "partQuestion", cascade = CascadeType.ALL)
     private List<UserWrongQuestionEntity> wrongQuestions;

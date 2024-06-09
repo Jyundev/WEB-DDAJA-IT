@@ -1,7 +1,5 @@
 package com.web.ddajait.model.dto;
 
-import java.sql.Timestamp;
-
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.ChallengePartEntity;
 
@@ -20,13 +18,7 @@ import lombok.Setter;
 public class ChallengePartDto {
 
     @NotBlank
-    private Timestamp missionDay;
-
-    @NotBlank
-    private Timestamp startDay;
-
-    @NotBlank
-    private Timestamp endDay;
+    private int day;
 
     @NotBlank
     private int partNum;
@@ -38,7 +30,7 @@ public class ChallengePartDto {
     private String chapterName;
 
     @NotBlank
-    private String sessionName;
+    private String sectionName;
 
     private String partLink;
 
@@ -57,15 +49,12 @@ public class ChallengePartDto {
         return ChallengePartDto.builder()
                 .challengeInfo(entity.getChallengeInfo())
                 .chapterName(entity.getChapterName())
-                .endDay(entity.getEndDay())
+                .day(entity.getDay())
                 .memo(entity.getMemo())
-                .missionDay(entity.getMissionDay())
                 .partLink(entity.getPartLink())
-                .partMission(entity.getPartMission())
                 .partName(entity.getPartName())
                 .partNum(entity.getPartNum())
-                .sessionName(entity.getSessionName())
-                .startDay(entity.getStartDay())
+                .sectionName(entity.getSectionName())
                 .build();
 
     }

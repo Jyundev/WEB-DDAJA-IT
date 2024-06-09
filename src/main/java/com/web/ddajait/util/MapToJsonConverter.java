@@ -12,7 +12,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class MapToJsonCoMnverter implements AttributeConverter<Map<String, Object>, String> {
+public class MapToJsonConverter implements AttributeConverter<Map<String, Object>, String> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

@@ -21,7 +21,7 @@ public class PartQuestionImpl implements PartQuestionDao{
     @Override
     public List<PartQuestionEntity> findByPartId(Long partId) {
         
-        return PartQuestionRepository.findByChallengePart_PartId(partId);
+        return PartQuestionRepository.findByChallengePart_ChallengePartId(partId);
     }
 
   

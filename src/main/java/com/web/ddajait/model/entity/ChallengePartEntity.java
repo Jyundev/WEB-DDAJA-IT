@@ -28,16 +28,10 @@ public class ChallengePartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( nullable = false)
-    private Long partId;
+    private Long challengePartId;
 
     @Column(nullable = false)
-    private Timestamp missionDay;
-
-    @Column(nullable = false)
-    private Timestamp startDay;
-
-    @Column(nullable = false)
-    private Timestamp endDay;
+    private int day;
 
     @Column(nullable = false)
     private int partNum;
@@ -49,13 +43,10 @@ public class ChallengePartEntity {
     private String chapterName;
     
     @Column( columnDefinition = "TEXT")
-    private String sessionName;
+    private String sectionName;
 
     @Column( columnDefinition = "TEXT")
     private String partLink;
-
-    @Column( columnDefinition = "TEXT")
-    private String partMission;
 
     @Column( columnDefinition = "TEXT")
     private String memo;
@@ -67,6 +58,9 @@ public class ChallengePartEntity {
     @JoinColumn(name = "challenge_id")
     private ChallengeInfoEntity challengeInfo;
 
+    @ManyToOne
+    @JoinColumn(name = "certificate_part_id")
+    private CertificatePartEntity certificatePartInfo;
 
 
 }

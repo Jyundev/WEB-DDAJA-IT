@@ -9,6 +9,6 @@ import com.web.ddajait.model.entity.PartQuestionEntity;
 public interface PartQuestionRepository extends JpaRepository<PartQuestionEntity, Long> {
 
 
-    List<PartQuestionEntity> findByChallengePart_PartId(Long partId);
+    List<PartQuestionEntity> findByChallengePart_ChallengePartId(Long partId);
 
 }
