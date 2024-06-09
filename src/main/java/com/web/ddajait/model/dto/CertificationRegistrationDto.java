@@ -2,7 +2,8 @@ package com.web.ddajait.model.dto;
 
 import java.sql.Timestamp;
 
-import com.web.ddajait.model.entity.CertificateInfoEntity;
+import java.text.SimpleDateFormat;
+
 import com.web.ddajait.model.entity.CertificationRegistrationEntity;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -24,7 +25,7 @@ public class CertificationRegistrationDto {
     @NotBlank
     @Schema(description = "자격증 정보", example = "정보보안/네트워크/운영체제 등")
     @Hidden
-    private CertificateInfoEntity challengeInfo;
+    private Long certificateId;
 
     @NotBlank
     private String certificateName;
@@ -39,10 +40,10 @@ public class CertificationRegistrationDto {
     private String testDay;
 
     @NotBlank
-    private Timestamp receptionStart;
+    private String receptionStart;
 
     @NotBlank
-    private Timestamp receptionEnd;
+    private String receptionEnd;
 
     @NotBlank
     private String resultDay;
@@ -52,15 +53,21 @@ public class CertificationRegistrationDto {
             return null;
 
         return CertificationRegistrationDto.builder()
-                .challengeInfo(entity.getCertificateInfo())
+                .certificateId(entity.getCertificateInfo().getCertificateId())
                 .certificateName(entity.getCertificateName())
                 .Type(entity.getTypes())
                 .round(entity.getRound())
                 .testDay(entity.getTestDay())
-                .receptionStart(entity.getReceptionStart())
-                .receptionEnd(entity.getReceptionStart())
+                .receptionStart(timestampToString(entity.getReceptionStart()))
+                .receptionEnd(timestampToString(entity.getReceptionStart()))
                 .resultDay(entity.getResultDay())
                 .build();
+
+    }
+
+    public static String timestampToString(Timestamp time) {
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return outputFormat.format(time);
 
     }
 }

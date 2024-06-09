@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.CertificateInfoDao;
-import com.web.ddajait.model.dto.ChallengePart.Certificate;
 import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.repository.CertificateInfoRepository;
 
@@ -28,9 +27,8 @@ public class CertificateInfoImpl implements CertificateInfoDao {
     }
 
     @Override
-    public Optional<CertificateInfoEntity>  findById(Long id) {
+    public Optional<CertificateInfoEntity> findById(Long id) {
         return certificateInfoRepository.findById(id);
     }
-
 
 }

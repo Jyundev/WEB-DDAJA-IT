@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import java.text.SimpleDateFormat;
 
 @Getter
 @Setter
@@ -40,15 +41,15 @@ public class ChallengeInfoDto {
     private String memberPassRate;
 
     @NotBlank
-    private Timestamp startDay;
+    private String startDay;
 
     @NotBlank
-    private Timestamp endDay;
+    private String endDay;
 
     private String thumbnail;
 
     @NotNull
-    private CertificateInfoEntity challengeInfo;
+    private Long challengeId;
 
     private String totalprogressRate;
 
@@ -60,11 +61,19 @@ public class ChallengeInfoDto {
                 .challenge_id(entity.getChallengeId())
                 .challengeName(entity.getChallengeName())
                 .challengeDetail(entity.getChallengeDetail())
+                .startDay(timestampToString(entity.getStartDay()))
+                .endDay(timestampToString(entity.getStartDay()))
                 .book(entity.getBook())
                 .passRate(entity.getPassRate())
                 .memberPassRate(entity.getMemberPassRate())
-                .challengeInfo(entity.getCertificateInfo())
+                .challengeId(entity.getCertificateInfo().getCertificateId())
                 .totalprogressRate(entity.getTotalprogressRate())
                 .build();
+    }
+
+    public static String timestampToString(Timestamp time){
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return outputFormat.format(time);
+
     }
 }

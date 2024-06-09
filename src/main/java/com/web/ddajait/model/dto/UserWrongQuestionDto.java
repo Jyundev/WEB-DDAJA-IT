@@ -23,9 +23,6 @@ public class UserWrongQuestionDto {
     @NotBlank
     private Long question_id;
 
-    @NotNull
-    private UserEntity user;
-
     public static UserWrongQuestionDto from(UserWrongQuestionEntity entity) {
         if (entity == null)
             return null;
@@ -33,7 +30,6 @@ public class UserWrongQuestionDto {
         return UserWrongQuestionDto.builder()
                 .incorrect_id(entity.getIncorrectId())
                 .question_id(entity.getPartQuestion().getQuestionId())
-                .user(entity.getUser())
                 .build();
     }
 }

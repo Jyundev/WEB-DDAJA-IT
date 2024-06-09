@@ -1,13 +1,12 @@
 package com.web.ddajait.model.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.UserCertificateDao;
-import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.UserCertificateEntity;
-import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.model.repository.UserCertificateRepository;
 
 import lombok.AllArgsConstructor;
@@ -43,9 +42,8 @@ public class UserCertificateImpl implements UserCertificateDao {
     }
 
     @Override
-    public UserCertificateEntity findUserCertificateId(CertificateInfoEntity certificateInfoEntity,
-            UserEntity userEntity) {
-        return userCertificateRepository.findByUserAndCertificateInfo(userEntity, certificateInfoEntity).orElse(null);
+    public Optional<UserCertificateEntity> findByUserIdCertificateId(Long userId, Long certificateId) {
+        return userCertificateRepository.findByUser_UserIdAndCertificateInfo_CertificateId(userId, certificateId);
     }
 
 }

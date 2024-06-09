@@ -1,8 +1,6 @@
 package com.web.ddajait.controller;
 
 import java.util.List;
-import java.util.Map;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserCertificateDto;
-import com.web.ddajait.model.dto.UserChallenge;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.service.UserService;
 import com.web.ddajait.util.CommonUtils;
-import com.web.ddajait.util.EntityUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -107,20 +103,30 @@ public class UserApiController {
         if (userId == null) {
             throw new Exception("User is not logged in");
         }
-        UserChallengeDto userChallengeDto = userService.findUserChallengeId(challegeId, userId);
+        UserChallengeDto userChallengeDto = userService.findByUserIdChallengeId(challegeId, userId);
 
         return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
     @PostMapping("/challenge/insert")
     @Operation(summary = "유저 챌린지 신청 API", description = "유저 챌린지 신청 API 입니다.")
-    public ResponseEntity<ResponseDto<UserChallenge>> insertUserChallenge(
-            @RequestBody @Valid UserChallenge userChallenge) throws Exception {
-        UserChallengeDto dto = new UserChallengeDto();
+    public ResponseEntity<ResponseDto<UserChallengeDto>> insertUserChallenge(
+            @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
 
-        EntityUtil.copyNonNullProperties(userChallenge, dto);
-        userService.insertUserChallenge(dto);
+        // EntityUtil.copyNonNullProperties(userChallenge, dto);
+        userService.insertUserChallenge(userChallenge);
         return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 추가 성공");
+
+    }
+
+    @PostMapping("/challenge/update/{challengeId}")
+    @Operation(summary = "유저 챌린지 상태 업데이트 API", description = "유저 챌린지 업데이트 API 입니다.")
+    public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
+            @PathVariable Long challengeId, @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
+
+        // EntityUtil.copyNonNullProperties(userChallenge, dto);
+        userService.updateUserChallenge(userChallenge, challengeId);
+        return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 상태 업데이트 성공");
 
     }
     /* 유저 자격증 */
@@ -157,8 +163,16 @@ public class UserApiController {
 
     }
 
-    // 개인정보 수집 API
+    @PostMapping("/certificate/update/{certificateId}")
+    @Operation(summary = "유저 자격증 상태 업데이트 API", description = "유저 자격증 상태 업데이트 API 입니다.")
+    public ResponseEntity<ResponseDto<UserCertificateDto>> updatetUserChallenge(
+            @PathVariable Long certificateId, @RequestBody @Valid UserCertificateDto usercCertificateDto)
+            throws Exception {
 
-    // 챌린지 신청 API
+        // EntityUtil.copyNonNullProperties(userChallenge, dto);
+        userService.updateUserCertificate(usercCertificateDto, certificateId);
+        return ResponseHandler.SUCCESS(usercCertificateDto, "유저 자격증 상태 업데이트 성공");
+
+    }
 
 }

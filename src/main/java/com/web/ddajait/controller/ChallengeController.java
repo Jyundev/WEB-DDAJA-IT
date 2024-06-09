@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.model.dto.ChallengeInfoDto;
 import com.web.ddajait.model.dto.ChallengePartDto;
-import com.web.ddajait.model.dto.ChallengePart.Certificate;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.service.ChallengeInfoSercive;
 import com.web.ddajait.service.ChallengePartService;
@@ -45,15 +44,6 @@ public class ChallengeController {
         log.info("[ChallengeController][getchallengePartInfo] Starts");
 
         return challengePartService.getAllchallengePartInfo();
-    }
-
-    @Operation(summary = "챌린지 챕터 데이터", description = "특정 챌린지 챕터 데이터를 가져오는 API 입니다.")
-    @GetMapping("/part/{challengeId}")
-    public Certificate getchallengePartInfo(@PathVariable("challengeId") Long challengeId) throws Exception {
-
-        log.info("[ChallengeController][getchallengePartInfo] Starts");
-
-        return challengePartService.getChallengePart(challengeId);
     }
 
     @Operation(summary = "챌린지 상세 페이지 데이터", description = "챌린지 상세 페이지 데이터를 가져오는 API 입니다. \n*현제 데이터 오류로 challengeId = 7, 8, 9 테스트 가능")

@@ -22,7 +22,7 @@ public class UserCertificateDto {
     private Boolean userResult;
 
     @NotNull
-    private CertificateInfoEntity certificateInfo;
+    private Long certificateId;
 
     public static UserCertificateDto from(UserCertificateEntity entity) {
         if (entity == null)
@@ -30,7 +30,7 @@ public class UserCertificateDto {
 
         return UserCertificateDto.builder()
                 .userResult(entity.getUserResult())
-                .certificateInfo(entity.getCertificateInfo())
+                .certificateId(entity.getCertificateInfo().getCertificateId())
                 .build();
     }
 }

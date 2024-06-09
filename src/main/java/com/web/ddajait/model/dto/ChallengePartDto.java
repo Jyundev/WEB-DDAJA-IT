@@ -40,14 +40,14 @@ public class ChallengePartDto {
     private String memo;
 
     @NotBlank
-    private ChallengeInfoEntity challengeInfo;
+    private Long challengeId;
 
     public static ChallengePartDto from(ChallengePartEntity entity) {
         if (entity == null)
             return null;
 
         return ChallengePartDto.builder()
-                .challengeInfo(entity.getChallengeInfo())
+                .challengeId(entity.getChallengeInfo().getChallengeId())
                 .chapterName(entity.getChapterName())
                 .day(entity.getDay())
                 .memo(entity.getMemo())

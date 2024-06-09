@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.web.ddajait.model.dto.CertificationRegistrationDto;
 import com.web.ddajait.model.dto.PartQuestionDto;
+import com.web.ddajait.model.dto.Calendar.CalendarDto;
 import com.web.ddajait.model.dto.CertificateInfo.CertificateInfoDto;
 import com.web.ddajait.model.dto.CertificateInfo.Elibility.ElibilityJsonWrapper;
 import com.web.ddajait.model.dto.CertificateInfo.ExamContent.ExamList;
@@ -100,6 +101,15 @@ public class CertificateController {
         log.info("[CertificateController][getAllCertificateRegistration] Starts");
 
         return certificationRegistrationService.getAllCerticationResgitration();
+
+    }
+
+    @GetMapping("/calandar")
+    @Operation(summary = "캘린더 데이터", description = "캘린더 데이터를 가져오는 API 입니다.")
+    public List<CalendarDto> getCalendarData() {
+        log.info("[CertificateController][getCalendarData] Starts");
+
+        return certificationRegistrationService.getCalendarContent();
 
     }
 }

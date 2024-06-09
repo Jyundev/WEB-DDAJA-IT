@@ -53,6 +53,7 @@ public class UserEntity {
     private int age;
 
     @Column(length = 50)
+    @Convert(converter = ListToJsonConverter.class)
     private List<String> gender;
 
     @Builder.Default
@@ -64,6 +65,7 @@ public class UserEntity {
     private List<String> interest;
 
     @Column(length = 50)
+    @Convert(converter = ListToJsonConverter.class)
     private List<String> job;
 
     @Column(columnDefinition = "TEXT")
@@ -76,6 +78,7 @@ public class UserEntity {
     private List<String> qualifiedCertificate;
 
     @Transient
+    @Convert(converter = ListToJsonConverter.class)
     private List<String> qualifiedCertificateList;
 
     // UserEntity와 AuthorityEntity 간의 다대다 관계를 정의하고,
