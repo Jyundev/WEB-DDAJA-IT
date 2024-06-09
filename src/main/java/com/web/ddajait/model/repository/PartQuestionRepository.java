@@ -11,4 +11,7 @@ public interface PartQuestionRepository extends JpaRepository<PartQuestionEntity
 
     List<PartQuestionEntity> findByChallengePart_ChallengePartId(Long partId);
 
+    List<PartQuestionEntity> findByCertificatePartInfo_CertificatePartId(Long certificatePartId);
+
+
 }

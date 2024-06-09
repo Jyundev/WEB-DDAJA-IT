@@ -1,18 +1,21 @@
 package com.web.ddajait.model.dto.ChallengePart;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Step {
-    private int step;
-    private boolean complete;
-    private List<Day> days;
+    int step;
+    boolean complete;
+    String partName;
+    String chapterName;
+    String sectionName;
+    List<TestQuestion> test;
+    List<Day> days;
 }

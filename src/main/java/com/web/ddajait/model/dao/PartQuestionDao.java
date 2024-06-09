@@ -8,4 +8,6 @@ public interface PartQuestionDao {
 
     public List<PartQuestionEntity> findByPartId(Long partId);
 
+    public List<PartQuestionEntity> findByCetificatePartId(Long certificatePartId);
+
 }

@@ -32,10 +32,11 @@ public class UserChallengeDto {
     private Map<String, Object> challengeStstus;
 
     @NotNull
-    private ChallengeInfoEntity challengeInfo;
+    @Schema(description = "챌린지 id", example = "1")
+    private Long challengeId;
 
     @NotNull
-    private UserEntity user;
+    private Long userId;
 
     public static UserChallengeDto from(UserChallengeEntity entity) {
         if (entity == null)
@@ -44,8 +45,8 @@ public class UserChallengeDto {
         return UserChallengeDto.builder()
                 .progressRate(entity.getProgressRate())
                 .challengeStstus(entity.getChallengeSatus())
-                .challengeInfo(entity.getChallengeInfo())
-                .user(entity.getUser())
+                .challengeId(entity.getChallengeInfo().getChallengeId())
+                .userId(entity.getUser().getUserId())
                 .build();
     }
 }

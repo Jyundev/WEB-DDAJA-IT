@@ -15,11 +15,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class JsonWrapper {
+public class ExamStandardJsonWrapper {
     @JsonProperty("subject")
     private List<Chapter> subject;
 
-    @JsonProperty("subject")
+    @JsonProperty("simpleSubject")
     private String simpleSubject;
 
     @JsonProperty("link")

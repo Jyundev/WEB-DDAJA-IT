@@ -53,20 +53,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder bCryptPasswordEncoder;
     private final HttpSession httpSession;
 
-    // public UserServiceImpl(UserDao userDao,
-    // UserCertificateDao userCertificateDao,
-    // UserchallengeDao UserchallengeDao,
-    // CertificateInfoDao certificateInfoDao,
-    // ChallengeInfoDao challengeInfoDao,
-    // PasswordEncoder bCryptPasswordEncoder, HttpSession httpSession) {
-    // this.userDao = userDao;
-    // this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    // this.userCertificateDao = userCertificateDao;
-    // this.certificateInfoDao = certificateInfoDao;
-    // this.challengeInfoDao = challengeInfoDao;
-    // this.userchallengeDao = UserchallengeDao;
-    // this.httpSession = httpSession;
-    // }
 
     @Override
     public List<UserDto> getAllUsers() throws Exception {
@@ -241,7 +227,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    // 유저 자격증
+    /* 유저 자격증 */
 
     @Override
     public List<UserCertificateDto> getUserCertificateList() throws Exception {
@@ -292,7 +278,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    // 유저 챌린지
+    /* 유저 챌린지 */ 
 
     @Override
     public List<UserChallengeDto> getUserChallengList() throws Exception {
@@ -332,10 +318,7 @@ public class UserServiceImpl implements UserService {
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(user_id).get());
-            // log.info("[UserServiceImpl][insertUserChallenge] ChallengeId : " +
-            // dto.getChallengeInfo());
-
-            entity.setChallengeInfo(dto.getChallengeInfo());
+            entity.setChallengeInfo(challengeInfoDao.findById(dto.getChallengeId()).get());
             userchallengeDao.insertUserChallenge(entity);
         } else {
             throw new NotFoundMemberException();

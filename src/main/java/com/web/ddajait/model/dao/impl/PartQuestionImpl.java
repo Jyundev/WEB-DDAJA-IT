@@ -14,15 +14,22 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PartQuestionImpl implements PartQuestionDao{
+public class PartQuestionImpl implements PartQuestionDao {
 
     private final PartQuestionRepository PartQuestionRepository;
 
     @Override
     public List<PartQuestionEntity> findByPartId(Long partId) {
-        
+
         return PartQuestionRepository.findByChallengePart_ChallengePartId(partId);
     }
 
-  
+    @Override
+    public List<PartQuestionEntity> findByCetificatePartId(Long certificatePartId) {
+        log.info("[PartQuestionImpl][findByCetificatePartId] Starts");
+        
+        return PartQuestionRepository.findByCertificatePartInfo_CertificatePartId(certificatePartId);
+
+    }
+
 }

@@ -21,7 +21,7 @@ public class Certificate {
     private int my_progress;
     private int total_progress;
     private int total_user;
-    private List<Step> steps;
+    // private List<ChallengeDto> steps;
 
 
 }

@@ -27,7 +27,7 @@ public class CertificatePartEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long certificate_part_id;
+    private Long certificatePartId;
 
     @NotBlank
     private String certificateName;

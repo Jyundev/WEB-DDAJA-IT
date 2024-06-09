@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Day {
-    int day;
-    Chapter chapter;
-    boolean complete;
-    String memo;
+public class TestQuestion {
+    int id;
+    String question;
+    String item1;
+    String item2;
+    String item3;
+    String item4;
+    int answer;
 }

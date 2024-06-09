@@ -2,6 +2,7 @@ package com.web.ddajait.model.dto;
 
 import java.util.List;
 
+import com.web.ddajait.model.entity.CertificatePartEntity;
 import com.web.ddajait.model.entity.ChallengePartEntity;
 import com.web.ddajait.model.entity.PartQuestionEntity;
 
@@ -19,16 +20,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PartQuestionDto {
 
-    private Long question_id;
-
     @NotBlank
-    private ChallengePartEntity part_id;
+    private Long challengePartId;
+
+    // private CertificatePartEntity certificatePart;
 
     @NotBlank
     private String partName;
 
     @NotBlank
-    private String certification_name;
+    private String certificationName;
     
     @NotBlank
     private String question;
@@ -42,7 +43,6 @@ public class PartQuestionDto {
     @NotBlank
     private int answer;
 
-    // @URL
     private String image;
 
     public static PartQuestionDto from(PartQuestionEntity entity) {
@@ -50,10 +50,10 @@ public class PartQuestionDto {
             return null;
 
         return PartQuestionDto.builder()
-                .question_id(entity.getQuestionId())
-                .part_id(entity.getChallengePart())
+                .challengePartId(entity.getChallengePart().getChallengePartId())
+                // .certificatePart(entity.getCertificatePartInfo())
                 .partName(entity.getPartName())
-                .certification_name(entity.getCertificateName())
+                .certificationName(entity.getCertificateName())
                 .question(entity.getQuestion())
                 .notes(entity.getNotes())
                 .choices(entity.getChoices())

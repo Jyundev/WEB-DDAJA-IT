@@ -10,9 +10,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Day {
-    int day;
-    Chapter chapter;
-    boolean complete;
-    String memo;
+public class Chapter {
+    String name;
+    List<String> section;
 }

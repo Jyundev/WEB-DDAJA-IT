@@ -1,6 +1,8 @@
 package com.web.ddajait.controller;
 
 import java.util.List;
+import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -115,6 +117,7 @@ public class UserApiController {
     public ResponseEntity<ResponseDto<UserChallenge>> insertUserChallenge(
             @RequestBody @Valid UserChallenge userChallenge) throws Exception {
         UserChallengeDto dto = new UserChallengeDto();
+
         EntityUtil.copyNonNullProperties(userChallenge, dto);
         userService.insertUserChallenge(dto);
         return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 추가 성공");
