@@ -1,6 +1,8 @@
 package com.web.ddajait.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -33,11 +35,13 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
     public ChallengeInfoDto findById(Long id) throws Exception {
         if (challengeInfoDao.findById(id).isPresent()) {
             ChallengeInfoEntity entity = challengeInfoDao.findById(id).get();
+            
             return ChallengeInfoDto.from(entity);
         } else {
             throw new EntityNotFoundException("Not found ChallengeInfoEntity");
         }
 
+   
     }
 
 }

@@ -3,15 +3,21 @@ package com.web.ddajait.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.ddajait.model.dto.CertificationRegistrationDto;
 import com.web.ddajait.model.dto.CertificateInfo.CertificateInfoDto;
+import com.web.ddajait.model.dto.CertificateInfo.ExamContent.ExamList;
+import com.web.ddajait.model.dto.CertificateInfo.ExamStandard.JsonWrapper;
 import com.web.ddajait.service.CertificateInfoService;
 import com.web.ddajait.service.CertificationRegistrationService;
 
+import io.jsonwebtoken.io.IOException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -36,6 +42,35 @@ public class CertificateController {
         return certificateInfoService.getAllCertificate();
 
     }
+
+    @GetMapping("/{certificateId}")
+    @Operation(summary = "특정 자격증 정보 데이터", description = "특정 자격증 데이터를 가져오는 API 입니다.")
+    public CertificateInfoDto getCertificate(@PathVariable("certificateId") Long certificateId) {
+        log.info("[CertificateController][getCertificate] Starts");
+
+        return certificateInfoService.findById(certificateId);
+
+    }
+
+    @GetMapping("/examcontent/{certificateId}")
+    @Operation(summary = "자격증 시험 내용", description = "자격증 시험 내용 데이터를 가져오는 API 입니다.")
+    public ExamList getExamcontent(@PathVariable("certificateId") Long certificateId)
+            throws JsonMappingException, IOException, JsonProcessingException {
+        log.info("[CertificateController][getExamcontent] Starts");
+
+        return certificateInfoService.getExamContent(certificateId);
+
+    }
+
+    // @GetMapping("/examstandard/{certificateId}")
+    // @Operation(summary = "자격증 시험 자격", description = "자격증 시험 자격 데이터를 가져오는 API 입니다.")
+    // public JsonWrapper getExamStandard(@PathVariable("certificateId") Long certificateId)
+    //         throws JsonMappingException, JsonProcessingException {
+    //     log.info("[CertificateController][getExamStandard] Starts");
+
+    //     return certificateInfoService.getExamStandard(certificateId);
+
+    // }
 
     @GetMapping("/register/all")
     @Operation(summary = "모든 자격증 접수 일정 데이터", description = "모든 자격증의 접수 일정 데이터를 가져오는 API 입니다.")
