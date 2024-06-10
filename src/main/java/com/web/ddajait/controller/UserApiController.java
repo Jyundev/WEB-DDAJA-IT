@@ -2,7 +2,6 @@ package com.web.ddajait.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -44,7 +43,6 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 public class UserApiController {
 
-    @Autowired
     UserService userService;
 
     HttpSession session;
@@ -59,6 +57,11 @@ public class UserApiController {
                 dto.getInterest());
 
         Long user_id = CommonUtils.checkSessionId(session);
+        
+        log.info("[PublicController][UserPrivateInfoDto] Start - user_id", user_id);
+
+
+
         userService.addUserInfo(user_id, dto);
 
         return ResponseHandler.SUCCESS(dto, "회원가입");
