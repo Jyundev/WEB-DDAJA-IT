@@ -228,24 +228,23 @@ public class UserServiceImpl implements UserService {
     /* 유저 자격증 */
 
     @Override
-    public List<UserCertificateDto> getUserCertificateList() throws Exception {
+    public List<UserCertificateDto> getUserCertificateList(Long userId) throws Exception {
         log.info("[UserServiceImpl][getUserCertificate] Starts");
-        Long user_id = (Long) httpSession.getAttribute("userId");
 
-        if (user_id == null) {
+        if (userId == null) {
             throw new NotFoundMemberException();
         }
 
-        return userCertificateDao.findUserCertificateByUserId(user_id).stream()
+        return userCertificateDao.findUserCertificateByUserId(userId).stream()
                 .map(UserCertificateDto::from)
                 .collect(Collectors.toList());
 
     }
 
     @Override
-    public void updateUserCertificate(UserCertificateDto dto, Long certificateId) throws Exception {
+    public void updateUserCertificate(UserCertificateDto dto, Long certificateId, Long userId) throws Exception {
         log.info("[UserServiceImpl][updateUserCertificate] Starts");
-        Long userId = (Long) httpSession.getAttribute("userId");
+        // Long userId = (Long) httpSession.getAttribute("userId");
 
         if (userCertificateDao.findByUserIdCertificateId(userId, certificateId) != null) {
             UserCertificateEntity entity = userCertificateDao.findByUserIdCertificateId(userId, certificateId).get();
@@ -293,9 +292,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserChallenge(UserChallengeDto dto, Long challengeID) throws Exception {
+    public void updateUserChallenge(UserChallengeDto dto, Long challengeID, Long userId) throws Exception {
         log.info("[UserServiceImpl][updateUserChallenge] Starts");
-        Long userId = (Long) httpSession.getAttribute("userId");
+        // Long userId = (Long) httpSession.getAttribute("userId");
 
         Optional<UserChallengeEntity> userChallengeEntity = userchallengeDao.findByUserIdChallengeId(userId,
                 challengeID);
@@ -312,14 +311,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void insertUserChallenge(UserChallengeDto dto) throws Exception {
+    public void insertUserChallenge(UserChallengeDto dto, Long userId) throws Exception {
         log.info("[UserServiceImpl][insertUserChallenge] Starts");
 
-        Long user_id = (Long) httpSession.getAttribute("userId");
-        if (user_id != null) {
+        // Long user_id = (Long) httpSession.getAttribute("userId");
+        if (userId != null) {
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
-            entity.setUser(userDao.findById(user_id).get());
+            entity.setUser(userDao.findById(userId).get());
             entity.setChallengeInfo(challengeInfoDao.findById(dto.getChallengeId()).get());
             userchallengeDao.insertUserChallenge(entity);
         } else {

@@ -50,7 +50,7 @@ public interface UserService {
         /* 자격증 */
 
         // 유저 자격증 정보 조회
-        public List<UserCertificateDto> getUserCertificateList() throws Exception;
+        public List<UserCertificateDto> getUserCertificateList(Long userId) throws Exception;
 
         // 자격증 정보 조회
         public UserCertificateDto getUserCertificate(Long userCertificateId) throws Exception;
@@ -59,7 +59,7 @@ public interface UserService {
         public UserCertificateDto findUserCertificateId(Long userCertificateId, Long userId) throws Exception;
 
         // 자격증 정보 업데이트
-        public void updateUserCertificate( UserCertificateDto dto, Long certificateId) throws Exception;
+        public void updateUserCertificate( UserCertificateDto dto, Long certificateId, Long userId) throws Exception;
 
         // 자격증 정보 추가
         public void inserteUserCertificate(UserCertificateDto dto) throws Exception;
@@ -78,9 +78,9 @@ public interface UserService {
         public UserChallengeDto findByUserIdChallengeId(Long challengeId, Long userId) throws Exception;
 
         // 챌린지 정보 업데이트
-        public void updateUserChallenge(UserChallengeDto dto, Long challengeID) throws Exception;
+        public void updateUserChallenge(UserChallengeDto dto, Long challengeID, Long UserId) throws Exception;
 
         // 챌린지 정보 추가
-        public void insertUserChallenge(UserChallengeDto dto) throws Exception;
+        public void insertUserChallenge(UserChallengeDto dto, Long userId) throws Exception;
 
 }
