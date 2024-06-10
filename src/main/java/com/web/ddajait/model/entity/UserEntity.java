@@ -50,11 +50,10 @@ public class UserEntity {
     private String password;
 
     @Column()
-    private int age;
+    private String age;
 
     @Column(length = 50)
-    @Convert(converter = ListToJsonConverter.class)
-    private List<String> gender;
+    private String gender;
 
     @Builder.Default
     @Column(columnDefinition = "tinyint(1) default 0")

@@ -35,10 +35,10 @@ public class UserDto {
     private String password;
 
     @Schema(description = "나이", example = "28")
-    private int age;
+    private String age;
 
     @Schema(description = "성별", example = "male/female")
-    private List<String> gender;
+    private String gender;
 
     @Builder.Default
     private Boolean isLogin = false;
