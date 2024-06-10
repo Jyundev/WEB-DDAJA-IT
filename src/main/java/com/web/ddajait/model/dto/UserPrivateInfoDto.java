@@ -14,10 +14,10 @@ import lombok.Setter;
 public class UserPrivateInfoDto {
 
     @Schema(description = "나이", example = "28")
-    private String age;
+    private String age="";
 
     @Schema(description = "성별", example = "여자")
-    private String gender;
+    private String gender="";
 
     @Schema(description = "관심분야", example = "[정보보안]")
     private List<String> interest;
