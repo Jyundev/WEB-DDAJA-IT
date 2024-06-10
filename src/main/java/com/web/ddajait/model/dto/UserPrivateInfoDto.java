@@ -20,13 +20,13 @@ public class UserPrivateInfoDto {
     private String gender="";
 
     @Schema(description = "관심분야", example = "[정보보안]")
-    private List<String> interest;
+    private String interest;
 
     @Schema(description = "직업", example = "[학생]")
-    private List<String> job;
+    private String job;
 
     @Schema(description = "자격증", example = "[정보처리기사]")
-    private List<String> qualified_certificate;
+    private String qualified_certificate;
 
 
 
