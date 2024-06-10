@@ -1,11 +1,10 @@
 package com.web.ddajait.service.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Arrays;
-
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -395,9 +394,13 @@ public class UserServiceImpl implements UserService {
                 userEntity.setGender(dto.getGender());
             }
 
-            userEntity.setInterest(strToList(dto.getInterest()));
-            userEntity.setJob(strToList(dto.getJob()));
-            userEntity.setQualifiedCertificate(strToList(dto.getQualified_certificate()));
+            // userEntity.setInterest(strToList(dto.getInterest()));
+            // userEntity.setJob(strToList(dto.getJob()));
+            // userEntity.setQualifiedCertificate(strToList(dto.getQualified_certificate()));
+
+            userEntity.setInterest((dto.getInterest()));
+            userEntity.setJob((dto.getJob()));
+            userEntity.setQualifiedCertificate((dto.getQualified_certificate()));
 
             userDao.updateUser(userEntity);
 

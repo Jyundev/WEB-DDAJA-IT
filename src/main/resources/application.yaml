@@ -59,7 +59,7 @@ spring:
 
   # 데이터 베이스 
   datasource:
-      url: jdbc:mysql://finaldb.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com:3306/ddajait_data
+      url: jdbc:mysql://database-1.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com/ddajait_data 
       username: fp
       password: qwerasdf1!
       driver-class-name: com.mysql.cj.jdbc.Driver
