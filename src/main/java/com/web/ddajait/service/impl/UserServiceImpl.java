@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Arrays;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -384,10 +386,18 @@ public class UserServiceImpl implements UserService {
             log.info("[UserServiceImpl][getAddUserInfo]  " + entity);
             UserEntity userEntity = entity.get();
             userEntity.setGender(dto.getGender());
-            userEntity.setInterest(dto.getInterest());
-            userEntity.setJob(dto.getJob());
-            userEntity.setAge(dto.getAge());
-            userEntity.setQualifiedCertificate(dto.getQualified_certificate());
+
+            if (dto.getAge().length() > 0){
+                userEntity.setAge(dto.getAge());
+            }
+
+            if (dto.getGender().length() > 0){
+                userEntity.setGender(dto.getGender());
+            }
+
+            userEntity.setInterest(strToList(dto.getInterest()));
+            userEntity.setJob(strToList(dto.getJob()));
+            userEntity.setQualifiedCertificate(strToList(dto.getQualified_certificate()));
 
             userDao.updateUser(userEntity);
 
@@ -398,4 +408,17 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    static List<String> strToList(String data) {
+        List<String> strArray;
+
+        if (data.contains(",")) {
+            String[] dataArray = data.split(", ");
+            strArray = Arrays.asList(dataArray);
+        } else {
+            strArray = Arrays.asList(data);
+        }
+
+
+        return strArray;
+    }
 }
