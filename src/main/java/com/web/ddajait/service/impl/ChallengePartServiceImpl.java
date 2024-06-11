@@ -2,10 +2,14 @@ package com.web.ddajait.service.impl;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -16,8 +20,12 @@ import com.web.ddajait.model.dao.PartQuestionDao;
 import com.web.ddajait.model.dao.UserchallengeDao;
 import com.web.ddajait.model.dto.ChallengePartDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
+import com.web.ddajait.model.dto.ChallengePart.Day;
+import com.web.ddajait.model.dto.ChallengePart.Step;
+import com.web.ddajait.model.dto.ChallengePart.TestQuestion;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.ChallengePartEntity;
+import com.web.ddajait.model.entity.PartQuestionEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.service.ChallengePartService;
 
@@ -125,19 +133,101 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                                     Collectors.toList())));
 
             // 결과 출력
+            List<Step> steps = new ArrayList<>();
             groupedByPartNumAndDay.forEach((partNum, dayMap) -> {
                 System.out.println("PartNum: " + partNum);
+
+                // step 객체 생성
+                Step step = new Step();
+
+                step.setStep(partNum);
+                // step별 진행률
+                if (userStep > partNum) {
+                    step.setComplete(true);
+                } else {
+                    step.setComplete(false);
+                }
+
+                // Day 리스트 생성
+                List<Day> days = new ArrayList<>();
                 dayMap.forEach((day, entities) -> {
                     System.out.println("  Day: " + day);
+                    // Day가 중복일 경우 여러 entity 생성
+                    Day dayInfo = new Day();
+                    Map<String, List<String>> chapterMap = new HashMap<>();
 
-                    // Day가 중복일 경우 여러 entity 생성 
                     entities.forEach(entity -> {
-                        
+                        step.setPartName(entity.getPartName());
+
+                        dayInfo.setDay(entity.getDay());
+                        dayInfo.setMemo("메모입니다");
+
+                        if (entity.getDay() > userDay) {
+                            dayInfo.setComplete(false);
+                        } else {
+                            dayInfo.setComplete(true);
+                        }
+
+                        // 챕터별 섹션 데이터 수집
+                        if (chapterMap.containsKey(entity.getChapterName())) {
+                            chapterMap.get(entity.getChapterName()).add(entity.getSectionName());
+                        } else {
+                            List<String> sections = new ArrayList<>();
+                            sections.add(entity.getSectionName());
+                            chapterMap.put(entity.getChapterName(), sections);
+                        }
+
+                        // test 데이터 생성
+                        List<TestQuestion> testQuestions = new ArrayList<>();
+
+                        if (entity.getPartName().equals("기출문제 풀이")) {
+
+                        } else if (entity.isRandomQuestion()) {
+
+                            Long certifocatePartId = entity.getCertificatePartInfo().getCertificatePartId();
+                            List<PartQuestionEntity> partQuestionEntities = partQuestionDao
+                                    .findByCetificatePartId(certifocatePartId);
+                            AtomicInteger testId = new AtomicInteger(0);
+
+                            // 랜덤으로 세가지 문제만 추출
+                            Collections.shuffle(partQuestionEntities);
+                            List<PartQuestionEntity> randomQuestions = partQuestionEntities.subList(0,
+                                    Math.min(partQuestionEntities.size(), 3));
+
+                            testQuestions = randomQuestions.stream()
+                                    .map(testData -> {
+                                        if (testData.getChoices().size() == 4) {
+                                            TestQuestion testQuestion = new TestQuestion();
+                                            int id = testId.incrementAndGet();
+                                            testQuestion.setId(id);
+                                            testQuestion.setQuestion(testData.getQuestion());
+                                            testQuestion.setItem1(testData.getChoices().get(0));
+                                            testQuestion.setItem2(testData.getChoices().get(1));
+                                            testQuestion.setItem3(testData.getChoices().get(2));
+                                            testQuestion.setItem4(testData.getChoices().get(3));
+                                            testQuestion.setAnswer(testData.getAnswer());
+                                            return Optional.of(testQuestion);
+                                        } else {
+                                            return Optional.<TestQuestion>empty();
+                                        }
+                                    })
+                                    .filter(Optional::isPresent)
+                                    .map(Optional::get)
+                                    .collect(Collectors.toList());
+
+                        }
+                        step.setTest(testQuestions);
                     });
+                    dayInfo.setChapterMap(chapterMap);
+                    days.add(dayInfo);
+
                 });
+                step.setDays(days);
+
+                steps.add(step);
             });
 
-
+            challenge.setSteps(steps);
             return challenge;
 
             /*

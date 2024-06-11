@@ -18,8 +18,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class UserChallengeDto{
+    
     @Schema(description = "나의 진행룰", example = "50")
-    private int progressRate;
+    private int progressRate = 0;
 
     @NotNull
     @Schema(description = "챌린지 진행 단계", example = "{step : 5 , day : 2}")
