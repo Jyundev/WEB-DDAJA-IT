@@ -11,5 +11,5 @@ public interface ChallengePartService {
 
     public ChallengePartDto getchallengePartInfo(Long challengePartId);
 
-    public Challenge getChallengersDetailData(Long challengeId);
+    public Challenge getChallengersDetailData(Long challengeId, Long UserId);
 }

@@ -24,7 +24,7 @@ public interface UserService {
         public UserDto addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception;
 
         // 프로필 수정 update
-        public void updateUser(UserDto dto, String Email) throws Exception;
+        public void updateUser(UserPrivateInfoDto dto, Long userId) throws Exception;
 
         // 회원 탈퇴 delete
         public void deleteUser(Long id) throws Exception;

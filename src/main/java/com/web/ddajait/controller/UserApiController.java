@@ -56,10 +56,8 @@ public class UserApiController {
                 dto.getInterest());
 
         // Long user_id = CommonUtils.checkSessionId(session);
-        
+
         log.info("[PublicController][UserPrivateInfoDto] Start - user_id", userId);
-
-
 
         userService.addUserInfo(userId, dto);
 
@@ -68,12 +66,12 @@ public class UserApiController {
     }
 
     // 프로필 수정
-    @PutMapping("/{email}")
+    @PutMapping("/{userId}")
     @Operation(summary = "프로필 수정", description = "프로필 수정 API 입니다. 이메일을 입력 후 프로필을 수정합니다")
-    public ResponseEntity<ResponseDto<UserDto>> updateUser(
-            @Parameter(description = "유저 Email", example = "Jyundev@gmail.com") @PathVariable String email,
-            @Valid @RequestBody UserDto dto) throws Exception {
-        userService.updateUser(dto, email);
+    public ResponseEntity<ResponseDto<UserPrivateInfoDto>> updateUser(
+            @PathVariable Long userId,
+            @Valid @RequestBody UserPrivateInfoDto dto) throws Exception {
+        userService.updateUser(dto, userId);
         return ResponseHandler.SUCCESS(dto, " 프로필 업데이트 성공");
     }
 
@@ -98,7 +96,7 @@ public class UserApiController {
     @GetMapping("/challenge/specific")
     @Operation(summary = "특정 챌린지 상테 조회 API", description = "로그인 유저의 특정 챌린지 상태 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> getUserChalenge(
-            @RequestParam Long challegeId,  @RequestParam Long userId) throws Exception {
+            @RequestParam Long challegeId, @RequestParam Long userId) throws Exception {
         log.info("[UserApiController][getUserChalenge] Start");
 
         if (userId == null) {
@@ -112,7 +110,8 @@ public class UserApiController {
     @PostMapping("/challenge/insert/{userId}/{challengeId}")
     @Operation(summary = "유저 챌린지 신청 API", description = "유저 챌린지 신청 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> insertUserChallenge(
-            @RequestBody @Valid UserChallengeDto userChallenge, @PathVariable Long userId, @PathVariable Long challengeId) throws Exception {
+            @RequestBody @Valid UserChallengeDto userChallenge, @PathVariable Long userId,
+            @PathVariable Long challengeId) throws Exception {
 
         // EntityUtil.copyNonNullProperties(userChallenge, dto);
         userService.insertUserChallenge(userChallenge, userId, challengeId);
@@ -123,7 +122,8 @@ public class UserApiController {
     @PostMapping("/challenge/update/{challengeId}/{userId}")
     @Operation(summary = "유저 챌린지 상태 업데이트 API", description = "유저 챌린지 업데이트 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
-            @PathVariable Long challengeId, @PathVariable Long userId, @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
+            @PathVariable Long challengeId, @PathVariable Long userId,
+            @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
 
         // EntityUtil.copyNonNullProperties(userChallenge, dto);
         userService.updateUserChallenge(userChallenge, challengeId, userId);
@@ -134,7 +134,8 @@ public class UserApiController {
 
     @GetMapping("/certificate/{userId}")
     @Operation(summary = "유저 자격증 리스트 조회 API", description = "유저 자격증 리스트 조회 API 입니다.")
-    public ResponseEntity<ResponseDto<List<UserCertificateDto>>> getUserCertificateList(@PathVariable Long userId) throws Exception {
+    public ResponseEntity<ResponseDto<List<UserCertificateDto>>> getUserCertificateList(@PathVariable Long userId)
+            throws Exception {
         log.info("[UserApiController][getUserCertificateList] Start");
         return ResponseHandler.SUCCESS(userService.getUserCertificateList(userId), "유저 자격증 리스트 조회 성공");
     }
@@ -157,7 +158,8 @@ public class UserApiController {
     @PostMapping("/certificate/insert/{userId}/{certificateId}")
     @Operation(summary = "유저 자격증 추가 API", description = "유저 자격증 추가 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> insertUserCertificate(
-            @RequestBody @Valid UserCertificateDto userCertificateDto, @PathVariable("userId") Long userId, @PathVariable("certificateId") Long certificateId) throws Exception {
+            @RequestBody @Valid UserCertificateDto userCertificateDto, @PathVariable("userId") Long userId,
+            @PathVariable("certificateId") Long certificateId) throws Exception {
         userService.inserteUserCertificate(userCertificateDto, userId, certificateId);
         return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 추가 성공");
 
@@ -166,7 +168,8 @@ public class UserApiController {
     @PostMapping("/certificate/update/{certificateId}/{userId}")
     @Operation(summary = "유저 자격증 상태 업데이트 API", description = "유저 자격증 상태 업데이트 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> updatetUserChallenge(
-            @PathVariable Long certificateId, @PathVariable Long userId, @RequestBody @Valid UserCertificateDto usercCertificateDto)
+            @PathVariable Long certificateId, @PathVariable Long userId,
+            @RequestBody @Valid UserCertificateDto usercCertificateDto)
             throws Exception {
 
         // EntityUtil.copyNonNullProperties(userChallenge, dto);

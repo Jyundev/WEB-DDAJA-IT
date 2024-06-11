@@ -155,40 +155,42 @@ public class UserServiceImpl implements UserService {
     // 프로필 수정
     @Override
     @Transactional
-    public void updateUser(UserDto userDto, String email) throws Exception {
+    public void updateUser(UserPrivateInfoDto userDto, Long userId) throws Exception {
         log.info("[UserServiceImpl][updateUser] Start");
 
         // 기존 사용자 정보 가져오기
-        if (userDao.findByEmail(email) != null) {
-            log.info("[UserServiceImpl][updateUser] email : " + email);
+        if (userDao.findById(userId) != null) {
+            log.info("[UserServiceImpl][updateUser] email : " + userId);
 
-            UserEntity userEntity = userDao.findByEmail(email);
+            Optional<UserEntity> userEntityOptional = userDao.findById(userId);
 
-            // 중복회원 처리
-            int emailCheck = countMemberByMemberEmail(userDto.getEmail());
-            int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
 
-            // 이메일(ID) 중복
-            if (emailCheck > 0) {
-                throw new DuplicateMemberException(userDto.getEmail());
+            if (userEntityOptional.isPresent()) {
+
+                UserEntity entity = userEntityOptional.get();
+
+                if(userDto.getProfileImage().length() == 0){
+                    userDto.setProfileImage(entity.getProfileImage());
+                }
+                if(userDto.getNickname().length() == 0){
+                    userDto.setNickname(entity.getNickname());
+                }
+
+                // 중복회원 처리
+                int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
+
+                // 닉네임 중복
+                if (nicknameCheck > 0 && entity.getNickname() != userDto.getNickname()) {
+                    throw new DuplicateMemberException(userDto.getNickname());
+                }
+
+
+                // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
+                EntityUtil.copyNonNullProperties(userDto, entity);
+
+                userDao.updateUser(entity);
             }
 
-            // 닉네임 중복
-            if (nicknameCheck > 0) {
-                throw new DuplicateMemberException(userDto.getNickname());
-            }
-
-            // 비밀번호 암호화
-            userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-
-            // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
-            EntityUtil.copyNonNullProperties(userDto, userEntity);
-
-            log.info("[UserServiceImpl][updateUser] userDto : " + userDto.getNickname());
-            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity.getNickname());
-            log.info("[UserServiceImpl][updateUser] userEntity : " + userEntity.getUserId());
-
-            userDao.updateUser(userEntity);
         }
     }
 
@@ -381,19 +383,6 @@ public class UserServiceImpl implements UserService {
             log.info("[UserServiceImpl][getAddUserInfo]  " + entity);
             UserEntity userEntity = entity.get();
             userEntity.setGender(dto.getGender());
-
-            if (dto.getAge().length() > 0){
-                userEntity.setAge(dto.getAge());
-            }
-
-            if (dto.getGender().length() > 0){
-                userEntity.setGender(dto.getGender());
-            }
-
-            // userEntity.setInterest(strToList(dto.getInterest()));
-            // userEntity.setJob(strToList(dto.getJob()));
-            // userEntity.setQualifiedCertificate(strToList(dto.getQualified_certificate()));
-
             userEntity.setInterest((dto.getInterest()));
             userEntity.setJob((dto.getJob()));
             userEntity.setQualifiedCertificate((dto.getQualified_certificate()));
@@ -416,7 +405,6 @@ public class UserServiceImpl implements UserService {
         } else {
             strArray = Arrays.asList(data);
         }
-
 
         return strArray;
     }
