@@ -135,7 +135,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지 상세 페이지 데이터", description = "챌린지 상세 페이지 데이터를 가져오는 API 입니다. \n*현제 데이터 오류로 challengeId = 7, 8, 9 테스트 가능")
-    @GetMapping("/certificatePage/{challengeId}/{userId}")
+    @GetMapping("/challengePage/{challengeId}/{userId}")
     public Challenge getchallengeDetailPageInfo(@PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId) throws Exception {
 
         log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
