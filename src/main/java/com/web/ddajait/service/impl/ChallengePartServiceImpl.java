@@ -135,8 +135,6 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             // 결과 출력
             List<Step> steps = new ArrayList<>();
             groupedByPartNumAndDay.forEach((partNum, dayMap) -> {
-                System.out.println("PartNum: " + partNum);
-
                 // step 객체 생성
                 Step step = new Step();
 
@@ -151,7 +149,6 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                 // Day 리스트 생성
                 List<Day> days = new ArrayList<>();
                 dayMap.forEach((day, entities) -> {
-                    System.out.println("  Day: " + day);
                     // Day가 중복일 경우 여러 entity 생성
                     Day dayInfo = new Day();
                     Map<String, List<String>> chapterMap = new HashMap<>();
