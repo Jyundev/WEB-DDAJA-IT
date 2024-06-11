@@ -25,15 +25,12 @@ public class UserPrivateInfoDto {
     @Schema(description = "관심분야", example = "[정보보안]")
     private List<String> interest;
 
-    @Schema(description = "직업", example = "[학생]")
-    private List<String>  job;
+    @Schema(description = "직업", example = "학생")
+    private String  job;
 
     @Schema(description = "자격증", example = "[정보처리기사]")
     private List<String>  qualifiedCertificate;
 
     @Schema(description = "프로필이미지", example = "url")
     private String profileImage = "";
-
-
-
 }

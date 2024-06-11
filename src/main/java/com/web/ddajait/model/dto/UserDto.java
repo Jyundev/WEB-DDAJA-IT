@@ -47,7 +47,7 @@ public class UserDto {
     private List<String> interest;
 
     @Schema(description = "직업", example = "학생/직장인/취준생")
-    private List<String> job;
+    private String job;
 
     // @URL
     @Schema(description = "프로필이미지", example = "URL")

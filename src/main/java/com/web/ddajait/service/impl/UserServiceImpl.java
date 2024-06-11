@@ -166,19 +166,21 @@ public class UserServiceImpl implements UserService {
             if (userEntityOptional.isPresent()) {
 
                 UserEntity entity = userEntityOptional.get();
+                log.info("[UserServiceImpl][updateUser] entity "+ entity.getNickname());
 
                 if(userDto.getProfileImage().length() == 0){
                     userDto.setProfileImage(entity.getProfileImage());
                 }
-                if(userDto.getNickname().length() == 0){
+                if(userDto.getNickname().length() == 0 ){
                     userDto.setNickname(entity.getNickname());
                 }
 
                 // 중복회원 처리
                 int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
 
+
                 // 닉네임 중복
-                if (nicknameCheck > 0 && entity.getNickname() != userDto.getNickname()) {
+                if (nicknameCheck > 0 && !entity.getNickname().equals(userDto.getNickname())) {
                     throw new DuplicateMemberException(userDto.getNickname());
                 }
 
@@ -350,10 +352,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserChallengeDto findByUserIdChallengeId(Long challengeId, Long userId) throws Exception {
-
-        // Optional<UserEntity> userEntity = userDao.findById(userId);
-        // Optional<ChallengeInfoEntity> challengeEntity =
-        // challengeInfoDao.findById(challengeId);
 
         Optional<UserChallengeEntity> userChallengeEntity = userchallengeDao.findByUserIdChallengeId(userId,
                 challengeId);

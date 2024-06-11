@@ -64,8 +64,7 @@ public class UserEntity {
     private List<String> interest;
 
     @Column(length = 50)
-    @Convert(converter = ListToJsonConverter.class)
-    private List<String> job;
+    private String job;
 
     @Column(columnDefinition = "TEXT")
     private String profileImage;
@@ -96,7 +95,5 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserWrongQuestionEntity> userWrongQuestions;
-
-   
 
 }
