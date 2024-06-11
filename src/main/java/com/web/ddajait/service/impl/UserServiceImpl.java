@@ -1,5 +1,6 @@
 package com.web.ddajait.service.impl;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +25,9 @@ import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.UserChallenge.SubChallenge;
 import com.web.ddajait.model.entity.AuthorityEntity;
+import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserCertificateEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.model.entity.UserEntity;
@@ -42,13 +45,27 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    static List<String> strToList(String data) {
+        List<String> strArray;
+
+        if (data.contains(",")) {
+            String[] dataArray = data.split(", ");
+            strArray = Arrays.asList(dataArray);
+        } else {
+            strArray = Arrays.asList(data);
+        }
+
+        return strArray;
+    }
+
     private final UserDao userDao;
     private final ChallengeInfoDao challengeInfoDao;
     private final CertificateInfoDao certificateInfoDao;
     private final UserCertificateDao userCertificateDao;
-    private final UserchallengeDao userchallengeDao;
 
+    private final UserchallengeDao userchallengeDao;
     private final PasswordEncoder bCryptPasswordEncoder;
+
     private final HttpSession httpSession;
 
     @Override
@@ -166,24 +183,22 @@ public class UserServiceImpl implements UserService {
             if (userEntityOptional.isPresent()) {
 
                 UserEntity entity = userEntityOptional.get();
-                log.info("[UserServiceImpl][updateUser] entity "+ entity.getNickname());
+                log.info("[UserServiceImpl][updateUser] entity " + entity.getNickname());
 
-                if(userDto.getProfileImage().length() == 0){
+                if (userDto.getProfileImage().length() == 0) {
                     userDto.setProfileImage(entity.getProfileImage());
                 }
-                if(userDto.getNickname().length() == 0 ){
+                if (userDto.getNickname().length() == 0) {
                     userDto.setNickname(entity.getNickname());
                 }
 
                 // 중복회원 처리
                 int nicknameCheck = countMemberByMemberNickname(userDto.getNickname());
 
-
                 // 닉네임 중복
                 if (nicknameCheck > 0 && !entity.getNickname().equals(userDto.getNickname())) {
                     throw new DuplicateMemberException(userDto.getNickname());
                 }
-
 
                 // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
                 EntityUtil.copyNonNullProperties(userDto, entity);
@@ -218,14 +233,14 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /* 유저 자격증 */
+
     @Override
     public UserDto getUserWithAuthorities(String username) throws Exception {
         log.info("[UserServiceImpl][getUserWithAuthorities] Start ");
         return UserDto.from(userDao.getUserWithAuthorities(username));
 
     }
-
-    /* 유저 자격증 */
 
     @Override
     public List<UserCertificateDto> getUserCertificateList(Long userId) throws Exception {
@@ -256,6 +271,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /* 유저 챌린지 */
+
     @Override
     public void inserteUserCertificate(UserCertificateDto dto, Long userId, Long certificateId) throws Exception {
         log.info("[UserServiceImpl][inserteUserCertificate] Starts");
@@ -272,8 +289,6 @@ public class UserServiceImpl implements UserService {
         }
 
     }
-
-    /* 유저 챌린지 */
 
     @Override
     public List<UserChallengeDto> getUserChallengList() throws Exception {
@@ -298,12 +313,32 @@ public class UserServiceImpl implements UserService {
                 challengeID);
 
         if (userChallengeEntity.isPresent()) {
+
             UserChallengeEntity entity = userChallengeEntity.get();
+
+            if (!(dto.getDay() == 1 && dto.getStep() == 1)) {
+
+                ChallengeInfoEntity challengeInfoEntity = entity.getChallengeInfo();
+                Timestamp starTimestamp = challengeInfoEntity.getStartDay();
+                Timestamp endTimestamp = challengeInfoEntity.getEndDay();
+
+                long durationInMillis = endTimestamp.getTime() - starTimestamp.getTime();
+
+                // 결과를 일 단위로 변환합니다.
+                int period = (int) (durationInMillis / (1000 * 60 * 60 * 24)) + 1;
+
+                // 전체기간 나누기 현재 유저가 진행한 날
+                dto.setProgressRate(period / dto.getDay());
+            }
+
             EntityUtil.copyNonNullProperties(dto, entity);
             userchallengeDao.updateUserChallenge(entity);
         } else {
-            throw new EntityNotFoundException("UserCertificateEntity Not Found");
-
+            UserChallengeEntity entity = new UserChallengeEntity();
+            EntityUtil.copyNonNullProperties(dto, entity);
+            entity.setUser(userDao.findById(userId).get());
+            entity.setChallengeInfo(challengeInfoDao.findById(challengeID).get());
+            userchallengeDao.insertUserChallenge(entity);
         }
 
     }
@@ -391,24 +426,16 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
     @Override
     public int countMemberByChallengeId(Long challengeId) {
         return userchallengeDao.countMemberByChallengeId(challengeId);
     }
 
-    static List<String> strToList(String data) {
-        List<String> strArray;
+    // 챌린지 신청
+    @Override
+    public void subChallenge(Long ChallengeId, SubChallenge subChallenge) {
+        UserChallengeEntity entity = new UserChallengeEntity();
 
-        if (data.contains(",")) {
-            String[] dataArray = data.split(", ");
-            strArray = Arrays.asList(dataArray);
-        } else {
-            strArray = Arrays.asList(data);
-        }
-
-        return strArray;
     }
-
 
 }

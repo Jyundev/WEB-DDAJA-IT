@@ -2,8 +2,6 @@ package com.web.ddajait.model.dto;
 
 import java.util.List;
 
-import com.web.ddajait.model.entity.CertificatePartEntity;
-import com.web.ddajait.model.entity.ChallengePartEntity;
 import com.web.ddajait.model.entity.PartQuestionEntity;
 
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +28,7 @@ public class PartQuestionDto {
 
     @NotBlank
     private String certificationName;
-    
+
     @NotBlank
     private String question;
 

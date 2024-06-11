@@ -6,6 +6,7 @@ import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.UserChallenge.SubChallenge;
 
 import jakarta.servlet.ServletException;
 
@@ -66,6 +67,8 @@ public interface UserService {
 
         /* 챌린지 */
 
+        // 챌린지 신청 
+        public void subChallenge(Long ChallengeId, SubChallenge subChallenge);
         // 유저 챌린지 정보 조회
         public List<UserChallengeDto> getUserChallengList() throws Exception;
 

@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.web.ddajait.model.dao.CertificationRegistrationDao;
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.ChallengePartDao;
 import com.web.ddajait.model.dao.PartQuestionDao;
@@ -43,7 +42,6 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     private final PartQuestionDao partQuestionDao;
     private final ChallengeInfoDao challengeInfoDao;
     private final UserchallengeDao userchallengeDao;
-    private final CertificationRegistrationDao certificationRegistrationDao;
 
     @Override
     public List<ChallengePartDto> getAllchallengePartInfo() {
@@ -79,11 +77,11 @@ public class ChallengePartServiceImpl implements ChallengePartService {
         // 현재 유저의 챌린지 진행상태 가져오기
         if (challengeStatus.isPresent()) {
             UserChallengeEntity uChallengeEntity = challengeStatus.get();
-            Map<String, Object> stepStatus = uChallengeEntity.getChallengeSatus();
-            stepv = (int) stepStatus.get("step");
-            dayv = (int) stepStatus.get("day");
-            System.err.println("stepv " + stepv);
-            
+            // Map<String, Object> stepStatus = uChallengeEntity.getChallengeSatus();
+            // stepv = (int) stepStatus.get("step");
+            // dayv = (int) stepStatus.get("day");
+            stepv = uChallengeEntity.getStep();
+            dayv = uChallengeEntity.getDay();            
 
         } else {
             stepv = 0;

@@ -1,8 +1,8 @@
 package com.web.ddajait.model.dto;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
-import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import java.text.SimpleDateFormat;
 
 @Getter
 @Setter
@@ -71,7 +70,7 @@ public class ChallengeInfoDto {
                 .build();
     }
 
-    public static String timestampToString(Timestamp time){
+    public static String timestampToString(Timestamp time) {
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
         return outputFormat.format(time);
 

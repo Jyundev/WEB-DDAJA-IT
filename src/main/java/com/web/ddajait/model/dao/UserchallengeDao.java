@@ -31,5 +31,8 @@ public interface UserchallengeDao {
 
     // 챌린지 평균 진행률 
     public double getTotalProgress(Long challengeId);
+
+    // 챌린지 신청 
+    public void subChallenge(UserChallengeEntity entity);
     
 }

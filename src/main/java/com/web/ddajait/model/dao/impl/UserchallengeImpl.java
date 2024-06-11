@@ -63,4 +63,10 @@ public class UserchallengeImpl implements UserchallengeDao {
         return userChallengeRepository.getTotalProgress(challengeId);
     }
 
+    @Override
+    public void subChallenge(UserChallengeEntity entity) {
+        userChallengeRepository.save(entity);
+
+    }
+
 }
