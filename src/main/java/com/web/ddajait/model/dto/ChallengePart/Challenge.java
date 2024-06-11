@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Challenge {
+    Long challengeId;
     String name;
     String start;
     String end;

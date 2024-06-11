@@ -62,7 +62,7 @@ public interface UserService {
         public void updateUserCertificate( UserCertificateDto dto, Long certificateId, Long userId) throws Exception;
 
         // 자격증 정보 추가
-        public void inserteUserCertificate(UserCertificateDto dto) throws Exception;
+        public void inserteUserCertificate(UserCertificateDto dto, Long userId, Long certificateId) throws Exception;
 
         
 
@@ -81,6 +81,6 @@ public interface UserService {
         public void updateUserChallenge(UserChallengeDto dto, Long challengeID, Long UserId) throws Exception;
 
         // 챌린지 정보 추가
-        public void insertUserChallenge(UserChallengeDto dto, Long userId) throws Exception;
+        public void insertUserChallenge(UserChallengeDto dto, Long userId, Long challengeId) throws Exception;
 
 }

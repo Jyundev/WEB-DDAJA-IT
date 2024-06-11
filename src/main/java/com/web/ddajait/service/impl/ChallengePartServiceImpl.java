@@ -2,8 +2,12 @@ package com.web.ddajait.service.impl;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.ChallengePartDao;
 import com.web.ddajait.model.dao.PartQuestionDao;
+import com.web.ddajait.model.dao.UserchallengeDao;
 import com.web.ddajait.model.dto.ChallengePartDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.model.dto.ChallengePart.Chapter;
@@ -21,6 +26,7 @@ import com.web.ddajait.model.dto.ChallengePart.TestQuestion;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.ChallengePartEntity;
 import com.web.ddajait.model.entity.PartQuestionEntity;
+import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.service.ChallengePartService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -35,6 +41,8 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     private final ChallengePartDao challengePartDao;
     private final PartQuestionDao partQuestionDao;
     private final ChallengeInfoDao challengeInfoDao;
+    private final UserchallengeDao userchallengeDao;
+
 
     @Override
     public List<ChallengePartDto> getAllchallengePartInfo() {
@@ -59,12 +67,21 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     }
 
     @Override
-    public Challenge getChallengersDetailData(Long challengeId) {
+    public Challenge getChallengersDetailData(Long challengeId, Long UserId) {
+
+        Optional<UserChallengeEntity> challengeStatus = userchallengeDao.findByUserIdChallengeId(UserId, challengeId);
+        if (challengeStatus.isPresent()){
+            UserChallengeEntity uChallengeEntity = challengeStatus.get();
+            Map<String, Object> stepStatus = uChallengeEntity.getChallengeSatus();
+            String step = (String) stepStatus.get("step");
+            String day = (String) stepStatus.get("day");
+        }
 
         Challenge challenge = new Challenge();
 
         if (challengeInfoDao.findById(challengeId).isPresent()) {
             ChallengeInfoEntity challengeInfoentity = challengeInfoDao.findById(challengeId).get();
+
             String name = challengeInfoentity.getChallengeName();
 
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -83,6 +100,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             int totalProgress = 40;
             int totalUser = 10;
 
+            challenge.setChallengeId(challengeId);
             challenge.setName(name);
             challenge.setStart(startDay);
             challenge.setEnd(endDay);
@@ -92,10 +110,32 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
             List<ChallengePartEntity> partEntityList = challengePartDao.findChallengePartByChallengeId(challengeId);
 
+            // day와 step이 같은 항목들을 묶어서 처리
+            // partnum으로 그룹화하고 day로 정렬하여 맵을 생성
+            Map<Integer, List<ChallengePartEntity>> groupedByPartNumAndDay = partEntityList.stream()
+                    .collect(Collectors.groupingBy(ChallengePartEntity::getPartNum,
+                            TreeMap::new,
+                            Collectors.toList()));
+
+            // 결과 출력
+            groupedByPartNumAndDay.forEach((key, value) -> {
+                System.out.println("Key: " + key);
+                System.out.println("Values:");
+                value.forEach(v -> {
+                    System.out.println(v.getPartNum());
+                    System.out.println(v.getDay());
+                    System.out.println(v.getPartName());
+
+                    Step step = new Step();
+                    step.setStep(v.getPartNum());
+                    
+
+                });
+                System.out.println();
+            });
             List<Step> steps = partEntityList.stream().map(source -> {
 
                 Step step = new Step();
-                log.info("[challengePartServiceImpl][getChallengersDetailData] source " + source.getSectionName());
 
                 int step_num = source.getPartNum();
                 boolean complete = true;
@@ -114,32 +154,41 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                         .findByCetificatePartId(certifocatePartId);
 
                 AtomicInteger testId = new AtomicInteger(0);
-                // TestQuestion 생성
-                List<TestQuestion> testQuestions = partQuestionEntities.stream().map(testData -> {
-                    TestQuestion testQuestion = new TestQuestion();
+                List<TestQuestion> testQuestions = new ArrayList<>();
 
-                    int id = testId.incrementAndGet();
+                // 마지막 step에 TestQuestion 생성
+                if (source.isRandomQuestion()) {
 
-                    if (testData.getChoices().size() == 4) {
-                        testQuestion.setId(id);
-                        testQuestion.setQuestion(testData.getQuestion());
-                        testQuestion.setItem1(testData.getChoices().get(0));
-                        testQuestion.setItem2(testData.getChoices().get(1));
-                        testQuestion.setItem3(testData.getChoices().get(2));
-                        testQuestion.setItem4(testData.getChoices().get(3));
-                        testQuestion.setAnswer(testData.getAnswer());
-                        return Optional.of(testQuestion);
+                    // 랜덤으로 세가지 문제만 추출
+                    Collections.shuffle(partQuestionEntities);
+                    List<PartQuestionEntity> randomQuestions = partQuestionEntities.subList(0,
+                            Math.min(partQuestionEntities.size(), 3));
 
-                    } else {
-                        return Optional.<TestQuestion>empty();
+                    testQuestions = randomQuestions.stream().map(testData -> {
+                        TestQuestion testQuestion = new TestQuestion();
 
-                    }
+                        int id = testId.incrementAndGet();
 
-                })
-                        .filter(Optional::isPresent)
-                        .map(Optional::get)
-                        .collect(Collectors.toList());
+                        if (testData.getChoices().size() == 4) {
+                            testQuestion.setId(id);
+                            testQuestion.setQuestion(testData.getQuestion());
+                            testQuestion.setItem1(testData.getChoices().get(0));
+                            testQuestion.setItem2(testData.getChoices().get(1));
+                            testQuestion.setItem3(testData.getChoices().get(2));
+                            testQuestion.setItem4(testData.getChoices().get(3));
+                            testQuestion.setAnswer(testData.getAnswer());
+                            return Optional.of(testQuestion);
 
+                        } else {
+                            return Optional.<TestQuestion>empty();
+
+                        }
+
+                    })
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .collect(Collectors.toList());
+                }
                 step.setTest(testQuestions);
 
                 List<Day> days = partEntityList.stream().map(partData -> {

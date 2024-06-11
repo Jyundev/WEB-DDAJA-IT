@@ -109,13 +109,13 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
-    @PostMapping("/challenge/insert/{userId}")
+    @PostMapping("/challenge/insert/{userId}/{challengeId}")
     @Operation(summary = "유저 챌린지 신청 API", description = "유저 챌린지 신청 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> insertUserChallenge(
-            @RequestBody @Valid UserChallengeDto userChallenge, @PathVariable Long userId) throws Exception {
+            @RequestBody @Valid UserChallengeDto userChallenge, @PathVariable Long userId, @PathVariable Long challengeId) throws Exception {
 
         // EntityUtil.copyNonNullProperties(userChallenge, dto);
-        userService.insertUserChallenge(userChallenge, userId);
+        userService.insertUserChallenge(userChallenge, userId, challengeId);
         return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 추가 성공");
 
     }
@@ -139,11 +139,11 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userService.getUserCertificateList(userId), "유저 자격증 리스트 조회 성공");
     }
 
-    @GetMapping("/certificate/specific")
+    @GetMapping("/certificate/specific/{userId}/{certificateId}")
     @Parameter(description = "challegeId", example = "1")
     @Operation(summary = "특정 유저 자격증 조회 API", description = "특정 유저 자격증 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> getUserCertificate(
-            @RequestParam Long certificateId, Long userId) throws Exception {
+            @PathVariable Long certificateId, @PathVariable Long userId) throws Exception {
         log.info("[UserApiController][getUserCertificate] Start");
 
         if (userId == null) {
@@ -154,11 +154,11 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 조회 성공");
     }
 
-    @PostMapping("/certificate/insert")
+    @PostMapping("/certificate/insert/{userId}/{certificateId}")
     @Operation(summary = "유저 자격증 추가 API", description = "유저 자격증 추가 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> insertUserCertificate(
-            @RequestBody @Valid UserCertificateDto userCertificateDto) throws Exception {
-        userService.inserteUserCertificate(userCertificateDto);
+            @RequestBody @Valid UserCertificateDto userCertificateDto, @PathVariable("userId") Long userId, @PathVariable("certificateId") Long certificateId) throws Exception {
+        userService.inserteUserCertificate(userCertificateDto, userId, certificateId);
         return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 추가 성공");
 
     }

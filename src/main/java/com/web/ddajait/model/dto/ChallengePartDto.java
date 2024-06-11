@@ -1,6 +1,5 @@
 package com.web.ddajait.model.dto;
 
-import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.ChallengePartEntity;
 
 import jakarta.validation.constraints.NotBlank;
@@ -39,6 +38,8 @@ public class ChallengePartDto {
 
     private String memo;
 
+    private boolean randomQuestion;
+
     @NotBlank
     private Long challengeId;
 
@@ -55,6 +56,7 @@ public class ChallengePartDto {
                 .partName(entity.getPartName())
                 .partNum(entity.getPartNum())
                 .sectionName(entity.getSectionName())
+                .randomQuestion(entity.isRandomQuestion())
                 .build();
 
     }

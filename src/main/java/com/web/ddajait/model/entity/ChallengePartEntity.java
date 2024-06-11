@@ -1,6 +1,5 @@
 package com.web.ddajait.model.entity;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -50,6 +49,8 @@ public class ChallengePartEntity {
 
     @Column( columnDefinition = "TEXT")
     private String memo;
+
+    private boolean randomQuestion;
 
     @OneToMany(mappedBy = "challengePart")
     private List<PartQuestionEntity> questions;

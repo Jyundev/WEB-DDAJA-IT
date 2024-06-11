@@ -5,7 +5,6 @@ import java.util.Map;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,10 +25,6 @@ public class UserChallengeDto{
     @Schema(description = "챌린지 진행 단계", example = "{step : 5 , day : 2}")
     private Map<String, Object> challengeSatus;
 
-    @NotNull
-    @Schema(description = "챌린지 id", example = "0")
-    private Long challengeId;
-
     public static UserChallengeDto from(UserChallengeEntity entity) {
         if (entity == null)
             return null;
@@ -37,7 +32,6 @@ public class UserChallengeDto{
         return UserChallengeDto.builder()
                 .progressRate(entity.getProgressRate())
                 .challengeSatus(entity.getChallengeSatus())
-                .challengeId(entity.getChallengeInfo().getChallengeId())
                 .build();
     }
 }

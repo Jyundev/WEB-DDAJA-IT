@@ -29,7 +29,6 @@ import com.web.ddajait.model.entity.UserCertificateEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.service.UserService;
-import com.web.ddajait.util.CommonUtils;
 import com.web.ddajait.util.EntityUtil;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -257,17 +256,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void inserteUserCertificate(UserCertificateDto dto) throws Exception {
+    public void inserteUserCertificate(UserCertificateDto dto, Long userId, Long certificateId) throws Exception {
         log.info("[UserServiceImpl][inserteUserCertificate] Starts");
 
         UserCertificateEntity entity = new UserCertificateEntity();
 
-        Long user_id = CommonUtils.checkSessionId(httpSession);
-
-        if (user_id != null) {
+        if (userId != null) {
             EntityUtil.copyNonNullProperties(dto, entity);
-            entity.setUser(userDao.findById(user_id).get());
-            entity.setCertificateInfo(certificateInfoDao.findById(dto.getCertificateId()).get());
+            entity.setUser(userDao.findById(userId).get());
+            entity.setCertificateInfo(certificateInfoDao.findById(certificateId).get());
             userCertificateDao.insertUserrCertificate(entity);
         } else {
             throw new NotFoundMemberException();
@@ -311,7 +308,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void insertUserChallenge(UserChallengeDto dto, Long userId) throws Exception {
+    public void insertUserChallenge(UserChallengeDto dto, Long userId, Long challengeId) throws Exception {
         log.info("[UserServiceImpl][insertUserChallenge] Starts");
 
         // Long user_id = (Long) httpSession.getAttribute("userId");
@@ -319,7 +316,7 @@ public class UserServiceImpl implements UserService {
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(userId).get());
-            entity.setChallengeInfo(challengeInfoDao.findById(dto.getChallengeId()).get());
+            entity.setChallengeInfo(challengeInfoDao.findById(challengeId).get());
             userchallengeDao.insertUserChallenge(entity);
         } else {
             throw new NotFoundMemberException();
