@@ -17,7 +17,6 @@ import com.web.ddajait.config.jwt.TokenProvider;
 import com.web.ddajait.model.dto.LoginDto;
 import com.web.ddajait.model.dto.TokenDto;
 import com.web.ddajait.service.UserService;
-import com.web.ddajait.util.CommonUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -62,15 +61,11 @@ public class AuthController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        // 세션 관리 
         Long userId = userService.getUserId(authentication.getName());
-        session.setAttribute("userId", userId);
-
-        // 세션 타임아웃을 설정하는 메서드 (1800초 == 30분)
-        session.setMaxInactiveInterval(60 * 30);
-        
-        CommonUtils.checkSessionId(session);
-        
+        String USER_ID =  String.valueOf(userId);
+        httpHeaders.add("USER_ID",USER_ID);
+        log.info("[AuthController][authorize] USER_ID "+USER_ID);
+ 
 
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
