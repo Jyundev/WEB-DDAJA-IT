@@ -160,10 +160,8 @@ public class UserServiceImpl implements UserService {
 
         // 기존 사용자 정보 가져오기
         if (userDao.findById(userId) != null) {
-            log.info("[UserServiceImpl][updateUser] email : " + userId);
 
             Optional<UserEntity> userEntityOptional = userDao.findById(userId);
-
 
             if (userEntityOptional.isPresent()) {
 
@@ -187,7 +185,6 @@ public class UserServiceImpl implements UserService {
 
                 // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
                 EntityUtil.copyNonNullProperties(userDto, entity);
-
                 userDao.updateUser(entity);
             }
 
@@ -385,7 +382,7 @@ public class UserServiceImpl implements UserService {
             userEntity.setGender(dto.getGender());
             userEntity.setInterest((dto.getInterest()));
             userEntity.setJob((dto.getJob()));
-            userEntity.setQualifiedCertificate((dto.getQualified_certificate()));
+            userEntity.setQualifiedCertificate((dto.getQualifiedCertificate()));
 
             userDao.updateUser(userEntity);
 

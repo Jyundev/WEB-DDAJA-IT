@@ -80,6 +80,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             Map<String, Object> stepStatus = uChallengeEntity.getChallengeSatus();
             stepv = (int) stepStatus.get("step");
             dayv = (int) stepStatus.get("day");
+            
 
         } else {
             stepv = 0;
@@ -104,13 +105,14 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             long durationInMillis = endTimestamp.getTime() - starTimestamp.getTime();
 
             // 결과를 일 단위로 변환합니다.
-            long period = durationInMillis / (1000 * 60 * 60 * 24);
+            int period = (int) (durationInMillis / (1000 * 60 * 60 * 24));
 
             String startDay = outputFormat.format(starTimestamp);
             String endDay = outputFormat.format(endTimestamp);
-            int myProgress = 20;
-            int totalProgress = 40;
-            int totalUser = 10;
+            // 전체기간 나누기 현재 유저가 진행한 데이 
+            int myProgress = period / userDay;
+            int totalProgress = 0;
+            int totalUser = 0;
 
             challenge.setChallengeId(challengeId);
             challenge.setName(name);
@@ -226,102 +228,6 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
             challenge.setSteps(steps);
             return challenge;
-
-            /*
-             * List<Step> steps = partEntityList.stream().map(source -> {
-             * 
-             * Step step = new Step();
-             * 
-             * int step_num = source.getPartNum();
-             * boolean complete = true;
-             * String part_name = source.getPartName();
-             * String chapter_name = source.getChapterName();
-             * String section_name = source.getSectionName();
-             * 
-             * step.setStep(step_num);
-             * step.setComplete(complete);
-             * step.setChapterName(chapter_name);
-             * step.setPartName(part_name);
-             * step.setSectionName(section_name);
-             * 
-             * Long certifocatePartId =
-             * source.getCertificatePartInfo().getCertificatePartId();
-             * List<PartQuestionEntity> partQuestionEntities = partQuestionDao
-             * .findByCetificatePartId(certifocatePartId);
-             * 
-             * AtomicInteger testId = new AtomicInteger(0);
-             * List<TestQuestion> testQuestions = new ArrayList<>();
-             * 
-             * // 마지막 step에 TestQuestion 생성
-             * if (source.isRandomQuestion()) {
-             * 
-             * // 랜덤으로 세가지 문제만 추출
-             * Collections.shuffle(partQuestionEntities);
-             * List<PartQuestionEntity> randomQuestions = partQuestionEntities.subList(0,
-             * Math.min(partQuestionEntities.size(), 3));
-             * 
-             * testQuestions = randomQuestions.stream().map(testData -> {
-             * TestQuestion testQuestion = new TestQuestion();
-             * 
-             * int id = testId.incrementAndGet();
-             * 
-             * if (testData.getChoices().size() == 4) {
-             * testQuestion.setId(id);
-             * testQuestion.setQuestion(testData.getQuestion());
-             * testQuestion.setItem1(testData.getChoices().get(0));
-             * testQuestion.setItem2(testData.getChoices().get(1));
-             * testQuestion.setItem3(testData.getChoices().get(2));
-             * testQuestion.setItem4(testData.getChoices().get(3));
-             * testQuestion.setAnswer(testData.getAnswer());
-             * return Optional.of(testQuestion);
-             * 
-             * } else {
-             * return Optional.<TestQuestion>empty();
-             * 
-             * }
-             * 
-             * })
-             * .filter(Optional::isPresent)
-             * .map(Optional::get)
-             * .collect(Collectors.toList());
-             * }
-             * step.setTest(testQuestions);
-             * 
-             * List<Day> days = partEntityList.stream().map(partData -> {
-             * 
-             * Day day = new Day();
-             * 
-             * day.setDay(partData.getDay());
-             * 
-             * Chapter chapter = new Chapter();
-             * chapter.setName(partData.getPartName());
-             * 
-             * List<String> sections = partEntityList.stream()
-             * .filter(p -> p.getDay() == partData.getDay())
-             * .map(ChallengePartEntity::getSectionName)
-             * .collect(Collectors.toList());
-             * 
-             * chapter.setSection(sections);
-             * 
-             * day.setChapter(chapter);
-             * day.setComplete(true);
-             * day.setMemo("memo 입니다");
-             * 
-             * return day;
-             * 
-             * }).collect(Collectors.toList());
-             * 
-             * step.setDays(days);
-             * 
-             * return step;
-             * 
-             * }).collect(Collectors.toList());
-             * 
-             * challenge.setSteps(steps);
-             * 
-             * return challenge;
-             * 
-             */
         } else {
             throw new EntityNotFoundException("Not found ChallengePartEntityList");
 

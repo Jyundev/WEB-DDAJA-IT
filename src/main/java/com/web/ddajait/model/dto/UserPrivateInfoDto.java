@@ -29,7 +29,7 @@ public class UserPrivateInfoDto {
     private List<String>  job;
 
     @Schema(description = "자격증", example = "[정보처리기사]")
-    private List<String>  qualified_certificate;
+    private List<String>  qualifiedCertificate;
 
     @Schema(description = "프로필이미지", example = "url")
     private String profileImage = "";

@@ -1,6 +1,8 @@
 package com.web.ddajait.model.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 
@@ -10,4 +12,7 @@ public interface ChallengeInfoRepository extends JpaRepository<ChallengeInfoEnti
     // nativeQuery = true)
     // int countMemberByMemberNickname(@Param("id") String id);
 
+    @Query(value = "SELECT COUNT(*) FROM challenge_info WHERE chalenge_id = :chalenge_id", nativeQuery = true)
+    int countMemberByMemberEmail(@Param("chalenge_id") Long chalenge_id);
+    
 }

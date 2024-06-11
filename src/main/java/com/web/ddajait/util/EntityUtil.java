@@ -1,5 +1,6 @@
 package com.web.ddajait.util;
 
+import java.beans.PropertyDescriptor;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,14 +10,10 @@ import org.springframework.beans.BeanWrapperImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.beans.PropertyDescriptor;
-
 @Slf4j
 public class EntityUtil {
     // 소스 객체에서 대상 객체로 속성을 복사
       public static void copyNonNullProperties(Object source, Object target) {
-        // log.info(source.toString());
-        // log.info(target.toString());
 
         if (source == null || target == null) {
             throw new IllegalArgumentException("Source and target must not be null");
