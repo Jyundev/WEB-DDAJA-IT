@@ -9,4 +9,5 @@ public interface CertificationRegistrationDao {
     
     public List<CertificationRegistrationEntity> getAllCerticationResgitration();
 
+    // public Optional<CertificationRegistrationEntity> findByCertificateId(Long certificateId);
 }

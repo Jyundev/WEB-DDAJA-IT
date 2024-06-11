@@ -18,9 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 public class UserchallengeImpl implements UserchallengeDao {
-
-
-
     private final UserChallengeRepository userChallengeRepository;
 
     @Override
@@ -30,7 +27,6 @@ public class UserchallengeImpl implements UserchallengeDao {
 
     @Override
     public void updateUserChallenge(UserChallengeEntity entity) {
-
         userChallengeRepository.save(entity);
     }
 
@@ -55,6 +51,16 @@ public class UserchallengeImpl implements UserchallengeDao {
     public Optional<UserChallengeEntity> findByUserIdChallengeId(Long userId, Long challengeId) {
 
         return userChallengeRepository.findByUser_UserIdAndChallengeInfo_ChallengeId(userId, challengeId);
+    }
+
+    @Override
+    public int countMemberByChallengeId(Long challengeId) {
+        return userChallengeRepository.countMemberByChallengeId(challengeId);
+    }
+
+    @Override
+    public double getTotalProgress(Long challengeId) {
+        return userChallengeRepository.getTotalProgress(challengeId);
     }
 
 }

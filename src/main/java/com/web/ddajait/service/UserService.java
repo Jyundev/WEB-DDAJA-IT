@@ -20,7 +20,7 @@ public interface UserService {
 
         public UserDto findByEmail(String email) throws Exception;
 
-        // 추가 정보 수집 
+        // 추가 정보 수집
         public UserDto addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception;
 
         // 프로필 수정 update
@@ -55,16 +55,14 @@ public interface UserService {
         // 자격증 정보 조회
         public UserCertificateDto getUserCertificate(Long userCertificateId) throws Exception;
 
-        // 자격증 ID 조회 
+        // 자격증 ID 조회
         public UserCertificateDto findUserCertificateId(Long userCertificateId, Long userId) throws Exception;
 
         // 자격증 정보 업데이트
-        public void updateUserCertificate( UserCertificateDto dto, Long certificateId, Long userId) throws Exception;
+        public void updateUserCertificate(UserCertificateDto dto, Long certificateId, Long userId) throws Exception;
 
         // 자격증 정보 추가
         public void inserteUserCertificate(UserCertificateDto dto, Long userId, Long certificateId) throws Exception;
-
-        
 
         /* 챌린지 */
 
@@ -74,7 +72,7 @@ public interface UserService {
         // 챌린지 정보 조회
         public UserChallengeDto getUserChalleng(Long userChallengeId) throws Exception;
 
-        // 챌린지 ID 조회 
+        // 챌린지 ID 조회
         public UserChallengeDto findByUserIdChallengeId(Long challengeId, Long userId) throws Exception;
 
         // 챌린지 정보 업데이트
@@ -82,5 +80,8 @@ public interface UserService {
 
         // 챌린지 정보 추가
         public void insertUserChallenge(UserChallengeDto dto, Long userId, Long challengeId) throws Exception;
+
+        // 챌린지별 참여 유저 수
+        public int countMemberByChallengeId(Long challengeId);
 
 }

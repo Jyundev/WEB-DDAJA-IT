@@ -3,13 +3,11 @@ package com.web.ddajait.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.model.dto.ChallengeInfoDto;
 import com.web.ddajait.model.dto.ChallengePartDto;
-import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.service.ChallengeInfoSercive;
 import com.web.ddajait.service.ChallengePartService;
 
@@ -46,13 +44,6 @@ public class ChallengeController {
         return challengePartService.getAllchallengePartInfo();
     }
 
-    @Operation(summary = "챌린지 상세 페이지 데이터", description = "챌린지 상세 페이지 데이터를 가져오는 API 입니다. \n*현제 데이터 오류로 challengeId = 7, 8, 9 테스트 가능")
-    @GetMapping("/detail/{challengeId}/{userId}")
-    public Challenge getchallengeDetailPageInfo(@PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId) throws Exception {
 
-        log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
-
-        return challengePartService.getChallengersDetailData(challengeId, userId);
-    }
 
 }

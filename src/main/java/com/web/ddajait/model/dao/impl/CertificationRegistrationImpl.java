@@ -21,8 +21,12 @@ public class CertificationRegistrationImpl implements CertificationRegistrationD
     @Override
     public List<CertificationRegistrationEntity> getAllCerticationResgitration() {
         log.info("[CertificationRegistrationImpl][getAllCerticationResgitration] Starts");
-
         return certificateRegieterRepogitory.findAll();
     }
+
+    // @Override
+    // public Optional<CertificationRegistrationEntity> findByCertificateId(Long certificateId) {
+    //     return certificateRegieterRepogitory.findByCertificateInfo_certificateId(certificateId);
+    // }
 
 }

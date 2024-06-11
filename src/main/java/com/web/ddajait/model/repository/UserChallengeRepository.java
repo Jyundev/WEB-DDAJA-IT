@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
@@ -22,5 +24,11 @@ public interface UserChallengeRepository extends JpaRepository<UserChallengeEnti
     Optional<UserChallengeEntity> findByUserAndChallengeInfo(UserEntity user, ChallengeInfoEntity challenge);
 
     Optional<UserChallengeEntity> findByUser_UserIdAndChallengeInfo_ChallengeId(Long userId, Long challengeID);
+
+    @Query(value = "SELECT COUNT(*) FROM user_challenge WHERE challenge_id = :challenge_id", nativeQuery = true)
+    int countMemberByChallengeId(@Param("challenge_id") Long challenge_id);
+
+    @Query(value = "SELECT COALESCE(AVG(progress_rate), 0) FROM user_challenge WHERE challenge_id = :challenge_id", nativeQuery = true)
+    double getTotalProgress(@Param("challenge_id") Long challenge_id);
 
 }

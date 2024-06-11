@@ -6,4 +6,6 @@ import com.web.ddajait.model.entity.CertificationRegistrationEntity;
 
 public interface CertificateRegieterRepogitory extends JpaRepository<CertificationRegistrationEntity, Long> {
 
+    // Optional<CertificationRegistrationEntity> findByCertificateInfo_certificateId(Long certificateId);
+
 }

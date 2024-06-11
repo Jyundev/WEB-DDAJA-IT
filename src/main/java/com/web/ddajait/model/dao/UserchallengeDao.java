@@ -26,4 +26,10 @@ public interface UserchallengeDao {
     // 데이터 추가
     public void insertUserChallenge(UserChallengeEntity entity);
 
+    // 챌린지별 참여 유저 수 
+    public int countMemberByChallengeId(Long challengeId);
+
+    // 챌린지 평균 진행률 
+    public double getTotalProgress(Long challengeId);
+    
 }

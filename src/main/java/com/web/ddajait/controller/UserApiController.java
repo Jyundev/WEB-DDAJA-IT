@@ -20,6 +20,8 @@ import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.ChallengePart.Challenge;
+import com.web.ddajait.service.ChallengePartService;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,7 +44,8 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 public class UserApiController {
 
-    UserService userService;
+    private final UserService userService;
+    private final ChallengePartService challengePartService;
 
     HttpSession session;
 
@@ -129,6 +132,15 @@ public class UserApiController {
         userService.updateUserChallenge(userChallenge, challengeId, userId);
         return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 상태 업데이트 성공");
 
+    }
+
+    @Operation(summary = "챌린지 상세 페이지 데이터", description = "챌린지 상세 페이지 데이터를 가져오는 API 입니다. \n*현제 데이터 오류로 challengeId = 7, 8, 9 테스트 가능")
+    @GetMapping("/certificatePage/{challengeId}/{userId}")
+    public Challenge getchallengeDetailPageInfo(@PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId) throws Exception {
+
+        log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
+
+        return challengePartService.getChallengersDetailData(challengeId, userId);
     }
     /* 유저 자격증 */
 

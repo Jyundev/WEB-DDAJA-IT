@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.web.ddajait.model.dao.CertificationRegistrationDao;
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.ChallengePartDao;
 import com.web.ddajait.model.dao.PartQuestionDao;
@@ -42,6 +43,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     private final PartQuestionDao partQuestionDao;
     private final ChallengeInfoDao challengeInfoDao;
     private final UserchallengeDao userchallengeDao;
+    private final CertificationRegistrationDao certificationRegistrationDao;
 
     @Override
     public List<ChallengePartDto> getAllchallengePartInfo() {
@@ -80,6 +82,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             Map<String, Object> stepStatus = uChallengeEntity.getChallengeSatus();
             stepv = (int) stepStatus.get("step");
             dayv = (int) stepStatus.get("day");
+            System.err.println("stepv " + stepv);
             
 
         } else {
@@ -90,13 +93,16 @@ public class ChallengePartServiceImpl implements ChallengePartService {
         final int userStep = stepv;
         final int userDay = dayv;
 
+
+
         Challenge challenge = new Challenge();
 
         if (challengeInfoDao.findById(challengeId).isPresent()) {
             ChallengeInfoEntity challengeInfoentity = challengeInfoDao.findById(challengeId).get();
+            // CertificationRegistrationEntity certificationRegistrationEntity = certificationRegistrationDao.findByCertificateId(challengeInfoentity.getCertificateInfo().getCertificateId()).get();
 
             String name = challengeInfoentity.getChallengeName();
-
+            // String testDay = certificationRegistrationEntity.getTestDay();
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             Timestamp starTimestamp = challengeInfoentity.getStartDay();
@@ -105,14 +111,21 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             long durationInMillis = endTimestamp.getTime() - starTimestamp.getTime();
 
             // 결과를 일 단위로 변환합니다.
-            int period = (int) (durationInMillis / (1000 * 60 * 60 * 24));
+            int period = (int) (durationInMillis / (1000 * 60 * 60 * 24)) + 1;
+
+            // 전체기간 나누기 현재 유저가 진행한 데이
+            int myProgress = 0;
+
+            if(userDay!=0){
+                myProgress = period / userDay;
+            }
 
             String startDay = outputFormat.format(starTimestamp);
             String endDay = outputFormat.format(endTimestamp);
-            // 전체기간 나누기 현재 유저가 진행한 데이 
-            int myProgress = period / userDay;
-            int totalProgress = 0;
-            int totalUser = 0;
+            int totalUser = userchallengeDao.countMemberByChallengeId(challengeId);
+
+            // 전체 유저 진행률 평균  
+            int totalProgress = (int) userchallengeDao.getTotalProgress(challengeId);
 
             challenge.setChallengeId(challengeId);
             challenge.setName(name);
@@ -121,6 +134,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             challenge.setMy_progress(myProgress);
             challenge.setTotal_progress(totalProgress);
             challenge.setTotal_user(totalUser);
+            challenge.setTest_date("-");
 
             List<ChallengePartEntity> partEntityList = challengePartDao.findChallengePartByChallengeId(challengeId);
 

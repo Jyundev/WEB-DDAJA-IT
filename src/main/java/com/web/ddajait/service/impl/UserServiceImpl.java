@@ -393,6 +393,12 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+
+    @Override
+    public int countMemberByChallengeId(Long challengeId) {
+        return userchallengeDao.countMemberByChallengeId(challengeId);
+    }
+
     static List<String> strToList(String data) {
         List<String> strArray;
 
@@ -405,4 +411,6 @@ public class UserServiceImpl implements UserService {
 
         return strArray;
     }
+
+
 }
