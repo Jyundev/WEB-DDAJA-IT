@@ -21,7 +21,6 @@ import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.service.UserService;
-import com.web.ddajait.util.CommonUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -49,7 +48,7 @@ public class UserApiController {
 
     // 추가 정보 수집
     @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다.")
-    @PostMapping("/info")
+    @PostMapping("/info/{userId}")
     public ResponseEntity<ResponseDto<UserPrivateInfoDto>> getUserInfo(
             @Valid @RequestBody UserPrivateInfoDto dto, @PathVariable Long userId) throws Exception {
 
@@ -110,7 +109,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
-    @PostMapping("/challenge/insert")
+    @PostMapping("/challenge/insert/{userId}")
     @Operation(summary = "유저 챌린지 신청 API", description = "유저 챌린지 신청 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> insertUserChallenge(
             @RequestBody @Valid UserChallengeDto userChallenge, @PathVariable Long userId) throws Exception {
@@ -121,7 +120,7 @@ public class UserApiController {
 
     }
 
-    @PostMapping("/challenge/update/{challengeId}")
+    @PostMapping("/challenge/update/{challengeId}/{userId}")
     @Operation(summary = "유저 챌린지 상태 업데이트 API", description = "유저 챌린지 업데이트 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
             @PathVariable Long challengeId, @PathVariable Long userId, @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
@@ -133,7 +132,7 @@ public class UserApiController {
     }
     /* 유저 자격증 */
 
-    @GetMapping("/certificate")
+    @GetMapping("/certificate/{userId}")
     @Operation(summary = "유저 자격증 리스트 조회 API", description = "유저 자격증 리스트 조회 API 입니다.")
     public ResponseEntity<ResponseDto<List<UserCertificateDto>>> getUserCertificateList(@PathVariable Long userId) throws Exception {
         log.info("[UserApiController][getUserCertificateList] Start");
@@ -164,7 +163,7 @@ public class UserApiController {
 
     }
 
-    @PostMapping("/certificate/update/{certificateId}")
+    @PostMapping("/certificate/update/{certificateId}/{userId}")
     @Operation(summary = "유저 자격증 상태 업데이트 API", description = "유저 자격증 상태 업데이트 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> updatetUserChallenge(
             @PathVariable Long certificateId, @PathVariable Long userId, @RequestBody @Valid UserCertificateDto usercCertificateDto)
