@@ -73,7 +73,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
         int stepv = 0;
         int dayv = 0;
-
+        
         // 현재 유저의 챌린지 진행상태 가져오기
         if (challengeStatus.isPresent()) {
             UserChallengeEntity uChallengeEntity = challengeStatus.get();
