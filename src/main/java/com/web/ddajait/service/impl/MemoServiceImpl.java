@@ -2,6 +2,7 @@ package com.web.ddajait.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.web.ddajait.config.error.custom.MemoNotFoundException;
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.MemoDao;
 import com.web.ddajait.model.dao.UserDao;
@@ -12,7 +13,6 @@ import com.web.ddajait.util.EntityUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -32,7 +32,7 @@ public class MemoServiceImpl implements MemoService {
 
             return MemoDto.from(memoEntity);
         } else {
-            return null;
+            throw new MemoNotFoundException("Memo not found for userId: " + userId + ", challengeId: " + challengeId + ", step: " + step + ", day: " + day);
         }
     }
 
