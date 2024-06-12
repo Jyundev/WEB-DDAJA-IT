@@ -73,7 +73,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
         int stepv = 0;
         int dayv = 0;
-        
+
         // 현재 유저의 챌린지 진행상태 가져오기
         if (challengeStatus.isPresent()) {
             UserChallengeEntity uChallengeEntity = challengeStatus.get();
@@ -81,7 +81,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             // stepv = (int) stepStatus.get("step");
             // dayv = (int) stepStatus.get("day");
             stepv = uChallengeEntity.getStep();
-            dayv = uChallengeEntity.getDay();            
+            dayv = uChallengeEntity.getDay();
 
         } else {
             stepv = 0;
@@ -91,13 +91,12 @@ public class ChallengePartServiceImpl implements ChallengePartService {
         final int userStep = stepv;
         final int userDay = dayv;
 
-
-
         Challenge challenge = new Challenge();
 
         if (challengeInfoDao.findById(challengeId).isPresent()) {
             ChallengeInfoEntity challengeInfoentity = challengeInfoDao.findById(challengeId).get();
-            // CertificationRegistrationEntity certificationRegistrationEntity = certificationRegistrationDao.findByCertificateId(challengeInfoentity.getCertificateInfo().getCertificateId()).get();
+            // CertificationRegistrationEntity certificationRegistrationEntity =
+            // certificationRegistrationDao.findByCertificateId(challengeInfoentity.getCertificateInfo().getCertificateId()).get();
 
             String name = challengeInfoentity.getChallengeName();
             // String testDay = certificationRegistrationEntity.getTestDay();
@@ -114,7 +113,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             // 전체기간 나누기 현재 유저가 진행한 데이
             int myProgress = 0;
 
-            if(userDay!=0){
+            if (userDay != 0) {
                 myProgress = period / userDay;
             }
 
@@ -122,7 +121,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             String endDay = outputFormat.format(endTimestamp);
             int totalUser = userchallengeDao.countMemberByChallengeId(challengeId);
 
-            // 전체 유저 진행률 평균  
+            // 전체 유저 진행률 평균
             int totalProgress = (int) userchallengeDao.getTotalProgress(challengeId);
 
             challenge.setChallengeId(challengeId);
@@ -152,18 +151,14 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                 // step 객체 생성
                 Step step = new Step();
 
+
                 step.setStep(partNum);
-                // step별 진행률
-                if (userStep > partNum) {
-                    step.setComplete(true);
-                } else {
-                    step.setComplete(false);
-                }
 
                 // Day 리스트 생성
                 List<Day> days = new ArrayList<>();
                 dayMap.forEach((day, entities) -> {
                     // Day가 중복일 경우 여러 entity 생성
+
                     Day dayInfo = new Day();
                     Map<String, List<String>> chapterMap = new HashMap<>();
 
@@ -175,8 +170,17 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
                         if (entity.getDay() > userDay) {
                             dayInfo.setComplete(false);
+                            step.setComplete(false);
                         } else {
                             dayInfo.setComplete(true);
+                            step.setComplete(true);
+
+                        }
+
+                        int finalDay = -1;
+
+                        if (entity.isRandomQuestion()) {
+                            finalDay = entity.getDay();
                         }
 
                         // 챕터별 섹션 데이터 수집
@@ -227,7 +231,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                                     .collect(Collectors.toList());
 
                         }
-                        step.setTest(testQuestions);
+                        dayInfo.setTest(testQuestions);
                     });
                     dayInfo.setChapterMap(chapterMap);
                     days.add(dayInfo);

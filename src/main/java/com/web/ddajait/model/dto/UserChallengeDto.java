@@ -4,18 +4,11 @@ package com.web.ddajait.model.dto;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Builder.Default;
-
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -40,10 +33,6 @@ public class UserChallengeDto {
     @Builder.Default
     private int day = 1;
 
-    @Schema(description = "memo", example = "{'day' : 2 , 'memo' : '메모입니다'}", required = false)
-    @Builder.Default
-    private List<Map<String, Object>> memo = new ArrayList<>();
-
     public static UserChallengeDto from(UserChallengeEntity entity) {
         if (entity == null)
             return null;
@@ -52,7 +41,6 @@ public class UserChallengeDto {
                 .progressRate(entity.getProgressRate())
                 .step(entity.getStep())
                 .day(entity.getDay())
-                .memo(entity.getMemo())
                 .build();
     }
 }
