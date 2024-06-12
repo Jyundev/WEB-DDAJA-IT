@@ -60,14 +60,12 @@ public class MemoServiceImpl implements MemoService {
             memoEntity = memoDao.findMemo(userId, challengeId, memoDto.getStep(), memoDto.getDay()).get();
             EntityUtil.copyNonNullProperties(memoDto, memoEntity);
             memoDao.modifyUserChallengeMemo(memoEntity);
-        }else{
-
-        } 
-       
-        EntityUtil.copyNonNullProperties(memoDto, memoEntity);
-        memoEntity.setUser(userDao.findById(userId).get());
-        memoEntity.setChallengeInfo(challengeInfoDao.findById(challengeId).get());
-        memoDao.saveUserChallengeMemo(memoEntity);
+        } else {
+            EntityUtil.copyNonNullProperties(memoDto, memoEntity);
+            memoEntity.setUser(userDao.findById(userId).get());
+            memoEntity.setChallengeInfo(challengeInfoDao.findById(challengeId).get());
+            memoDao.saveUserChallengeMemo(memoEntity);
+        }
     }
 
 }
