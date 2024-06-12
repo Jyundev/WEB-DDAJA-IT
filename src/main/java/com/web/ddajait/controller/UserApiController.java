@@ -2,6 +2,7 @@ package com.web.ddajait.controller;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +22,9 @@ import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
+import com.web.ddajait.model.dto.UserChallenge.MemoDto;
 import com.web.ddajait.service.ChallengePartService;
+import com.web.ddajait.service.MemoService;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,6 +49,7 @@ public class UserApiController {
 
     private final UserService userService;
     private final ChallengePartService challengePartService;
+    private final MemoService memoService;
 
     HttpSession session;
 
@@ -124,12 +128,43 @@ public class UserApiController {
 
     @Operation(summary = "챌린지 상세 페이지 데이터", description = "챌린지 상세 페이지 데이터를 가져오는 API 입니다. \n*현제 데이터 오류로 challengeId = 7, 8, 9 테스트 가능")
     @GetMapping("/challengePage/{challengeId}/{userId}")
-    public Challenge getchallengeDetailPageInfo(@PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId) throws Exception {
+    public Challenge getchallengeDetailPageInfo(@PathVariable("challengeId") Long challengeId,
+            @PathVariable("userId") Long userId) throws Exception {
 
         log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
 
         return challengePartService.getChallengersDetailData(challengeId, userId);
     }
+
+    // @Operation(summary = "챌린지 데이별 메모 저장", description = "챌린지 데이별 메모를 저장하는 API. ChallengeId, UserId, Step, Day 값이 필요합니다")
+    // @PostMapping("/challengeMemo/{challengeId}/{userId}")
+    // public ResponseEntity<ResponseDto<MemoDto>> saveChallengeMemo(@PathVariable("challengeId") Long challengeId,
+    //         @PathVariable("userId") Long userId,
+    //         @Valid @RequestBody MemoDto dto) throws Exception {
+    //     log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
+    //     memoService.saveUserChallengeMemo(dto, userId, challengeId);
+    //     return ResponseHandler.SUCCESS(dto, "챌린지 데이별 메모 저장 성공");
+    // }
+
+    @Operation(summary = "챌린지 데이별 메모 업데이트", description = "챌린지 데이별 메모를 수정하는 API")
+    @PostMapping("/challengeMemo/{challengeId}/{userId}")
+    public ResponseEntity<ResponseDto<MemoDto>> modifyChallengeMemo(@PathVariable("challengeId") Long challengeId,
+            @PathVariable("userId") Long userId,
+            @Valid @RequestBody MemoDto dto) throws Exception {
+        log.info("[ChallengeController][modifyChallengeMemo] Starts");
+        memoService.modifyUserChallengeMemo(userId, challengeId, dto);
+        return ResponseHandler.SUCCESS(dto, "챌린지 데이별 메모 수정 성공");
+    }
+
+    @Operation(summary = "챌린지 데이별 메모 가져오기", description = "챌린지 데이별 메모를 가져오는 API. ChallengeId, UserId, Step, Day 값이 필요합니다")
+    @GetMapping("/challengeMemo/{challengeId}/{userId}")
+    public ResponseEntity<ResponseDto<MemoDto>> getChallengeMemo(@Param("challengeId") Long challengeId,
+            @Param("userId") Long userId, @Param("step") int step, @Param("day") int day) throws Exception {
+        log.info("[ChallengeController][getChallengeMemo] Starts");
+        MemoDto memoDto = memoService.findMemo(userId, challengeId, step, day);
+        return ResponseHandler.SUCCESS(memoDto, "챌린지 데이별 메모 저장 성공");
+    }
+
     /* 유저 자격증 */
 
     @GetMapping("/certificate/{userId}")

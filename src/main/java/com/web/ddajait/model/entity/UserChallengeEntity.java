@@ -28,9 +28,9 @@ public class UserChallengeEntity {
     @Column(length = 10)
     private int progressRate = 0;
 
-    private int day = 1;
+    private int day = 0;
 
-    private int step = 1;
+    private int step = 0;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

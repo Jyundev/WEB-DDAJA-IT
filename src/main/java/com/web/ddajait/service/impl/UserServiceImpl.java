@@ -314,20 +314,18 @@ public class UserServiceImpl implements UserService {
 
             UserChallengeEntity entity = userChallengeEntity.get();
 
-            if (!(dto.getDay() == 1 && dto.getStep() == 1)) {
+            ChallengeInfoEntity challengeInfoEntity = entity.getChallengeInfo();
+            Timestamp starTimestamp = challengeInfoEntity.getStartDay();
+            Timestamp endTimestamp = challengeInfoEntity.getEndDay();
 
-                ChallengeInfoEntity challengeInfoEntity = entity.getChallengeInfo();
-                Timestamp starTimestamp = challengeInfoEntity.getStartDay();
-                Timestamp endTimestamp = challengeInfoEntity.getEndDay();
+            long durationInMillis = endTimestamp.getTime() - starTimestamp.getTime();
 
-                long durationInMillis = endTimestamp.getTime() - starTimestamp.getTime();
+            // 결과를 일 단위로 변환합니다.
+            int period = (int) (durationInMillis / (1000 * 60 * 60 * 24)) + 1;
 
-                // 결과를 일 단위로 변환합니다.
-                int period = (int) (durationInMillis / (1000 * 60 * 60 * 24)) + 1;
+            // 전체기간 나누기 현재 유저가 진행한 날
 
-                // 전체기간 나누기 현재 유저가 진행한 날
-                dto.setProgressRate(period / dto.getDay());
-            }
+            dto.setProgressRate(dto.getDay() * 100 / period);
 
             EntityUtil.copyNonNullProperties(dto, entity);
             userchallengeDao.updateUserChallenge(entity);
