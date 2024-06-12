@@ -27,11 +27,11 @@ public class UserChallengeDto {
 
     @Schema(description = "진행 step", example = "2", required = false)
     @Builder.Default
-    private int step = 1;
+    private int step = 0;
 
     @Schema(description = "진행 day", example = "1", required = false)
     @Builder.Default
-    private int day = 1;
+    private int day = 0;
 
     public static UserChallengeDto from(UserChallengeEntity entity) {
         if (entity == null)

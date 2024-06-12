@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.ChallengePartDao;
+import com.web.ddajait.model.dao.MemoDao;
 import com.web.ddajait.model.dao.PartQuestionDao;
 import com.web.ddajait.model.dao.UserchallengeDao;
 import com.web.ddajait.model.dto.ChallengePartDto;
@@ -25,6 +26,7 @@ import com.web.ddajait.model.dto.ChallengePart.Step;
 import com.web.ddajait.model.dto.ChallengePart.TestQuestion;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.ChallengePartEntity;
+import com.web.ddajait.model.entity.MemoEntity;
 import com.web.ddajait.model.entity.PartQuestionEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.service.ChallengePartService;
@@ -42,6 +44,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     private final PartQuestionDao partQuestionDao;
     private final ChallengeInfoDao challengeInfoDao;
     private final UserchallengeDao userchallengeDao;
+    private final MemoDao memoDao;
 
     @Override
     public List<ChallengePartDto> getAllchallengePartInfo() {
@@ -114,7 +117,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             int myProgress = 0;
 
             if (userDay != 0) {
-                myProgress = period / userDay;
+                myProgress = userDay * 100 / period;
             }
 
             String startDay = outputFormat.format(starTimestamp);
@@ -151,7 +154,6 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                 // step 객체 생성
                 Step step = new Step();
 
-
                 step.setStep(partNum);
 
                 // Day 리스트 생성
@@ -161,12 +163,22 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
                     Day dayInfo = new Day();
                     Map<String, List<String>> chapterMap = new HashMap<>();
+                    List<String> chaptersList = new ArrayList<>();
+                    List<List<String>> sectionsList = new ArrayList<>();
 
                     entities.forEach(entity -> {
                         step.setPartName(entity.getPartName());
 
                         dayInfo.setDay(entity.getDay());
-                        dayInfo.setMemo("메모입니다");
+
+                        String memo = "메모를 입력해주세요!";
+                        
+                        Optional<MemoEntity> memoEntity = memoDao.findMemo(UserId, challengeId, partNum, entity.getDay());
+                        if(memoEntity.isPresent()){
+                            memo = memoEntity.get().getMemo();
+                        }
+
+                        dayInfo.setMemo(memo);
 
                         if (entity.getDay() > userDay) {
                             dayInfo.setComplete(false);
@@ -177,14 +189,18 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
                         }
 
-
                         // 챕터별 섹션 데이터 수집
                         if (chapterMap.containsKey(entity.getChapterName())) {
                             chapterMap.get(entity.getChapterName()).add(entity.getSectionName());
                         } else {
                             List<String> sections = new ArrayList<>();
-                            sections.add(entity.getSectionName());
-                            chapterMap.put(entity.getChapterName(), sections);
+                            if (entity.getSectionName().length() > 0) {
+                                sections.add(entity.getSectionName());
+                                chapterMap.put(entity.getChapterName(), sections);
+
+                            }else{
+                                chapterMap.put(entity.getChapterName(),null);
+                            }
                         }
 
                         // test 데이터 생성
@@ -228,7 +244,12 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                         }
                         dayInfo.setTest(testQuestions);
                     });
-                    dayInfo.setChapterMap(chapterMap);
+
+                    chaptersList.addAll(chapterMap.keySet());
+                    sectionsList.addAll(chapterMap.values());
+
+                    dayInfo.setChapter(chaptersList);
+                    dayInfo.setSectionList(sectionsList);
                     days.add(dayInfo);
 
                 });
