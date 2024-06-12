@@ -17,4 +17,6 @@ public class Day {
     Map<String, List<String>> chapterMap;
     boolean complete;
     String memo;
+    List<TestQuestion> test;
+
 }

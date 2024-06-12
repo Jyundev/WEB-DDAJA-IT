@@ -25,7 +25,6 @@ import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
-import com.web.ddajait.model.dto.UserChallenge.SubChallenge;
 import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserCertificateEntity;
@@ -307,7 +306,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserChallenge(UserChallengeDto dto, Long challengeID, Long userId) throws Exception {
         log.info("[UserServiceImpl][updateUserChallenge] Starts");
-        // Long userId = (Long) httpSession.getAttribute("userId");
 
         Optional<UserChallengeEntity> userChallengeEntity = userchallengeDao.findByUserIdChallengeId(userId,
                 challengeID);
@@ -334,6 +332,7 @@ public class UserServiceImpl implements UserService {
             EntityUtil.copyNonNullProperties(dto, entity);
             userchallengeDao.updateUserChallenge(entity);
         } else {
+            // 챌린지 신청
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(userId).get());
@@ -429,13 +428,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countMemberByChallengeId(Long challengeId) {
         return userchallengeDao.countMemberByChallengeId(challengeId);
-    }
-
-    // 챌린지 신청
-    @Override
-    public void subChallenge(Long ChallengeId, SubChallenge subChallenge) {
-        UserChallengeEntity entity = new UserChallengeEntity();
-
     }
 
 }

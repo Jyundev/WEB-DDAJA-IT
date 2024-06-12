@@ -15,6 +15,5 @@ public class Step {
     int step;
     boolean complete;
     String partName;
-    List<TestQuestion> test;
     List<Day> days;
 }
