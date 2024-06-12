@@ -21,7 +21,7 @@ public interface UserService {
         public UserDto findByEmail(String email) throws Exception;
 
         // 추가 정보 수집
-        public UserDto addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception;
+        public void addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception;
 
         // 프로필 수정 update
         public void updateUser(UserPrivateInfoDto dto, Long userId) throws Exception;

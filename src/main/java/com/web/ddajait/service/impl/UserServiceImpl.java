@@ -402,7 +402,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception {
+    public void addUserInfo(Long userId, UserPrivateInfoDto dto) throws Exception {
         log.info("[UserServiceImpl][getAddUserInfo] Starts");
 
         Optional<UserEntity> entity = userDao.findById(userId);
@@ -417,10 +417,9 @@ public class UserServiceImpl implements UserService {
             userDao.updateUser(userEntity);
 
         } else {
-            throw new NotFoundMemberException();
+            throw new NotFoundMemberException("User with id " + userId + " not found");
         }
 
-        return null;
     }
 
     @Override

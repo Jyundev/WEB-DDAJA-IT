@@ -24,7 +24,7 @@ public class UserWrongQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long incorrectId;
+    private Long wrongId;
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
@@ -33,4 +33,9 @@ public class UserWrongQuestionEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "challenge_id")
+    private ChallengeInfoEntity challengeInfo;
+
 }

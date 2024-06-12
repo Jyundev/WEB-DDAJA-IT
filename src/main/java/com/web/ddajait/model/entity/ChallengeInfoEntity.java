@@ -1,5 +1,6 @@
 package com.web.ddajait.model.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -17,7 +18,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -69,6 +69,10 @@ public class ChallengeInfoEntity {
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<UserChallengeEntity> userChallenges;
+
+    @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
+    private List<UserWrongQuestionEntity> userWrongQuestions;
+
 
 
 

@@ -225,7 +225,8 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                                         if (testData.getChoices().size() == 4) {
                                             TestQuestion testQuestion = new TestQuestion();
                                             int id = testId.incrementAndGet();
-                                            testQuestion.setId(id);
+                                            testQuestion.setTestId(testData.getQuestionId());
+                                            testQuestion.setNum(id);
                                             testQuestion.setQuestion(testData.getQuestion());
                                             testQuestion.setItem1(testData.getChoices().get(0));
                                             testQuestion.setItem2(testData.getChoices().get(1));

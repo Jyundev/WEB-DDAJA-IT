@@ -13,5 +13,8 @@ public interface PartQuestionRepository extends JpaRepository<PartQuestionEntity
 
     List<PartQuestionEntity> findByCertificatePartInfo_CertificatePartId(Long certificatePartId);
 
+    // 챌린지 아이디별 문제 가져오기 
+    List<PartQuestionEntity> findByChallengePart_ChallengeInfo_ChallengeId(Long challengeId);
+    
 
 }
