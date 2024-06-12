@@ -177,11 +177,6 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
                         }
 
-                        int finalDay = -1;
-
-                        if (entity.isRandomQuestion()) {
-                            finalDay = entity.getDay();
-                        }
 
                         // 챕터별 섹션 데이터 수집
                         if (chapterMap.containsKey(entity.getChapterName())) {
