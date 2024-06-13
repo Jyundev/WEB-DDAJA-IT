@@ -13,9 +13,9 @@ import com.web.ddajait.model.entity.ChallengePartEntity;
 public interface ChallengePartRepository extends JpaRepository<ChallengePartEntity, Long> {
 
     
-    List<ChallengePartEntity> findByChallengeInfo_ChallengeId(Long challengeId);
+    List<ChallengePartEntity> findByCertificateInfo_CertificateId(Long challengeId);
 
-    @Query(value = "SELECT * FROM challenge_part WHERE challenge_id = :challenge_id", nativeQuery = true)
-    List<ChallengePartEntity> findChallengePartsByChallengeId(@Param("challenge_id") Long challenge_id);
+    @Query(value = "SELECT * FROM challenge_part WHERE certificateId = :certificateId", nativeQuery = true)
+    List<ChallengePartEntity> findChallengePartsByCertificateId(@Param("certificateId") Long certificateId);
 
 }

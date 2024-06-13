@@ -24,14 +24,14 @@ public class ChallengePartImpl implements ChallengePartDao {
     }
 
     @Override
-    public Optional<ChallengePartEntity> findChallengeById(Long challengeId) {
+    public Optional<ChallengePartEntity> findChallengeById(Long challengePartId) {
 
-        return challengePartRepository.findById(challengeId);
+        return challengePartRepository.findById(challengePartId);
     }
 
     @Override
-    public List<ChallengePartEntity> findChallengePartByChallengeId(Long challengeId) {
-        return challengePartRepository.findByChallengeInfo_ChallengeId(challengeId);
+    public List<ChallengePartEntity> findChallengePartsByCertificateId(Long certificateId) {
+        return challengePartRepository.findByCertificateInfo_CertificateId(certificateId);
         // return challengePartRepository.findChallengePartsByChallengeId(challengeId);
         
     }

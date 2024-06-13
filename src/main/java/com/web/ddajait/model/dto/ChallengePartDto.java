@@ -41,14 +41,14 @@ public class ChallengePartDto {
     private boolean randomQuestion;
 
     @NotBlank
-    private Long challengeId;
+    private Long certificateId;
 
     public static ChallengePartDto from(ChallengePartEntity entity) {
         if (entity == null)
             return null;
 
         return ChallengePartDto.builder()
-                .challengeId(entity.getChallengeInfo().getChallengeId())
+                .certificateId(entity.getCertificateInfo().getCertificateId())
                 .chapterName(entity.getChapterName())
                 .day(entity.getDay())
                 .memo(entity.getMemo())

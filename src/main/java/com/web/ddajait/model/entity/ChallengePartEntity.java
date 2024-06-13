@@ -52,12 +52,10 @@ public class ChallengePartEntity {
 
     private boolean randomQuestion;
 
-    @OneToMany(mappedBy = "challengePart")
-    private List<PartQuestionEntity> questions;
 
     @ManyToOne
-    @JoinColumn(name = "challenge_id")
-    private ChallengeInfoEntity challengeInfo;
+    @JoinColumn(name = "certificate_id")
+    private CertificateInfoEntity certificateInfo;
 
     @ManyToOne
     @JoinColumn(name = "certificate_part_id")

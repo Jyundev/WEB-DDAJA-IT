@@ -21,13 +21,8 @@ public class PartQuestionImpl implements PartQuestionDao {
 
     @Override
     public Optional<PartQuestionEntity> findById(Long questionId) {
+        log.info("[PartQuestionImpl][findById] Starts");
         return PartQuestionRepository.findById(questionId);
-    }
-
-    @Override
-    public List<PartQuestionEntity> findByPartId(Long partId) {
-
-        return PartQuestionRepository.findByChallengePart_ChallengePartId(partId);
     }
 
     @Override
@@ -36,6 +31,12 @@ public class PartQuestionImpl implements PartQuestionDao {
 
         return PartQuestionRepository.findByCertificatePartInfo_CertificatePartId(certificatePartId);
 
+    }
+
+    @Override
+    public List<PartQuestionEntity> findByCertificateId(Long certificateId) {
+        log.info("[PartQuestionImpl][findByChallengeId] Starts");
+        return PartQuestionRepository.findByCertificatePartInfo_CertificatePartId(certificateId);
     }
 
 }

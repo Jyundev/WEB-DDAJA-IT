@@ -101,6 +101,8 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             // CertificationRegistrationEntity certificationRegistrationEntity =
             // certificationRegistrationDao.findByCertificateId(challengeInfoentity.getCertificateInfo().getCertificateId()).get();
 
+            Long certificateId = challengeInfoentity.getCertificateInfo().getCertificateId();
+
             String name = challengeInfoentity.getChallengeName();
             // String testDay = certificationRegistrationEntity.getTestDay();
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -136,8 +138,8 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             challenge.setTotal_user(totalUser);
             challenge.setTest_date("-");
 
-            List<ChallengePartEntity> partEntityList = challengePartDao.findChallengePartByChallengeId(challengeId);
-
+            List<ChallengePartEntity> partEntityList = challengePartDao.findChallengePartsByCertificateId(certificateId);
+            
             // partnum으로 그룹화하고 day로 정렬하여 맵을 생성
             Map<Integer, Map<Integer, List<ChallengePartEntity>>> groupedByPartNumAndDay = partEntityList.stream()
                     .collect(Collectors.groupingBy(

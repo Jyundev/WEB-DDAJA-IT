@@ -1,6 +1,7 @@
 package com.web.ddajait.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.web.ddajait.model.dto.UserWrongQuestionDto;
 
@@ -12,6 +13,6 @@ public interface UserWrongQuestionService {
 
     public void modifyWrongQuestion(UserWrongQuestionDto userWrongQuestionDto) throws Exception;
 
-    public UserWrongQuestionDto findWrongQuestionByQuestionId(Long questionId) throws Exception;
+    public Optional<UserWrongQuestionDto> findWrongQuestionByQuestionId(Long questionId) throws Exception;
 
 }

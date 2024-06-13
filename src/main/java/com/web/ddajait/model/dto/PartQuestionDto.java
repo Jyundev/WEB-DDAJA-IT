@@ -19,9 +19,10 @@ import lombok.Setter;
 public class PartQuestionDto {
 
     @NotBlank
-    private Long challengePartId;
+    private Long certificateId;
 
-    // private CertificatePartEntity certificatePart;
+    @NotBlank
+    private Long certificatePartId;
 
     @NotBlank
     private String partName;
@@ -48,8 +49,8 @@ public class PartQuestionDto {
             return null;
 
         return PartQuestionDto.builder()
-                .challengePartId(entity.getChallengePart().getChallengePartId())
-                // .certificatePart(entity.getCertificatePartInfo())
+                .certificateId(entity.getCertificateInfo().getCertificateId())
+                .certificatePartId(entity.getCertificatePartInfo().getCertificatePartId())
                 .partName(entity.getPartName())
                 .certificationName(entity.getCertificateName())
                 .question(entity.getQuestion())

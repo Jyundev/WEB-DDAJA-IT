@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.handler.ResponseHandler;
+import com.web.ddajait.model.dto.PartQuestionDto;
 import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.UserWrongQuestionDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.model.dto.UserChallenge.MemoDto;
 import com.web.ddajait.service.ChallengePartService;
 import com.web.ddajait.service.MemoService;
+import com.web.ddajait.service.PartQuestionService;
 import com.web.ddajait.service.UserService;
+import com.web.ddajait.service.UserWrongQuestionService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -50,6 +54,8 @@ public class UserApiController {
     private final UserService userService;
     private final ChallengePartService challengePartService;
     private final MemoService memoService;
+    private final PartQuestionService partQuestionService;
+    private final UserWrongQuestionService userWrongQuestionService;
 
     HttpSession session;
 
@@ -136,14 +142,16 @@ public class UserApiController {
         return challengePartService.getChallengersDetailData(challengeId, userId);
     }
 
-    // @Operation(summary = "챌린지 데이별 메모 저장", description = "챌린지 데이별 메모를 저장하는 API. ChallengeId, UserId, Step, Day 값이 필요합니다")
+    // @Operation(summary = "챌린지 데이별 메모 저장", description = "챌린지 데이별 메모를 저장하는 API.
+    // ChallengeId, UserId, Step, Day 값이 필요합니다")
     // @PostMapping("/challengeMemo/{challengeId}/{userId}")
-    // public ResponseEntity<ResponseDto<MemoDto>> saveChallengeMemo(@PathVariable("challengeId") Long challengeId,
-    //         @PathVariable("userId") Long userId,
-    //         @Valid @RequestBody MemoDto dto) throws Exception {
-    //     log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
-    //     memoService.saveUserChallengeMemo(dto, userId, challengeId);
-    //     return ResponseHandler.SUCCESS(dto, "챌린지 데이별 메모 저장 성공");
+    // public ResponseEntity<ResponseDto<MemoDto>>
+    // saveChallengeMemo(@PathVariable("challengeId") Long challengeId,
+    // @PathVariable("userId") Long userId,
+    // @Valid @RequestBody MemoDto dto) throws Exception {
+    // log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
+    // memoService.saveUserChallengeMemo(dto, userId, challengeId);
+    // return ResponseHandler.SUCCESS(dto, "챌린지 데이별 메모 저장 성공");
     // }
 
     @Operation(summary = "챌린지 데이별 메모 업데이트", description = "챌린지 데이별 메모를 수정하는 API")
@@ -163,6 +171,26 @@ public class UserApiController {
         log.info("[ChallengeController][getChallengeMemo] Starts");
         MemoDto memoDto = memoService.findMemo(userId, challengeId, step, day);
         return ResponseHandler.SUCCESS(memoDto, "챌린지 데이별 메모 저장 성공");
+    }
+
+    @Operation(summary = "챌린지별 모든 기출문제 가져오기", description = "챌린지별 모든 파트의 기출문제를 제공합니다")
+    @GetMapping("/challengePage/allQuestion/{certificateId}")
+    public ResponseEntity<ResponseDto<List<PartQuestionDto>>> getAllPartQuestionByChallengeId(
+            @PathVariable("challengeId") Long certificateId)
+            throws Exception {
+        log.info("[ChallengeController][getAllPartQuestionByChallengeId] Starts");
+        List<PartQuestionDto> partQuestionDtos = partQuestionService.getQuestionListbyCertificatePartID(certificateId);
+        return ResponseHandler.SUCCESS(partQuestionDtos, "챌린지별 모든 기출문제 가져오기 성공");
+    }
+
+    @Operation(summary = "챌린지별 유저 오답문제 가져오기", description = "챌린지별 유저 오답문제를 제공합니다")
+    @GetMapping("/challengePage/wrongQuestion/{challengeId}/{userId}")
+    public ResponseEntity<ResponseDto<List<UserWrongQuestionDto>>> getAllUserWrongQuestionById(
+            @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId)
+            throws Exception {
+        log.info("[ChallengeController][getAllUserWrongQuestionById] Starts");
+        List<UserWrongQuestionDto> userWrongQuestionDtos = userWrongQuestionService.findWrongQuestionList(userId, challengeId);
+        return ResponseHandler.SUCCESS(userWrongQuestionDtos, "챌린지별 모든 기출문제 가져오기 성공");
     }
 
     /* 유저 자격증 */

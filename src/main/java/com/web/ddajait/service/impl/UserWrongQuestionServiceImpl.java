@@ -67,10 +67,15 @@ public class UserWrongQuestionServiceImpl implements UserWrongQuestionService {
 
     @Override
     public Optional<UserWrongQuestionDto> findWrongQuestionByQuestionId(Long questionId) throws Exception {
-        log.info("[UserWrongQuestionServiceImpl][findWrongQuestionByQuestionId] Starts");
-        Optional<UserWrongQuestionEntity> userWrongEntity = userWrongQuestionDao
+        Optional<UserWrongQuestionEntity> userWrongQuestionEntity = userWrongQuestionDao
                 .findWrongQuestionByQuestionId(questionId);
+        if (userWrongQuestionEntity.isPresent()) {
+            UserWrongQuestionEntity userWrongEntity = userWrongQuestionEntity.get();
 
-                return null;
+            return Optional.of(UserWrongQuestionDto.from(userWrongEntity));
+        } else {
+            return Optional.empty();
+        }
     }
+
 }

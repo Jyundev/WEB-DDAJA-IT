@@ -63,17 +63,12 @@ public class ChallengeInfoEntity {
     @ManyToOne
     @JoinColumn(name = "certificateId")
     private CertificateInfoEntity certificateInfo;
-
-    @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
-    private List<ChallengePartEntity> challengeParts;
-
+    
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<UserChallengeEntity> userChallenges;
 
     @OneToMany(mappedBy = "challengeInfo", cascade = CascadeType.ALL)
     private List<UserWrongQuestionEntity> userWrongQuestions;
-
-
 
 
 }

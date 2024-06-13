@@ -80,5 +80,10 @@ public class CertificateInfoEntity {
     @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)
     private List<ChallengeInfoEntity> challenges;
 
+    @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)
+    private List<PartQuestionEntity> partQuestionEntities;
+
+    @OneToMany(mappedBy = "certificateInfo", cascade = CascadeType.ALL)
+    private List<ChallengePartEntity> challengePartEntities;
     
 }

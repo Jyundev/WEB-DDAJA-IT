@@ -7,9 +7,9 @@ import com.web.ddajait.model.entity.PartQuestionEntity;
 
 public interface PartQuestionDao {
 
-    public List<PartQuestionEntity> findByPartId(Long partId);
-
     public List<PartQuestionEntity> findByCetificatePartId(Long certificatePartId);
+
+    public List<PartQuestionEntity> findByCertificateId(Long certificateId);
 
     public Optional<PartQuestionEntity> findById(Long questionId);
 }
