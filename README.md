@@ -15,17 +15,49 @@
 
 </br></br>
 
-
 ## 🕺 구성원
 
 | 구성원 | 깃허브 주소 | 분담 역할 |
 | --- | --- | --- |
-| 장윤영 | https://github.com/Jyundev | |
-| 조하민 | https://github.com/chohaming ||
-| 김도한 | https://github.com/rlaehgks115 ||
-| 김백운 | https://github.com/kimbw0615 | 
+| 장윤영 | https://github.com/Jyundev | SpringBoot RestFul API 개발|
+| 조하민 | https://github.com/chohaming |AWS 인프라 구축|
+| 김도한 | https://github.com/rlaehgks115 |React 프론트엔드 개발|
+| 김백운 | https://github.com/kimbw0615 | 데이터 수집 및 전처리, 모델링|
 
 </br></br>
 
 
-![spring-boot-ci-cd drawio (1)](https://github.com/Jyundev/Spring-Boot-Project/assets/83933219/33d7fa3c-63b9-4a0c-b77e-2f1efd6b21de)
+## Environment
+- Window11, MacOS, Ubuntu
+- JDK 17
+- Spring Boot : 3.2.5
+- React : 
+- Docker 25.0.3, Docker Compose
+- Github Actions
+- nginx
+- AWS EC2, RDS, S3
+
+## ERD
+
+<div style="display: flex; justify-content: center;">
+     <img src="main/java/com/web/ddajait/image/ERD-DDAJAIT.png" alt="Alt text" style="width: 60%; height: 100%; ">
+     
+</div>
+
+##  CI/CD 파이프라인
+
+GitHub Actions CI/CD 파이프라인은 Spring 애플리케이션을 AWS EC2 인스턴스에 Docker를 사용하여 배포하는 환경을 구축
+
+<div style="display: flex; justify-content: center;">
+     <img src="main/java/com/web/ddajait/image/spring-boot-ci-cd.drawio.png" alt="Alt text" style="width: 60%; height: 100%; ">
+     
+</div>
+
+## Spring REST Docs
+###  Swagger - springdoc : 2.5.0
+http://52.78.44.47/swagger-ui/index.html#/
+<div style="display: flex; justify-content: center;">
+     <img src="main/java/com/web/ddajait/image/swagger.png" alt="Alt text" style="width: 60%; height: 100%; ">
+     
+</div>
+
