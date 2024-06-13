@@ -37,27 +37,16 @@
 - nginx
 - AWS EC2, RDS, S3
 
-## ERD
+## 🔗 ERD 
+![ERD](src/main/java/com/web/ddajait/image/ERD-DDAJAIT.png)
 
-<div style="display: flex; justify-content: center;">
-     <img src="main/java/com/web/ddajait/image/ERD-DDAJAIT.png" alt="Alt text" style="width: 60%; height: 100%; ">
-     
-</div>
+## ⚙️ CI/CD 파이프라인
+GitHub Actions, nginx , AWS EC2를 이용하여 Spring 애플리케이션 무중단 배포 환경을 구축했습니다.
 
-##  CI/CD 파이프라인
+![CI](src/main/java/com/web/ddajait/image/spring-boot-ci-cd.drawio.png)
 
-GitHub Actions CI/CD 파이프라인은 Spring 애플리케이션을 AWS EC2 인스턴스에 Docker를 사용하여 배포하는 환경을 구축
-
-<div style="display: flex; justify-content: center;">
-     <img src="main/java/com/web/ddajait/image/spring-boot-ci-cd.drawio.png" alt="Alt text" style="width: 60%; height: 100%; ">
-     
-</div>
-
-## Spring REST Docs
+## 📝 Spring REST Docs
 ###  Swagger - springdoc : 2.5.0
 http://52.78.44.47/swagger-ui/index.html#/
-<div style="display: flex; justify-content: center;">
-     <img src="main/java/com/web/ddajait/image/swagger.png" alt="Alt text" style="width: 60%; height: 100%; ">
-     
-</div>
 
+![swagger](src/main/java/com/web/ddajait/image/swagger.png)
