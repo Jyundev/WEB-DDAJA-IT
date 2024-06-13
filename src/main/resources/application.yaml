@@ -95,10 +95,12 @@ spring:
 
 # spring doc
 springdoc:
+# JSON 형식의 OpenAPI 문서의 사용자 경로 지정
   api-docs:
     path: /api-docs
     groups:
       enabled: true
+  # HTML 형식의 swagger 문서의 사용자 경로 지정
   swagger-ui:
     path: /swagger-ui-custom.html
     enabled: true
