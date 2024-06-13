@@ -1,7 +1,5 @@
 # PROJECT : IT자격증 챌린지 웹사이트 
 
->**EMOTI = Emotion + Emoticon**
-
 </br></br>
 
 ## 📆 프로젝트 기간 
@@ -30,4 +28,4 @@
 </br></br>
 
 
-![spring-boot-ci-cd drawio](https://github.com/Jyundev/Spring-Boot-Project/assets/83933219/f52d760b-19b5-4827-adbd-81ab65390274)
+![spring-boot-ci-cd drawio (1)](https://github.com/Jyundev/Spring-Boot-Project/assets/83933219/33d7fa3c-63b9-4a0c-b77e-2f1efd6b21de)
