@@ -15,4 +15,8 @@ public class ExtendedProps {
 
     private String type;
 
+    private String testDay;
+
+    private String information;
+
 }

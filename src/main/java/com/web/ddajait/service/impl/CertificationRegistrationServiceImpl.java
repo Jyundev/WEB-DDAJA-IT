@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.web.ddajait.model.dao.CertificateInfoDao;
 import com.web.ddajait.model.dao.CertificationRegistrationDao;
 import com.web.ddajait.model.dto.CertificationRegistrationDto;
 import com.web.ddajait.model.dto.Calendar.CalendarDto;
 import com.web.ddajait.model.dto.Calendar.ExtendedProps;
+import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.service.CertificationRegistrationService;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CertificationRegistrationServiceImpl implements CertificationRegistrationService {
 
     private final CertificationRegistrationDao certificationRegistrationDao;
+    private final CertificateInfoDao certificateInfoDao;
 
     @Override
     public List<CertificationRegistrationDto> getAllCerticationResgitration() {
@@ -38,13 +41,16 @@ public class CertificationRegistrationServiceImpl implements CertificationRegist
 
         // 각 dto를 CalendarDto로 변환하여 리스트로 수집
         List<CalendarDto> calendarDtos = dtos.stream().map(data -> {
+            CertificateInfoEntity certificateInfoEntity = certificateInfoDao.findById(data.getCertificateId()).get();
+            
             CalendarDto calendarDto = new CalendarDto();
 
             // 시작일과 종료일 설정
             String startDay = data.getReceptionStart();
             String endDay = data.getReceptionEnd();
             String title = data.getCertificateName() + " 접수";
-
+            String overView = certificateInfoEntity.getOverview();
+            
             calendarDto.setStart(startDay);
             calendarDto.setEnd(endDay);
             calendarDto.setTitle(title);
