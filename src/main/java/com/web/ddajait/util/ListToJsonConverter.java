@@ -6,39 +6,37 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.jsonwebtoken.io.IOException;
 import jakarta.persistence.AttributeConverter;
 
-// @Convert 애노테이션을 사용하여 JSON 문자열로 변환되고 다시 변환됩니다. 
-public class ListToJsonConverter implements AttributeConverter<List<String>, String> {
+public class ListToJsonConverter<T> implements AttributeConverter<List<T>, String> {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public String convertToDatabaseColumn(List<String> attribute) {
+    public String convertToDatabaseColumn(List<T> attribute) {
         if (attribute == null) {
             return null;
         }
         try {
             return objectMapper.writeValueAsString(attribute);
-        } catch (IOException | JsonProcessingException e) {
-            throw new IllegalArgumentException("Error converting list to JSON", e);
+        } catch (JsonProcessingException e) {
+            System.out.println(attribute);
+            throw new IllegalArgumentException("리스트를 JSON으로 변환하는 중 오류가 발생했습니다", e);
         }
     }
 
     @Override
-    public List<String> convertToEntityAttribute(String dbData) {
+    public List<T> convertToEntityAttribute(String dbData) {
         if (dbData == null) {
             return null;
         }
         try {
-            return objectMapper.readValue(dbData, new TypeReference<List<String>>() {
+            return objectMapper.readValue(dbData, new TypeReference<List<T>>() {
             });
-        } catch (IOException | JsonProcessingException e) {
-            throw new IllegalArgumentException("Error converting JSON to list", e);
+        } catch (JsonProcessingException e) {
+            System.out.println(dbData);
+            
+            throw new IllegalArgumentException("JSON을 리스트로 변환하는 중 오류가 발생했습니다", e);
         }
-
     }
-
-    
 }
