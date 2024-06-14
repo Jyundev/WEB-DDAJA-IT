@@ -1,5 +1,7 @@
 package com.web.ddajait.model.dto;
 
+import java.util.List;
+
 import com.web.ddajait.model.entity.UserWrongQuestionEntity;
 
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +22,7 @@ public class UserWrongQuestionDto {
     private Long userId;
 
     @NotNull
-    private Long questionId;
+    private List<Integer> wrongQuestions;
 
     @NotNull
     private Long challengeId;
@@ -32,7 +34,7 @@ public class UserWrongQuestionDto {
         return UserWrongQuestionDto.builder()
                 .userId(entity.getUser().getUserId())
                 .challengeId(entity.getChallengeInfo().getChallengeId())
-                .questionId(entity.getPartQuestion().getQuestionId())
+                .wrongQuestions(entity.getWrongQuestions())
                 .build();
     }
 }

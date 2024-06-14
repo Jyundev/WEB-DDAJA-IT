@@ -10,9 +10,11 @@ import com.web.ddajait.model.entity.ChallengePartEntity;
 import com.web.ddajait.model.repository.ChallengePartRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ChallengePartImpl implements ChallengePartDao {
 
     final private ChallengePartRepository challengePartRepository;
@@ -31,6 +33,7 @@ public class ChallengePartImpl implements ChallengePartDao {
 
     @Override
     public List<ChallengePartEntity> findChallengePartsByCertificateId(Long certificateId) {
+        log.info("[ChallengePartImpl][findChallengePartsByCertificateId] certificateId : "+certificateId);
         return challengePartRepository.findByCertificateInfo_CertificateId(certificateId);
         // return challengePartRepository.findChallengePartsByChallengeId(challengeId);
         

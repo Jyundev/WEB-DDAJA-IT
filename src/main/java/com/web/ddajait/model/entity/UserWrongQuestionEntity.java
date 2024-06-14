@@ -1,6 +1,11 @@
 package com.web.ddajait.model.entity;
 
+import java.util.List;
+
+import com.web.ddajait.util.ListToJsonConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,9 +31,13 @@ public class UserWrongQuestionEntity {
     @Column(nullable = false)
     private Long wrongId;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false)
-    private PartQuestionEntity partQuestion;
+    @Convert(converter = ListToJsonConverter.class)
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private List<Integer> wrongQuestions;
+
+    // @ManyToOne
+    // @JoinColumn(name = "question_id", nullable = false)
+    // private PartQuestionEntity partQuestion;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

@@ -14,10 +14,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.web.ddajait.config.error.custom.WrongQuestionNotFoundException;
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.ChallengePartDao;
 import com.web.ddajait.model.dao.MemoDao;
 import com.web.ddajait.model.dao.PartQuestionDao;
+import com.web.ddajait.model.dao.UserWrongQuestionDao;
 import com.web.ddajait.model.dao.UserchallengeDao;
 import com.web.ddajait.model.dto.ChallengePartDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
@@ -29,6 +31,7 @@ import com.web.ddajait.model.entity.ChallengePartEntity;
 import com.web.ddajait.model.entity.MemoEntity;
 import com.web.ddajait.model.entity.PartQuestionEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
+import com.web.ddajait.model.entity.UserWrongQuestionEntity;
 import com.web.ddajait.service.ChallengePartService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -44,6 +47,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     private final PartQuestionDao partQuestionDao;
     private final ChallengeInfoDao challengeInfoDao;
     private final UserchallengeDao userchallengeDao;
+    private final UserWrongQuestionDao userWrongQuestionDao;
     private final MemoDao memoDao;
 
     @Override
@@ -69,7 +73,8 @@ public class ChallengePartServiceImpl implements ChallengePartService {
     }
 
     @Override
-    public Challenge getChallengersDetailData(Long challengeId, Long UserId) {
+    public Challenge getChallengersDetailData(Long UserId, Long challengeId)
+            throws Exception, WrongQuestionNotFoundException {
         log.info("[challengePartServiceImpl][getChallengersDetailData] Starts");
 
         Optional<UserChallengeEntity> challengeStatus = userchallengeDao.findByUserIdChallengeId(UserId, challengeId);
@@ -85,6 +90,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             // dayv = (int) stepStatus.get("day");
             stepv = uChallengeEntity.getStep();
             dayv = uChallengeEntity.getDay();
+
 
         } else {
             stepv = 0;
@@ -138,8 +144,9 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             challenge.setTotal_user(totalUser);
             challenge.setTest_date("-");
 
-            List<ChallengePartEntity> partEntityList = challengePartDao.findChallengePartsByCertificateId(certificateId);
-            
+            List<ChallengePartEntity> partEntityList = challengePartDao
+                    .findChallengePartsByCertificateId(certificateId);
+
             // partnum으로 그룹화하고 day로 정렬하여 맵을 생성
             Map<Integer, Map<Integer, List<ChallengePartEntity>>> groupedByPartNumAndDay = partEntityList.stream()
                     .collect(Collectors.groupingBy(
@@ -174,9 +181,10 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                         dayInfo.setDay(entity.getDay());
 
                         String memo = "메모를 입력해주세요!";
-                        
-                        Optional<MemoEntity> memoEntity = memoDao.findMemo(UserId, challengeId, partNum, entity.getDay());
-                        if(memoEntity.isPresent()){
+
+                        Optional<MemoEntity> memoEntity = memoDao.findMemo(UserId, challengeId, partNum,
+                                entity.getDay());
+                        if (memoEntity.isPresent()) {
                             memo = memoEntity.get().getMemo();
                         }
 
@@ -200,49 +208,86 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                                 sections.add(entity.getSectionName());
                                 chapterMap.put(entity.getChapterName(), sections);
 
-                            }else{
-                                chapterMap.put(entity.getChapterName(),null);
+                            } else {
+                                chapterMap.put(entity.getChapterName(), null);
                             }
                         }
 
                         // test 데이터 생성
                         List<TestQuestion> testQuestions = new ArrayList<>();
+                        Long certificatePartId = entity.getCertificatePartInfo().getCertificatePartId();
+                        log.info("[challengePartServiceImpl][getChallengersDetailData] certificatePartId "
+                                + certificatePartId);
 
+                        // 모든 파트의 기출문제
                         if (entity.getPartName().equals("기출문제 풀이")) {
+                            List<PartQuestionEntity> allPartQuestionEntities = partQuestionDao
+                                    .findByCertificateId(certificateId);
+                            testQuestions = getRandomTestQuestions(allPartQuestionEntities, 5);
+                            // 유저 오답문제 가져오기
+                        } else if (entity.getPartName().equals("오답문제 풀이")) {
+                            UserWrongQuestionEntity wrongQuestionEntity = new UserWrongQuestionEntity();
+                            List<PartQuestionEntity> wrongQuestionEntities = new ArrayList<>();
+                            try {
+                                Optional<UserWrongQuestionEntity> optionalEntity;
+                                optionalEntity = userWrongQuestionDao.findWrongQuestionByUserIdChallengeId(UserId,
+                                        challengeId);
+                                wrongQuestionEntity = optionalEntity.get();
+                                List<Integer> wrongQuestions = wrongQuestionEntity.getWrongQuestions();
+                                wrongQuestionEntities = wrongQuestions.stream().map(
+                                        questionId -> {
+                                            Long id = ((Number) questionId).longValue();
+                                            Optional<PartQuestionEntity> partQuestionEntityOption = partQuestionDao
+                                                    .findById(id);
+                                            if (partQuestionEntityOption.isPresent()) {
+                                                PartQuestionEntity partQuestionEntity = partQuestionEntityOption.get();
+                                                return partQuestionEntity;
+                                            } else {
+                                                return null;
+                                            }
+                                        }).collect(Collectors.toList());
+
+                                testQuestions = getRandomTestQuestions(wrongQuestionEntities, 3);
+
+                            } catch (WrongQuestionNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
                         } else if (entity.isRandomQuestion()) {
 
-                            Long certifocatePartId = entity.getCertificatePartInfo().getCertificatePartId();
                             List<PartQuestionEntity> partQuestionEntities = partQuestionDao
-                                    .findByCetificatePartId(certifocatePartId);
-                            AtomicInteger testId = new AtomicInteger(0);
+                                    .findByCetificatePartId(certificatePartId);
 
+                            testQuestions = getRandomTestQuestions(partQuestionEntities, 3);
                             // 랜덤으로 세가지 문제만 추출
-                            Collections.shuffle(partQuestionEntities);
-                            List<PartQuestionEntity> randomQuestions = partQuestionEntities.subList(0,
-                                    Math.min(partQuestionEntities.size(), 3));
+                            // AtomicInteger testId = new AtomicInteger(0);
+                            // Collections.shuffle(partQuestionEntities);
+                            // List<PartQuestionEntity> randomQuestions = partQuestionEntities.subList(0,
+                            // Math.min(partQuestionEntities.size(), 3));
 
-                            testQuestions = randomQuestions.stream()
-                                    .map(testData -> {
-                                        if (testData.getChoices().size() == 4) {
-                                            TestQuestion testQuestion = new TestQuestion();
-                                            int id = testId.incrementAndGet();
-                                            testQuestion.setTestId(testData.getQuestionId());
-                                            testQuestion.setNum(id);
-                                            testQuestion.setQuestion(testData.getQuestion());
-                                            testQuestion.setItem1(testData.getChoices().get(0));
-                                            testQuestion.setItem2(testData.getChoices().get(1));
-                                            testQuestion.setItem3(testData.getChoices().get(2));
-                                            testQuestion.setItem4(testData.getChoices().get(3));
-                                            testQuestion.setAnswer(testData.getAnswer());
-                                            return Optional.of(testQuestion);
-                                        } else {
-                                            return Optional.<TestQuestion>empty();
-                                        }
-                                    })
-                                    .filter(Optional::isPresent)
-                                    .map(Optional::get)
-                                    .collect(Collectors.toList());
+                            // testQuestions = randomQuestions.stream()
+                            // .map(testData -> {
+                            // if (testData.getChoices().size() == 4) {
+                            // TestQuestion testQuestion = new TestQuestion();
+                            // int id = testId.incrementAndGet();
+                            // testQuestion.setTestId(testData.getQuestionId());
+                            // testQuestion.setNum(id);
+                            // testQuestion.setQuestion(testData.getQuestion());
+                            // testQuestion.setItem1(testData.getChoices().get(0));
+                            // testQuestion.setItem2(testData.getChoices().get(1));
+                            // testQuestion.setItem3(testData.getChoices().get(2));
+                            // testQuestion.setItem4(testData.getChoices().get(3));
+                            // testQuestion.setAnswer(testData.getAnswer());
+                            // return Optional.of(testQuestion);
+                            // } else {
+                            // return Optional.<TestQuestion>empty();
+                            // }
+                            // })
+                            // .filter(Optional::isPresent)
+                            // .map(Optional::get)
+                            // .collect(Collectors.toList());
 
                         }
                         dayInfo.setTest(testQuestions);
@@ -267,6 +312,37 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             throw new EntityNotFoundException("Not found ChallengePartEntityList");
 
         }
+    }
+
+    // 랜덤문제 생성
+    private Optional<TestQuestion> mapToTestQuestion(PartQuestionEntity testData, AtomicInteger testId) {
+        if (testData.getChoices().size() == 4) {
+            TestQuestion testQuestion = new TestQuestion();
+            int id = testId.incrementAndGet();
+            testQuestion.setTestId(testData.getQuestionId());
+            testQuestion.setNum(id);
+            testQuestion.setQuestion(testData.getQuestion());
+            testQuestion.setItem1(testData.getChoices().get(0));
+            testQuestion.setItem2(testData.getChoices().get(1));
+            testQuestion.setItem3(testData.getChoices().get(2));
+            testQuestion.setItem4(testData.getChoices().get(3));
+            testQuestion.setAnswer(testData.getAnswer());
+            return Optional.of(testQuestion);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    // Method to select random questions and map them to TestQuestion
+    public List<TestQuestion> getRandomTestQuestions(List<PartQuestionEntity> partQuestionEntities, int count) {
+        Collections.shuffle(partQuestionEntities);
+        AtomicInteger testId = new AtomicInteger(0);
+        return partQuestionEntities.stream()
+                .limit(count)
+                .map(testData -> mapToTestQuestion(testData, testId))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
 }

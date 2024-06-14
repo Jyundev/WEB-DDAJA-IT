@@ -1,10 +1,10 @@
 package com.web.ddajait.model.dao.impl;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.web.ddajait.config.error.custom.WrongQuestionNotFoundException;
 import com.web.ddajait.model.dao.UserWrongQuestionDao;
 import com.web.ddajait.model.entity.UserWrongQuestionEntity;
 import com.web.ddajait.model.repository.UserWrongQuestionRepogitory;
@@ -30,15 +30,12 @@ public class UserWrongQuetionImpl implements UserWrongQuestionDao {
     }
 
     @Override
-    public Optional<UserWrongQuestionEntity> findWrongQuestionByQuestionId(Long questionId) throws Exception {
-        return userWrongQuestionRepogitory.findByPartQuestion_QuestionId(questionId);
-    }
+    public Optional<UserWrongQuestionEntity> findWrongQuestionByUserIdChallengeId(Long userId, Long challengeId)
+            throws Exception, WrongQuestionNotFoundException {
+        Optional<UserWrongQuestionEntity> userWrongQuestionEntity = userWrongQuestionRepogitory
+                .findByUser_UserIdAndChallengeInfo_ChallengeId(userId, challengeId);
+        return userWrongQuestionEntity;
 
-    @Override
-    public Optional<List<UserWrongQuestionEntity>> findWrongQuestionList(Long UserId, Long ChallengeId)
-            throws Exception {
-
-        return userWrongQuestionRepogitory.findByUser_UserIdAndChallengeInfo_ChallengeId(UserId, ChallengeId);
     }
 
 }
