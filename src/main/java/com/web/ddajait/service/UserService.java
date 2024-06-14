@@ -6,6 +6,7 @@ import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.UserChallenge.UserChallengeApiDto;
 
 import jakarta.servlet.ServletException;
 
@@ -67,7 +68,7 @@ public interface UserService {
         /* 챌린지 */
 
         // 유저 챌린지 정보 조회
-        public List<UserChallengeDto> getUserChallengList() throws Exception;
+        public List<UserChallengeApiDto> getUserChallengList(Long userId) throws Exception;
 
         // 챌린지 정보 조회
         public UserChallengeDto getUserChalleng(Long userChallengeId) throws Exception;

@@ -25,6 +25,7 @@ import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.model.dto.UserWrongQuestionDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.model.dto.UserChallenge.MemoDto;
+import com.web.ddajait.model.dto.UserChallenge.UserChallengeApiDto;
 import com.web.ddajait.service.ChallengePartService;
 import com.web.ddajait.service.MemoService;
 import com.web.ddajait.service.PartQuestionService;
@@ -99,11 +100,11 @@ public class UserApiController {
 
     /* 유저 챌린지 */
 
-    @GetMapping("/challenge")
+    @GetMapping("/challenge/{userId}")
     @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
-    public ResponseEntity<ResponseDto<List<UserChallengeDto>>> getUserChalengeList() throws Exception {
+    public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(@PathVariable("userId") Long userId) throws Exception {
         log.info("[UserApiController][getUserChalengeList] Start");
-        return ResponseHandler.SUCCESS(userService.getUserChallengList(), "유저 챌린지 리스트 조회 성공");
+        return ResponseHandler.SUCCESS(userService.getUserChallengList(userId), "유저 챌린지 리스트 조회 성공");
     }
 
     @GetMapping("/challenge/specific")

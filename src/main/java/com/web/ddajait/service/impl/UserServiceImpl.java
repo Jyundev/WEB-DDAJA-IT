@@ -25,6 +25,7 @@ import com.web.ddajait.model.dto.UserCertificateDto;
 import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.UserChallenge.UserChallengeApiDto;
 import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserCertificateEntity;
@@ -290,16 +291,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserChallengeDto> getUserChallengList() throws Exception {
+    public List<UserChallengeApiDto> getUserChallengList(Long uerId) throws Exception {
         log.info("[UserServiceImpl][getUserChalleng] Starts");
 
-        Long user_id = (Long) httpSession.getAttribute("userId");
-        if (user_id == null) {
-            throw new NotFoundMemberException();
-        }
-
-        return userchallengeDao.findUserChallengeByUserId(user_id).stream()
-                .map(UserChallengeDto::from)
+        return userchallengeDao.findUserChallengeByUserId(uerId).stream()
+                .map(entity -> {
+                    UserChallengeApiDto userChallengeApiDto = new UserChallengeApiDto();
+                    userChallengeApiDto.setChallengeId(entity.getUserChallenge_id());
+                    userChallengeApiDto.setChallengeName(entity.getChallengeInfo().getThumbnail());
+                    userChallengeApiDto.setChallengeName(entity.getChallengeInfo().getChallengeName());
+                    userChallengeApiDto.setProgress(entity.getProgressRate());
+                    return userChallengeApiDto;
+                })
                 .collect(Collectors.toList());
     }
 
