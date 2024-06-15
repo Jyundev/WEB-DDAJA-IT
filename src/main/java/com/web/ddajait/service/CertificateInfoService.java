@@ -23,4 +23,5 @@ public interface CertificateInfoService {
 
     public ElibilityJsonWrapper  getElibility(Long id) throws  JsonMappingException, JsonProcessingException;
 
+
 }

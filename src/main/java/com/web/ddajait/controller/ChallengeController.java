@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.ddajait.model.dto.ChallengeInfoDto;
 import com.web.ddajait.model.dto.ChallengePartDto;
+import com.web.ddajait.model.dto.ChallegeInfo.ChallengeCardDto;
+import com.web.ddajait.model.dto.ChallegeInfo.ChallengeInfoDto;
 import com.web.ddajait.service.ChallengeInfoSercive;
 import com.web.ddajait.service.ChallengePartService;
 
@@ -44,6 +45,21 @@ public class ChallengeController {
         return challengePartService.getAllchallengePartInfo();
     }
 
+    @Operation(summary = "챌린지 시작 날짜순으로 정렬한 챌린지 데이터", description = "메인에 보여지는 데이터로 챌린지 시작 날짜가 가까운 챌린지 데이터 10개를 가져오는 API 입니다. ")
+    @GetMapping("/recent")
+    public List<ChallengeCardDto> getRecentChallenge() throws Exception {
+        log.info("[ChallengeController][getRecentChallenge] Starts");
 
+        return challengeInfoSercive.getRecentChallenges();
+
+    }
+
+    @Operation(summary = "HOT 챌린지 데이터", description = "메인에 보여지는 데이터로 참가자 수가 많은 챌린지 데이터 10개를 가져오는 API 입니다. ")
+    @GetMapping("/hot")
+    public List<ChallengeCardDto> getHOtChallenge() throws Exception {
+        log.info("[ChallengeController][getHOtChallenge] Starts");
+
+        return challengeInfoSercive.getHotChallenges();
+    }
 
 }

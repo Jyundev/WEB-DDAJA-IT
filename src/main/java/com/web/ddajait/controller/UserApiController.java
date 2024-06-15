@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +20,13 @@ import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.PartQuestionDto;
 import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserCertificateDto;
-import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.model.dto.UserWrongQuestionDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.model.dto.UserChallenge.MemoDto;
 import com.web.ddajait.model.dto.UserChallenge.UserChallengeApiDto;
+import com.web.ddajait.model.dto.UserChallenge.UserChallengeDto;
 import com.web.ddajait.service.ChallengePartService;
 import com.web.ddajait.service.MemoService;
 import com.web.ddajait.service.PartQuestionService;
@@ -33,7 +34,6 @@ import com.web.ddajait.service.UserService;
 import com.web.ddajait.service.UserWrongQuestionService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -98,11 +98,21 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userService.getMyUserWithAuthorities(), "권한 조회");
     }
 
+    // 탈퇴
+       // 삭제
+    // localhost:8080/api/v1/user/{userName}
+    @Operation(summary = "유저탈퇴", description = "유저탈퇴 API 입니다. 유저 데이터가 삭제됩니다.")
+    @DeleteMapping("delete/{userId}")
+    public ResponseEntity<ResponseDto<String>> deleteUser(@PathVariable("userId") Long userId) throws Exception {
+        userService.deleteUser(userId);
+        return ResponseHandler.SUCCESS(null, "유저탈퇴에 성공했습니다");
+    }
     /* 유저 챌린지 */
 
     @GetMapping("/challenge/{userId}")
     @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
-    public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(@PathVariable("userId") Long userId) throws Exception {
+    public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(
+            @PathVariable("userId") Long userId) throws Exception {
         log.info("[UserApiController][getUserChalengeList] Start");
         return ResponseHandler.SUCCESS(userService.getUserChallengList(userId), "유저 챌린지 리스트 조회 성공");
     }
@@ -173,7 +183,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지별 유저 오답문제 가져오기", description = "챌린지별 유저 오답문제를 제공합니다")
-    @GetMapping("/challengePage/wrongQuestion/{challengeId}/{userId}")
+    @GetMapping("/challengePage/wrongQuestion/{userId}/{challengeId}")
     public ResponseEntity<ResponseDto<UserWrongQuestionDto>> getUserWrongQuestionById(
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId)
             throws Exception {
@@ -185,7 +195,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지별 유저 오답문제 저장 및 수정", description = "챌린지별 유저 오답문제 저장 및 수정이 이루어집니다")
-    @PutMapping("/challengePage/wrongQuestion/{challengeId}/{userId}")
+    @PutMapping("/challengePage/wrongQuestion/{userId}/{challengeId}")
     public ResponseEntity<ResponseDto<UserWrongQuestionDto>> modifyUserWrongQuestionByUserIdAndChalleneId(
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId,
             @RequestBody UserWrongQuestionDto uDto)
@@ -208,15 +218,11 @@ public class UserApiController {
     }
 
     @GetMapping("/certificate/specific/{userId}/{certificateId}")
-    @Parameter(description = "challegeId", example = "1")
     @Operation(summary = "특정 유저 자격증 조회 API", description = "특정 유저 자격증 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> getUserCertificate(
             @PathVariable Long certificateId, @PathVariable Long userId) throws Exception {
         log.info("[UserApiController][getUserCertificate] Start");
 
-        if (userId == null) {
-            throw new Exception("User is not logged in");
-        }
         UserCertificateDto userCertificateDto = userService.findUserCertificateId(certificateId, userId);
 
         return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 조회 성공");
@@ -232,14 +238,13 @@ public class UserApiController {
 
     }
 
-    @PostMapping("/certificate/update/{certificateId}/{userId}")
+    @PostMapping("/certificate/update/{userId}/{certificateId}")
     @Operation(summary = "유저 자격증 상태 업데이트 API", description = "유저 자격증 상태 업데이트 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> updatetUserChallenge(
             @PathVariable Long certificateId, @PathVariable Long userId,
             @RequestBody @Valid UserCertificateDto usercCertificateDto)
             throws Exception {
 
-        // EntityUtil.copyNonNullProperties(userChallenge, dto);
         userService.updateUserCertificate(usercCertificateDto, certificateId, userId);
         return ResponseHandler.SUCCESS(usercCertificateDto, "유저 자격증 상태 업데이트 성공");
 

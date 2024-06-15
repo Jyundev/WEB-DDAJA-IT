@@ -28,4 +28,9 @@ public class ChallengeInfoImpl implements ChallengeInfoDao {
         return challengeInfoRepository.findById(id);
     }
 
+    @Override
+    public List<ChallengeInfoEntity> getRecentChallegnges() {
+        return challengeInfoRepository.getRecentChallenges();
+    }
+
 }

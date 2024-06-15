@@ -20,7 +20,6 @@ import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,15 +33,7 @@ public class AuthController {
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final HttpSession session;
     private final UserService userService ;
-
-    // public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, HttpSession session, UserService userService) {
-    //     this.tokenProvider = tokenProvider;
-    //     this.authenticationManagerBuilder = authenticationManagerBuilder;
-    //     this.session = session;
-    //     this.userService = userService;
-    // }
 
     @Operation(summary = "로그인", description = "로그인 API 입니다.")
     @PostMapping("/authenticate")

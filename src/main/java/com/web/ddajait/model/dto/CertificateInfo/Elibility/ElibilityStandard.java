@@ -15,11 +15,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ElibilityJsonWrapper {
-    @JsonProperty("standard")
-    private List<ElibilityStandard> standard = null;
+public class ElibilityStandard {
+    @JsonProperty("qualification")
+    private String qualification;
 
-    @JsonProperty("Simplestandard")
-    private String Simplestandard;
-
+    @JsonProperty("condition")
+    private List<String> condition;
 }

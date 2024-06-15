@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.UserchallengeDao;
+import com.web.ddajait.model.dto.UserChallenge.TotalUserDto;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.model.entity.UserEntity;
@@ -68,5 +69,12 @@ public class UserchallengeImpl implements UserchallengeDao {
         userChallengeRepository.save(entity);
 
     }
+
+    @Override
+    public List<TotalUserDto> getTotalUser() {
+        return userChallengeRepository.getTotalUser();
+    }
+
+
 
 }
