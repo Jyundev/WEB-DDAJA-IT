@@ -45,7 +45,7 @@ public class ChallengeController {
         return challengePartService.getAllchallengePartInfo();
     }
 
-    @Operation(summary = "접수일이 가까운 챌린지 데이터", description = "메인에 보여지는 데이터로 접수일이 가까운 챌린지 데이터 10개를 가져오는 API 입니다. ")
+    @Operation(summary = "챌린지 시작 날짜순으로 정렬한 챌린지 데이터", description = "메인에 보여지는 데이터로 챌린지 시작 날짜가 가까운 챌린지 데이터 10개를 가져오는 API 입니다. ")
     @GetMapping("/recent")
     public List<ChallengeCardDto> getRecentChallenge() throws Exception {
         log.info("[ChallengeController][getRecentChallenge] Starts");
