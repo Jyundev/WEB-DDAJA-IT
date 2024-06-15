@@ -48,7 +48,8 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
     @Override
     public List<ChallengeCardDto> getRecentChallenges() throws Exception {
         List<ChallengeInfoEntity> entitys = challengeInfoDao.getRecentChallegnges();
-        return entitys.parallelStream().map(data -> {
+        List<ChallengeInfoDto> dInfoDtos = entitys.stream().map(ChallengeInfoDto::from).collect(Collectors.toList());
+        return dInfoDtos.parallelStream().map(data -> {
             ChallengeCardDto cardDto = new ChallengeCardDto();
             EntityUtil.copyNonNullProperties(data, cardDto);
             return cardDto;
@@ -62,9 +63,8 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
         List<ChallengeCardDto> cardDtos = userchallengeDao.getTotalUser().parallelStream().map(
                 entity -> {
                     ChallengeCardDto cardDto = new ChallengeCardDto();
-                    ChallengeInfoDto challengeDto;
                     try {
-                        challengeDto = findById(entity.getChallenge_id());
+                        ChallengeInfoDto challengeDto = findById(entity.getChallenge_id());
                         EntityUtil.copyNonNullProperties(challengeDto, cardDto);
                         cardDto.setTotalUser(entity.getTotal_user());
                     } catch (Exception e) {
