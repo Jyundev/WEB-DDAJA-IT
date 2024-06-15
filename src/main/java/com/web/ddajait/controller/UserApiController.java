@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +20,13 @@ import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.PartQuestionDto;
 import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.UserCertificateDto;
-import com.web.ddajait.model.dto.UserChallengeDto;
 import com.web.ddajait.model.dto.UserDto;
 import com.web.ddajait.model.dto.UserPrivateInfoDto;
 import com.web.ddajait.model.dto.UserWrongQuestionDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.model.dto.UserChallenge.MemoDto;
 import com.web.ddajait.model.dto.UserChallenge.UserChallengeApiDto;
+import com.web.ddajait.model.dto.UserChallenge.UserChallengeDto;
 import com.web.ddajait.service.ChallengePartService;
 import com.web.ddajait.service.MemoService;
 import com.web.ddajait.service.PartQuestionService;
@@ -97,6 +98,15 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userService.getMyUserWithAuthorities(), "권한 조회");
     }
 
+    // 탈퇴
+       // 삭제
+    // localhost:8080/api/v1/user/{userName}
+    @Operation(summary = "유저탈퇴", description = "유저탈퇴 API 입니다. 유저 데이터가 삭제됩니다.")
+    @DeleteMapping("delete/{userId}")
+    public ResponseEntity<ResponseDto<String>> deleteUser(@PathVariable("userId") Long userId) throws Exception {
+        userService.deleteUser(userId);
+        return ResponseHandler.SUCCESS(null, "유저탈퇴에 성공했습니다");
+    }
     /* 유저 챌린지 */
 
     @GetMapping("/challenge/{userId}")

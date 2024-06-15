@@ -1,13 +1,11 @@
-package com.web.ddajait.model.dto;
+package com.web.ddajait.model.dto.ChallegeInfo;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,8 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ChallengeInfoDto {
 
-    @Hidden
-    private Long challenge_id;
+    private Long challengeId;
 
     @NotBlank
     private String challengeName;
@@ -47,8 +44,6 @@ public class ChallengeInfoDto {
 
     private String thumbnail;
 
-    @NotNull
-    private Long challengeId;
 
     private String totalprogressRate;
 
@@ -57,7 +52,7 @@ public class ChallengeInfoDto {
             return null;
 
         return ChallengeInfoDto.builder()
-                .challenge_id(entity.getChallengeId())
+                .challengeId(entity.getChallengeId())
                 .challengeName(entity.getChallengeName())
                 .challengeDetail(entity.getChallengeDetail())
                 .startDay(timestampToString(entity.getStartDay()))

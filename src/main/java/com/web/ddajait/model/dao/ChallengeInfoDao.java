@@ -10,4 +10,7 @@ public interface ChallengeInfoDao {
     public List<ChallengeInfoEntity> getAllChallengeInfo();
 
     public Optional<ChallengeInfoEntity> findById(Long id);
+
+    // 시험 날짜가 가까운 데이터 10개 
+    public List<ChallengeInfoEntity> getRecentChallegnges();
 }
