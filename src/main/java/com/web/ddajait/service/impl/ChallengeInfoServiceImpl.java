@@ -60,12 +60,16 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
     @Override
     public List<ChallengeCardDto> getHotChallenges() throws Exception {
         log.info("[ChallengeInfoServiceImpl][ChallengeCardDto] Starts");
+
         List<ChallengeCardDto> cardDtos = userchallengeDao.getTotalUser().parallelStream().map(
                 entity -> {
+                    ChallengeInfoDto challengeInfoDto = new ChallengeInfoDto(); 
                     ChallengeCardDto cardDto = new ChallengeCardDto();
                     try {
-                        ChallengeInfoDto challengeDto = findById(entity.getChallenge_id());
-                        EntityUtil.copyNonNullProperties(challengeDto, cardDto);
+
+                        challengeInfoDto = findById(entity.getChallenge_id());
+                        challengeInfoDto.setChallengeId(entity.getChallenge_id());
+                        EntityUtil.copyNonNullProperties(challengeInfoDto, cardDto);
                         cardDto.setTotalUser(entity.getTotal_user());
                     } catch (Exception e) {
                         e.printStackTrace();
