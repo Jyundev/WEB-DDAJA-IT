@@ -16,7 +16,6 @@ import com.web.ddajait.model.dto.CertificateInfo.CertificateInfoDto;
 import com.web.ddajait.model.dto.CertificateInfo.Elibility.ElibilityJsonWrapper;
 import com.web.ddajait.model.dto.CertificateInfo.ExamContent.ExamList;
 import com.web.ddajait.model.dto.CertificateInfo.ExamStandard.ExamStandardJsonWrapper;
-import com.web.ddajait.model.entity.PartQuestionEntity;
 import com.web.ddajait.service.CertificateInfoService;
 import com.web.ddajait.service.CertificationRegistrationService;
 import com.web.ddajait.service.PartQuestionService;
