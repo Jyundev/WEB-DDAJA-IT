@@ -42,6 +42,9 @@ public class CertificateInfoEntity {
 
     @Column(nullable = false, length = 50)
     private String types;
+  
+    @Column(nullable = true, columnDefinition = "TEXT")
+    private String thumbnail;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String overview;
