@@ -3,6 +3,7 @@ package com.web.ddajait.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +35,15 @@ public class ChallengeController {
         log.info("[ChallengeController][getChallengeInfo] Starts");
 
         return challengeInfoSercive.getAllChallengeInfo();
+    }
+
+    @Operation(summary = "특정 챌린지 데이터", description = "특정 챌린지 데이터를 가져오는 API 입니다.")
+    @GetMapping("/detail/{challengeId}")
+    public ChallengeInfoDto getChallengeInfoById(@PathVariable Long challengeId) throws Exception {
+
+        log.info("[ChallengeController][getChallengeInfo] Starts");
+
+        return challengeInfoSercive.findById(challengeId);
     }
 
     @Operation(summary = "모든 챌린지 챕터 데이터", description = "모든 챌린지 챕터 데이터를 가져오는 API 입니다.")
