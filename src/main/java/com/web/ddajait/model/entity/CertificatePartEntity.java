@@ -32,6 +32,7 @@ public class CertificatePartEntity {
     @NotBlank
     private String certificateName;
 
+
     @NotBlank
     private String certificatePart;
     
