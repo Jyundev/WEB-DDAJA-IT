@@ -336,26 +336,27 @@ public class UserServiceImpl implements UserService {
             if (userEntity.isPresent()) {
 
                 // 챌린지 신청시 권한을 챌린저로 변경
-                UserEntity entity = userEntity.get();
+                UserEntity uEntity = userEntity.get();
                 // 사용자의 권한 목록에서 해당 챌린지의 챌린저 권한 여부 확인
-                boolean hasChallengerRole = entity.getAuthorities().stream()
+                boolean hasChallengerRole = uEntity.getAuthorities().stream()
                         .anyMatch(authority -> authority.getAuthorityName()
-                                .equals(Role.CHALLENGER.getKey() + challengeID));
+                                .equals(Role.CHALLENGER.getKey()));
 
                 // 해당 챌린지에 챌린저 권한이 없는 경우 추가
                 if (!hasChallengerRole) {
-                    Set<AuthorityEntity> authorities = entity.getAuthorities();
+                    Set<AuthorityEntity> authorities = uEntity.getAuthorities();
 
                     // 새로운 챌린지 챌린저 권한 추가
                     authorities.add(AuthorityEntity.builder()
-                            .authorityName(Role.CHALLENGER.getKey() + challengeID)
+                            .authorityName(Role.CHALLENGER.getKey())
                             .build());
 
                     // 권한 목록 업데이트
-                    entity.setAuthorities(authorities);
+                    uEntity.setAuthorities(authorities);
+                    
+                    userDao.updateUser(uEntity);
                 }
 
-                userDao.updateUser(entity);
             }
 
             UserChallengeEntity entity = new UserChallengeEntity();
