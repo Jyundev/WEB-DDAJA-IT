@@ -50,6 +50,9 @@ serverName: green_server
 
 # Spring Data Source 설정 
 spring:
+  devtools:
+    liveload:
+      enabled: true
   application:
     name: final-prod
     

@@ -361,7 +361,6 @@ public class UserServiceImpl implements UserService {
     public void insertUserChallenge(UserChallengeDto dto, Long userId, Long challengeId) throws Exception {
         log.info("[UserServiceImpl][insertUserChallenge] Starts");
 
-        // Long user_id = (Long) httpSession.getAttribute("userId");
         if (userId != null) {
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
@@ -424,12 +423,12 @@ public class UserServiceImpl implements UserService {
 
         Optional<UserEntity> entity = userDao.findById(userId);
         if (entity.isPresent()) {
-            log.info("[UserServiceImpl][getAddUserInfo]  " + entity);
             UserEntity userEntity = entity.get();
-            userEntity.setGender(dto.getGender());
-            userEntity.setInterest((dto.getInterest()));
-            userEntity.setJob((dto.getJob()));
-            userEntity.setQualifiedCertificate((dto.getQualifiedCertificate()));
+
+            log.info("[UserServiceImpl][getAddUserInfo]  UserInfo : {}, {}" , userEntity.getNickname(), dto.getAge());
+
+            EntityUtil.copyNonNullProperties(dto, userEntity);
+            
 
             userDao.updateUser(userEntity);
 

@@ -51,8 +51,10 @@ dependencies {
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
 
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
 // S3
-implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+// implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 }
 
