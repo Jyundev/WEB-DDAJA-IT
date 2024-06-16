@@ -91,7 +91,6 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             stepv = uChallengeEntity.getStep();
             dayv = uChallengeEntity.getDay();
 
-
         } else {
             stepv = 0;
             dayv = 0;
@@ -130,6 +129,9 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
             String startDay = outputFormat.format(starTimestamp);
             String endDay = outputFormat.format(endTimestamp);
+
+            String testDay = challengeInfoentity.getTestDay();
+
             int totalUser = userchallengeDao.countMemberByChallengeId(challengeId);
 
             // 전체 유저 진행률 평균
@@ -142,7 +144,7 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             challenge.setMy_progress(myProgress);
             challenge.setTotal_progress(totalProgress);
             challenge.setTotal_user(totalUser);
-            challenge.setTest_date("-");
+            challenge.setTest_date(testDay);
 
             List<ChallengePartEntity> partEntityList = challengePartDao
                     .findChallengePartsByCertificateId(certificateId);

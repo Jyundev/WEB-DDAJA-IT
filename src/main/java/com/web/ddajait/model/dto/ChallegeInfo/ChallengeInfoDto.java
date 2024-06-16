@@ -42,8 +42,9 @@ public class ChallengeInfoDto {
     @NotBlank
     private String endDay;
 
-    private String thumbnail;
+    private String testDay;
 
+    private String thumbnail;
 
     private String totalprogressRate;
 
@@ -62,7 +63,7 @@ public class ChallengeInfoDto {
                 .memberPassRate(entity.getMemberPassRate())
                 .challengeId(entity.getCertificateInfo().getCertificateId())
                 .totalprogressRate(entity.getTotalprogressRate())
-                .thumbnail(entity.getThumbnail())
+                .testDay(entity.getTestDay())
                 .build();
     }
 
