@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,10 +37,10 @@ public class CertificatePartEntity {
     @NotBlank
     private String certificatePart;
     
-    @OneToMany(mappedBy = "certificatePartInfo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "certificatePartInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ChallengePartEntity> challengePartEntities;
 
-    @OneToMany(mappedBy = "certificatePartInfo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "certificatePartInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PartQuestionEntity> partQuestionEntities;
 
 
