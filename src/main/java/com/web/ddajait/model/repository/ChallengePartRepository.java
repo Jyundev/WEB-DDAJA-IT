@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.web.ddajait.model.entity.ChallengePartEntity;
@@ -15,7 +14,7 @@ public interface ChallengePartRepository extends JpaRepository<ChallengePartEnti
     
     List<ChallengePartEntity> findByCertificateInfo_CertificateId(Long challengeId);
 
-    @Query(value = "SELECT * FROM challenge_part WHERE certificateId = :certificateId", nativeQuery = true)
-    List<ChallengePartEntity> findChallengePartsByCertificateId(@Param("certificateId") Long certificateId);
+    @Query(value = "SELECT * FROM challenge_part WHERE certificateId = ?1", nativeQuery = true)
+    List<ChallengePartEntity> findChallengePartsByCertificateId( Long certificateId);
 
 }

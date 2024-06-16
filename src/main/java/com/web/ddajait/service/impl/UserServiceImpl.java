@@ -334,7 +334,7 @@ public class UserServiceImpl implements UserService {
 
             Optional<UserEntity> userEntity = userDao.findById(userId);
             if (userEntity.isPresent()) {
-                
+
                 // 챌린지 신청시 권한을 챌린저로 변경
                 UserEntity entity = userEntity.get();
 
@@ -425,10 +425,17 @@ public class UserServiceImpl implements UserService {
         if (entity.isPresent()) {
             UserEntity userEntity = entity.get();
 
-            log.info("[UserServiceImpl][getAddUserInfo]  UserInfo : {}, {}" , userEntity.getNickname(), dto.getAge());
+            if (dto.getNickname().length() == 0) {
+                dto.setNickname(userEntity.getNickname());
+            }
+
+            if (dto.getProfileImage().length() == 0) {
+                dto.setProfileImage(userEntity.getProfileImage());
+            }
 
             EntityUtil.copyNonNullProperties(dto, userEntity);
-            
+
+            log.info("[UserServiceImpl][getAddUserInfo]  UserInfo : {}, {}", userEntity.getNickname(), dto.getAge());
 
             userDao.updateUser(userEntity);
 
