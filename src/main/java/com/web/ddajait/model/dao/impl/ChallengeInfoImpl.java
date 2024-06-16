@@ -20,7 +20,7 @@ public class ChallengeInfoImpl implements ChallengeInfoDao {
     @Override
     public List<ChallengeInfoEntity> getAllChallengeInfo() {
         // return challengeInfoRepository.findAll();
-        return challengeInfoRepository.getAllChallenges();
+        return challengeInfoRepository.findDistinctBy();
     }
 
     @Override
