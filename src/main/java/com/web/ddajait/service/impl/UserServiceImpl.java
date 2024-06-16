@@ -355,7 +355,7 @@ public class UserServiceImpl implements UserService {
                     entity.setAuthorities(authorities);
                 }
 
-                userDao.createMember(entity);
+                userDao.updateUser(entity);
             }
 
             UserChallengeEntity entity = new UserChallengeEntity();
