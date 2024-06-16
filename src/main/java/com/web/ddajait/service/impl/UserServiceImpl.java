@@ -141,9 +141,7 @@ public class UserServiceImpl implements UserService {
         log.info("[UserServiceImpl][createMember] userDto : " + userDto);
 
         if (userDto.getNickname().equals(Role.ADMIN.name())) {
-            log.info("[UserServiceImpl][createMember] userDto equals: " + userDto);
 
-            log.info("[UserServiceImpl][createMember] : " + userDto.getNickname());
             authorities.add(AuthorityEntity.builder()
                     .authorityName(Role.ADMIN.getKey())
                     .build());
@@ -333,7 +331,23 @@ public class UserServiceImpl implements UserService {
             EntityUtil.copyNonNullProperties(dto, entity);
             userchallengeDao.updateUserChallenge(entity);
         } else {
-            // 챌린지 신청
+
+            Optional<UserEntity> userEntity = userDao.findById(userId);
+            if (userEntity.isPresent()) {
+                
+                // 챌린지 신청시 권한을 챌린저로 변경
+                UserEntity entity = userEntity.get();
+
+                Set<AuthorityEntity> authorities = entity.getAuthorities();
+
+                authorities.add(AuthorityEntity.builder()
+                        .authorityName(Role.CHALLENGER.getKey())
+                        .build());
+
+                entity.setAuthorities(authorities);
+                userDao.createMember(entity);
+            }
+
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(userId).get());
