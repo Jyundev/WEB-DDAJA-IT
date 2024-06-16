@@ -57,6 +57,9 @@ public class ChallengeInfoEntity {
     @Column(nullable = false, length = 10)
     private Timestamp endDay;
 
+    @Column(nullable = false, length = 50)
+    private String testDay;
+
     @Column(nullable = true, columnDefinition = "TEXT")
     private String thumbnail;
 
