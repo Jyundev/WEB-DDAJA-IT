@@ -1,5 +1,7 @@
 package com.web.ddajait.model.dto.CertificateInfo;
 
+import org.hibernate.validator.constraints.URL;
+
 import com.web.ddajait.model.entity.CertificateInfoEntity;
 
 import jakarta.validation.constraints.NotBlank;
@@ -34,6 +36,9 @@ public class CertificateInfoDto {
     private String overview;
 
     private String difficulty;
+
+    @URL
+    private String thumbnail;
 
     @NotBlank
     private String eligibility;
@@ -72,6 +77,7 @@ public class CertificateInfoDto {
                 .passCriteria(entity.getPassCriteria())
                 .registrationLink(entity.getRegistrationLink())
                 .relatedJob(entity.getRelatedJob())
+                .thumbnail(entity.getThumbnail())
                 .build();
 
     }

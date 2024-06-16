@@ -49,12 +49,12 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.16.1'
 
 	// lombok
-	// implementation('org.projectlombok:lombok')
-	// testImplementation('org.projectlombok:lombok')
-	// annotationProcessor('org.projectlombok:lombok')
-	// testAnnotationProcessor('org.projectlombok:lombok')
 	compileOnly 'org.projectlombok:lombok'
 
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+// S3
+// implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 }
 

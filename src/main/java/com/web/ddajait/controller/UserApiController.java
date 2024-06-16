@@ -61,17 +61,13 @@ public class UserApiController {
     HttpSession session;
 
     // 추가 정보 수집
-    @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다.")
+    @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다. *닉네임은 프로필 수정 api를 통해 수정됩니다")
     @PostMapping("/info/{userId}")
     public ResponseEntity<ResponseDto<UserPrivateInfoDto>> getUserInfo(
             @Valid @RequestBody UserPrivateInfoDto dto, @PathVariable Long userId) throws Exception {
 
-        log.info("[PublicController][UserPrivateInfoDto] Start - Gender: {}, Interst: {}", dto.getGender(),
+        log.info("[PublicController][UserPrivateInfoDto] Start - AGE: {}, Interst: {}", dto.getAge(),
                 dto.getInterest());
-
-        // Long user_id = CommonUtils.checkSessionId(session);
-
-        log.info("[PublicController][UserPrivateInfoDto] Start - user_id", userId);
 
         userService.addUserInfo(userId, dto);
 

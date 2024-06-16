@@ -141,9 +141,7 @@ public class UserServiceImpl implements UserService {
         log.info("[UserServiceImpl][createMember] userDto : " + userDto);
 
         if (userDto.getNickname().equals(Role.ADMIN.name())) {
-            log.info("[UserServiceImpl][createMember] userDto equals: " + userDto);
 
-            log.info("[UserServiceImpl][createMember] : " + userDto.getNickname());
             authorities.add(AuthorityEntity.builder()
                     .authorityName(Role.ADMIN.getKey())
                     .build());
@@ -333,7 +331,23 @@ public class UserServiceImpl implements UserService {
             EntityUtil.copyNonNullProperties(dto, entity);
             userchallengeDao.updateUserChallenge(entity);
         } else {
-            // 챌린지 신청
+
+            Optional<UserEntity> userEntity = userDao.findById(userId);
+            if (userEntity.isPresent()) {
+                
+                // 챌린지 신청시 권한을 챌린저로 변경
+                UserEntity entity = userEntity.get();
+
+                Set<AuthorityEntity> authorities = entity.getAuthorities();
+
+                authorities.add(AuthorityEntity.builder()
+                        .authorityName(Role.CHALLENGER.getKey())
+                        .build());
+
+                entity.setAuthorities(authorities);
+                userDao.createMember(entity);
+            }
+
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
             entity.setUser(userDao.findById(userId).get());
@@ -347,7 +361,6 @@ public class UserServiceImpl implements UserService {
     public void insertUserChallenge(UserChallengeDto dto, Long userId, Long challengeId) throws Exception {
         log.info("[UserServiceImpl][insertUserChallenge] Starts");
 
-        // Long user_id = (Long) httpSession.getAttribute("userId");
         if (userId != null) {
             UserChallengeEntity entity = new UserChallengeEntity();
             EntityUtil.copyNonNullProperties(dto, entity);
@@ -410,12 +423,12 @@ public class UserServiceImpl implements UserService {
 
         Optional<UserEntity> entity = userDao.findById(userId);
         if (entity.isPresent()) {
-            log.info("[UserServiceImpl][getAddUserInfo]  " + entity);
             UserEntity userEntity = entity.get();
-            userEntity.setGender(dto.getGender());
-            userEntity.setInterest((dto.getInterest()));
-            userEntity.setJob((dto.getJob()));
-            userEntity.setQualifiedCertificate((dto.getQualifiedCertificate()));
+
+            log.info("[UserServiceImpl][getAddUserInfo]  UserInfo : {}, {}" , userEntity.getNickname(), dto.getAge());
+
+            EntityUtil.copyNonNullProperties(dto, userEntity);
+            
 
             userDao.updateUser(userEntity);
 
