@@ -15,4 +15,8 @@ public interface ChallengeInfoRepository extends JpaRepository<ChallengeInfoEnti
     @Query(value = "SELECT * FROM challenge_info;", nativeQuery = true)
     List<ChallengeInfoEntity> getAllChallenges();
 
+    List<ChallengeInfoEntity> findDistinctBy();
+
+
+    
 }
