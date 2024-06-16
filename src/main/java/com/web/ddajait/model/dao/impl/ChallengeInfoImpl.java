@@ -19,12 +19,13 @@ public class ChallengeInfoImpl implements ChallengeInfoDao {
 
     @Override
     public List<ChallengeInfoEntity> getAllChallengeInfo() {
-        return challengeInfoRepository.findAll();
+        // return challengeInfoRepository.findAll();
+        return challengeInfoRepository.getAllChallenges();
     }
 
     @Override
     public Optional<ChallengeInfoEntity> findById(Long id) {
-        
+
         return challengeInfoRepository.findById(id);
     }
 

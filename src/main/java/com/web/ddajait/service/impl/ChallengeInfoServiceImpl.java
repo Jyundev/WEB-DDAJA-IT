@@ -11,7 +11,6 @@ import com.web.ddajait.model.dto.ChallegeInfo.ChallengeCardDto;
 import com.web.ddajait.model.dto.ChallegeInfo.ChallengeInfoDto;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.service.ChallengeInfoSercive;
-import com.web.ddajait.util.EntityUtil;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -48,12 +47,8 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
     @Override
     public List<ChallengeCardDto> getRecentChallenges() throws Exception {
         List<ChallengeInfoEntity> entitys = challengeInfoDao.getRecentChallegnges();
-        return entitys.parallelStream().map(data -> {
-            ChallengeCardDto cardDto = new ChallengeCardDto();
-            EntityUtil.copyNonNullProperties(data, cardDto);
-            return cardDto;
-
-        }).collect(Collectors.toList());
+        return entitys.parallelStream().map(
+                ChallengeCardDto::from).collect(Collectors.toList());
     }
 
     @Override
@@ -62,19 +57,9 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
 
         List<ChallengeCardDto> cardDtos = userchallengeDao.getTotalUser().parallelStream().map(
                 entity -> {
-                    ChallengeInfoDto challengeInfoDto = new ChallengeInfoDto(); 
-                    ChallengeCardDto cardDto = new ChallengeCardDto();
-                    try {
-
-                        challengeInfoDto = findById(entity.getChallenge_id());
-                        challengeInfoDto.setChallengeId(entity.getChallenge_id());
-                        EntityUtil.copyNonNullProperties(challengeInfoDto, cardDto);
-                        cardDto.setTotalUser(entity.getTotal_user());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    return cardDto;
+                    ChallengeInfoEntity challengeInfoEntity = challengeInfoDao.findById(entity.getChallenge_id()).get();
+                    log.info("[ChallengeInfoServiceImpl][getHotChallenges] challengeId {}", entity.getChallenge_id());
+                    return ChallengeCardDto.from(challengeInfoEntity);
 
                 }).collect(Collectors.toList());
 

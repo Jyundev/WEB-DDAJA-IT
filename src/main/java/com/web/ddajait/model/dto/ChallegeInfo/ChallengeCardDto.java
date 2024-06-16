@@ -1,8 +1,14 @@
 package com.web.ddajait.model.dto.ChallegeInfo;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+import com.web.ddajait.model.entity.ChallengeInfoEntity;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ChallengeCardDto {
 
     @NotNull
@@ -32,9 +39,35 @@ public class ChallengeCardDto {
     @NotBlank
     private String endDay;
 
+    private String testDay;
+
     private String thumbnail;
 
     private String totalprogressRate;
 
     private Long totalUser;
+
+    public static ChallengeCardDto from(ChallengeInfoEntity entity) {
+        if (entity == null)
+            return null;
+
+        return ChallengeCardDto.builder()
+                .challengeId(entity.getChallengeId())
+                .challengeName(entity.getChallengeName())
+                .challengeDetail(entity.getChallengeDetail())
+                .startDay(timestampToString(entity.getStartDay()))
+                .endDay(timestampToString(entity.getStartDay()))
+                .passRate(entity.getPassRate())
+                .memberPassRate(entity.getMemberPassRate())
+                .challengeId(entity.getCertificateInfo().getCertificateId())
+                .totalprogressRate(entity.getTotalprogressRate())
+                .testDay(entity.getTestDay())
+                .build();
+    }
+
+    public static String timestampToString(Timestamp time) {
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return outputFormat.format(time);
+
+    }
 }
