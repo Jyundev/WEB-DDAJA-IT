@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.handler.ResponseHandler;
-import com.web.ddajait.model.dto.ChallengePartDto;
-import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.ChallegeInfo.ChallengeCardDto;
 import com.web.ddajait.model.dto.ChallegeInfo.ChallengeInfoDto;
+import com.web.ddajait.model.dto.ChallengePart.ChallengePartDto;
+import com.web.ddajait.model.dto.Response.ResponseDto;
 import com.web.ddajait.service.ChallengeInfoSercive;
 import com.web.ddajait.service.ChallengePartService;
 

@@ -56,7 +56,7 @@ public class ChallengeCardDto {
                 .challengeName(entity.getChallengeName())
                 .challengeDetail(entity.getChallengeDetail())
                 .startDay(timestampToString(entity.getStartDay()))
-                .endDay(timestampToString(entity.getStartDay()))
+                .endDay(timestampToString(entity.getEndDay()))
                 .passRate(entity.getPassRate())
                 .memberPassRate(entity.getMemberPassRate())
                 .totalprogressRate(entity.getTotalprogressRate())

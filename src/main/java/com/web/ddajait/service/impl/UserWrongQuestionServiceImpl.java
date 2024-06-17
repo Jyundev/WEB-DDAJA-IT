@@ -8,7 +8,7 @@ import com.web.ddajait.config.error.custom.WrongQuestionNotFoundException;
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.UserDao;
 import com.web.ddajait.model.dao.UserWrongQuestionDao;
-import com.web.ddajait.model.dto.UserWrongQuestionDto;
+import com.web.ddajait.model.dto.User.UserWrongQuestionDto;
 import com.web.ddajait.model.entity.UserWrongQuestionEntity;
 import com.web.ddajait.service.UserWrongQuestionService;
 import com.web.ddajait.util.EntityUtil;

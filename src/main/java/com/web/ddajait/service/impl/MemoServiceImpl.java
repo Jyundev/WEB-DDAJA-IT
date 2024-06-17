@@ -6,7 +6,7 @@ import com.web.ddajait.config.error.custom.MemoNotFoundException;
 import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.MemoDao;
 import com.web.ddajait.model.dao.UserDao;
-import com.web.ddajait.model.dto.UserChallenge.MemoDto;
+import com.web.ddajait.model.dto.User.UserChallenge.MemoDto;
 import com.web.ddajait.model.entity.MemoEntity;
 import com.web.ddajait.service.MemoService;
 import com.web.ddajait.util.EntityUtil;

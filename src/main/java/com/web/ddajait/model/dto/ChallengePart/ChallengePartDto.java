@@ -1,4 +1,4 @@
-package com.web.ddajait.model.dto;
+package com.web.ddajait.model.dto.ChallengePart;
 
 import com.web.ddajait.model.entity.ChallengePartEntity;
 

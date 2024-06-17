@@ -1,4 +1,4 @@
-package com.web.ddajait.model.dto.UserChallenge;
+package com.web.ddajait.model.dto.User.UserChallenge;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

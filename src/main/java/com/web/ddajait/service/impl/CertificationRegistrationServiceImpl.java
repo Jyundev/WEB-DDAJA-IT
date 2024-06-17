@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.web.ddajait.model.dao.CertificationRegistrationDao;
-import com.web.ddajait.model.dto.CertificationRegistrationDto;
 import com.web.ddajait.model.dto.Calendar.CalendarDto;
 import com.web.ddajait.model.dto.Calendar.ExtendedProps;
 import com.web.ddajait.model.dto.CertificateInfo.CertificateInfoDto;
 import com.web.ddajait.model.dto.CertificateInfo.Elibility.ElibilityJsonWrapper;
 import com.web.ddajait.model.dto.CertificateInfo.Elibility.ElibilityStandard;
+import com.web.ddajait.model.dto.CertificateRegister.CertificationRegistrationDto;
 import com.web.ddajait.service.CertificateInfoService;
 import com.web.ddajait.service.CertificationRegistrationService;
 

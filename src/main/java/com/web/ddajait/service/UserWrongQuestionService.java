@@ -1,6 +1,6 @@
 package com.web.ddajait.service;
 
-import com.web.ddajait.model.dto.UserWrongQuestionDto;
+import com.web.ddajait.model.dto.User.UserWrongQuestionDto;
 
 public interface UserWrongQuestionService {
 

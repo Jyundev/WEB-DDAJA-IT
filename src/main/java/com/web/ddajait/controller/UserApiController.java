@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.handler.ResponseHandler;
-import com.web.ddajait.model.dto.PartQuestionDto;
-import com.web.ddajait.model.dto.ResponseDto;
-import com.web.ddajait.model.dto.UserCertificateDto;
-import com.web.ddajait.model.dto.UserDto;
-import com.web.ddajait.model.dto.UserPrivateInfoDto;
-import com.web.ddajait.model.dto.UserWrongQuestionDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
-import com.web.ddajait.model.dto.UserChallenge.MemoDto;
-import com.web.ddajait.model.dto.UserChallenge.UserChallengeApiDto;
-import com.web.ddajait.model.dto.UserChallenge.UserChallengeDto;
+import com.web.ddajait.model.dto.ChallengePart.PartQuestionDto;
+import com.web.ddajait.model.dto.Response.ResponseDto;
+import com.web.ddajait.model.dto.User.UserCertificateDto;
+import com.web.ddajait.model.dto.User.UserDto;
+import com.web.ddajait.model.dto.User.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.User.UserWrongQuestionDto;
+import com.web.ddajait.model.dto.User.UserChallenge.MemoDto;
+import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeApiDto;
+import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeDto;
 import com.web.ddajait.service.ChallengePartService;
 import com.web.ddajait.service.MemoService;
 import com.web.ddajait.service.PartQuestionService;
@@ -140,7 +140,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지 상세 페이지 데이터", description = "챌린지 상세 페이지 데이터를 가져오는 API 입니다. \n*현제 데이터 오류로 challengeId = 1, 50 테스트 가능")
-    @GetMapping("/challengePage/{challengeId}/{userId}")
+    @GetMapping("/challenge/challengePage/{challengeId}/{userId}")
     public Challenge getchallengeDetailPageInfo(
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId) throws Exception {
 
@@ -150,7 +150,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지 데이별 메모 업데이트", description = "챌린지 데이별 메모를 수정하는 API")
-    @PostMapping("/challengeMemo/{challengeId}/{userId}")
+    @PostMapping("/challenge/challengeMemo/{challengeId}/{userId}")
     public ResponseEntity<ResponseDto<MemoDto>> modifyChallengeMemo(@PathVariable("challengeId") Long challengeId,
             @PathVariable("userId") Long userId,
             @Valid @RequestBody MemoDto dto) throws Exception {
@@ -160,7 +160,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지 데이별 메모 가져오기", description = "챌린지 데이별 메모를 가져오는 API. ChallengeId, UserId, Step, Day 값이 필요합니다")
-    @GetMapping("/challengeMemo/{challengeId}/{userId}")
+    @GetMapping("/challenge/challengeMemo/{challengeId}/{userId}")
     public ResponseEntity<ResponseDto<MemoDto>> getChallengeMemo(@Param("challengeId") Long challengeId,
             @Param("userId") Long userId, @Param("step") int step, @Param("day") int day) throws Exception {
         log.info("[ChallengeController][getChallengeMemo] Starts");
@@ -169,7 +169,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지별 모든 기출문제 가져오기", description = "챌린지별 모든 파트의 기출문제를 제공합니다")
-    @GetMapping("/challengePage/allQuestion/{certificateId}")
+    @GetMapping("/challenge/challengePage/allQuestion/{certificateId}")
     public ResponseEntity<ResponseDto<List<PartQuestionDto>>> getAllPartQuestionByChallengeId(
             @PathVariable("certificateId") Long certificateId)
             throws Exception {
@@ -179,7 +179,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지별 유저 오답문제 가져오기", description = "챌린지별 유저 오답문제를 제공합니다")
-    @GetMapping("/challengePage/wrongQuestion/{userId}/{challengeId}")
+    @GetMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}")
     public ResponseEntity<ResponseDto<UserWrongQuestionDto>> getUserWrongQuestionById(
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId)
             throws Exception {
@@ -191,7 +191,7 @@ public class UserApiController {
     }
 
     @Operation(summary = "챌린지별 유저 오답문제 저장 및 수정", description = "챌린지별 유저 오답문제 저장 및 수정이 이루어집니다")
-    @PutMapping("/challengePage/wrongQuestion/{userId}/{challengeId}")
+    @PutMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}")
     public ResponseEntity<ResponseDto<UserWrongQuestionDto>> modifyUserWrongQuestionByUserIdAndChalleneId(
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId,
             @RequestBody UserWrongQuestionDto uDto)

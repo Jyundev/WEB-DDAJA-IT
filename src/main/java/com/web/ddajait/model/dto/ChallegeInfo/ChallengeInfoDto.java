@@ -48,6 +48,8 @@ public class ChallengeInfoDto {
 
     private String totalprogressRate;
 
+    private int totalUser;
+
     public static ChallengeInfoDto from(ChallengeInfoEntity entity) {
         if (entity == null)
             return null;
@@ -72,4 +74,8 @@ public class ChallengeInfoDto {
         return outputFormat.format(time);
 
     }
+
+    
+
+
 }

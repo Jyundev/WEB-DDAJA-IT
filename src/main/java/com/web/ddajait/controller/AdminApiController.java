@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.handler.ResponseHandler;
-import com.web.ddajait.model.dto.ResponseDto;
-import com.web.ddajait.model.dto.UserDto;
+import com.web.ddajait.model.dto.Response.ResponseDto;
+import com.web.ddajait.model.dto.User.UserDto;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;

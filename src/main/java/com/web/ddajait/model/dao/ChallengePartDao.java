@@ -11,6 +11,6 @@ public interface ChallengePartDao {
 
     public Optional<ChallengePartEntity> findChallengeById(Long challengePartId);
 
-    public List<ChallengePartEntity> findChallengePartsByCertificateId(Long certificateID);
+    public Optional<List<ChallengePartEntity>> findChallengePartsByCertificateId(Long certificateID);
 
 }

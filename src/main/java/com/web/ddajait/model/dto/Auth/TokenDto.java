@@ -1,4 +1,4 @@
-package com.web.ddajait.model.dto;
+package com.web.ddajait.model.dto.Auth;
 
 import lombok.Builder;
 
