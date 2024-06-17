@@ -64,14 +64,14 @@ public class UserApiController {
     @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다. *닉네임은 프로필 수정 api를 통해 수정됩니다")
     @PostMapping("/info/{userId}")
     public ResponseEntity<ResponseDto<UserPrivateInfoDto>> getUserInfo(
-            @Valid @RequestBody UserPrivateInfoDto dto, @PathVariable Long userId) throws Exception {
+            @Valid @RequestBody UserPrivateInfoDto dto, @PathVariable("userId") Long userId) throws Exception {
 
         log.info("[PublicController][UserPrivateInfoDto] Start - AGE: {}, Interst: {}", dto.getAge(),
                 dto.getInterest());
 
         userService.addUserInfo(userId, dto);
 
-        return ResponseHandler.SUCCESS(dto, "회원가입");
+        return ResponseHandler.SUCCESS(dto, "유저 정보 추가 성공!");
 
     }
 
@@ -79,7 +79,7 @@ public class UserApiController {
     @PutMapping("/{userId}")
     @Operation(summary = "프로필 수정", description = "프로필 수정 API 입니다. 이메일을 입력 후 프로필을 수정합니다")
     public ResponseEntity<ResponseDto<UserPrivateInfoDto>> updateUser(
-            @PathVariable Long userId,
+            @PathVariable("userId") Long userId,
             @Valid @RequestBody UserPrivateInfoDto dto) throws Exception {
         userService.updateUser(dto, userId);
         return ResponseHandler.SUCCESS(dto, " 프로필 업데이트 성공");
@@ -130,7 +130,7 @@ public class UserApiController {
     @PostMapping("/challenge/update/{challengeId}/{userId}")
     @Operation(summary = "유저 챌린지 신청 및 상태 업데이트 API", description = "유저 챌린지 채린지 신청할 경우는 body 값이 없어도 되지만 상태 업데이트를 할 경우 step, day 값을 입력하세요.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
-            @PathVariable Long challengeId, @PathVariable Long userId,
+            @PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId,
             @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
 
         // EntityUtil.copyNonNullProperties(userChallenge, dto);
@@ -207,7 +207,7 @@ public class UserApiController {
 
     @GetMapping("/certificate/{userId}")
     @Operation(summary = "유저 자격증 리스트 조회 API", description = "유저 자격증 리스트 조회 API 입니다.")
-    public ResponseEntity<ResponseDto<List<UserCertificateDto>>> getUserCertificateList(@PathVariable Long userId)
+    public ResponseEntity<ResponseDto<List<UserCertificateDto>>> getUserCertificateList(@PathVariable("userId") Long userId)
             throws Exception {
         log.info("[UserApiController][getUserCertificateList] Start");
         return ResponseHandler.SUCCESS(userService.getUserCertificateList(userId), "유저 자격증 리스트 조회 성공");
@@ -216,7 +216,7 @@ public class UserApiController {
     @GetMapping("/certificate/specific/{userId}/{certificateId}")
     @Operation(summary = "특정 유저 자격증 조회 API", description = "특정 유저 자격증 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> getUserCertificate(
-            @PathVariable Long certificateId, @PathVariable Long userId) throws Exception {
+            @PathVariable("certificateId") Long certificateId, @PathVariable("userId") Long userId) throws Exception {
         log.info("[UserApiController][getUserCertificate] Start");
 
         UserCertificateDto userCertificateDto = userService.findUserCertificateId(certificateId, userId);
@@ -237,7 +237,7 @@ public class UserApiController {
     @PostMapping("/certificate/update/{userId}/{certificateId}")
     @Operation(summary = "유저 자격증 상태 업데이트 API", description = "유저 자격증 상태 업데이트 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> updatetUserChallenge(
-            @PathVariable Long certificateId, @PathVariable Long userId,
+            @PathVariable("certificateId") Long certificateId, @PathVariable("userId") Long userId,
             @RequestBody @Valid UserCertificateDto usercCertificateDto)
             throws Exception {
 
