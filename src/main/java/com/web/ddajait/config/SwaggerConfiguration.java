@@ -25,31 +25,71 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 @Configuration
 public class SwaggerConfiguration {
 
-    private static final String SCHEME_NAME = "bearerAuth";
-    private static final String SCHEME = "bearer";
-    private static final String BEARER_FORMAT = "JWT";
+        private static final String SCHEME_NAME = "bearerAuth";
+        private static final String SCHEME = "bearer";
+        private static final String BEARER_FORMAT = "JWT";
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .info(new Info().title("API").version("v1"))
-                .addSecurityItem(new SecurityRequirement().addList(SCHEME_NAME))
-                .components(new Components()
-                        .addSecuritySchemes(SCHEME_NAME,
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme(SCHEME)
-                                        .bearerFormat(BEARER_FORMAT)
-                                        .in(SecurityScheme.In.HEADER)
-                                        .name("Authorization")));
-    }
+        @Bean
+        public OpenAPI customOpenAPI() {
+                return new OpenAPI()
+                                .info(new Info().title("API").version("v1"))
+                                .addSecurityItem(new SecurityRequirement().addList(SCHEME_NAME))
+                                .components(new Components()
+                                                .addSecuritySchemes(SCHEME_NAME,
+                                                                new SecurityScheme()
+                                                                                .type(SecurityScheme.Type.HTTP)
+                                                                                .scheme(SCHEME)
+                                                                                .bearerFormat(BEARER_FORMAT)
+                                                                                .in(SecurityScheme.In.HEADER)
+                                                                                .name("Authorization")));
+        }
 
-    @Bean
-    public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("public")
-                .pathsToMatch("/**")
-                .build();
-    }
+        @Bean
+        public GroupedOpenApi allApi() {
+                return GroupedOpenApi.builder()
+                                .group("모든 API")
+                                .pathsToMatch("/**")
+                                .build();
+        }
+
+        @Bean
+        public GroupedOpenApi challengeApi() {
+                return GroupedOpenApi.builder()
+                                .group("챌린지 API")
+                                .pathsToMatch("/api/v1/challenge/**")
+                                .build();
+        }
+
+        @Bean
+        public GroupedOpenApi certificateApi() {
+                return GroupedOpenApi.builder()
+                                .group("자격증 API")
+                                .pathsToMatch("/api/v1/certificate/**")
+                                .build();
+        }
+
+        @Bean
+        public GroupedOpenApi adminApi() {
+                return GroupedOpenApi.builder()
+                                .group("관리자 API")
+                                .pathsToMatch("/api/v1/admin/**")
+                                .build();
+        }
+
+        @Bean
+        public GroupedOpenApi publicApi() {
+                return GroupedOpenApi.builder()
+                                .group("PUBLIC API")
+                                .pathsToMatch("/api/v1", "/api/v1/public/**", "/api/v1/auth/**")
+                                .build();
+        }
+
+        @Bean
+        public GroupedOpenApi envApi() {
+                return GroupedOpenApi.builder()
+                                .group("환경 체크 API")
+                                .pathsToMatch("/hc", "/env")
+                                .build();
+        }
+
 }
-

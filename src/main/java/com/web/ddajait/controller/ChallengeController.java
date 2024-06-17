@@ -2,12 +2,15 @@ package com.web.ddajait.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.ChallengePartDto;
+import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.ChallegeInfo.ChallengeCardDto;
 import com.web.ddajait.model.dto.ChallegeInfo.ChallengeInfoDto;
 import com.web.ddajait.service.ChallengeInfoSercive;
@@ -30,46 +33,46 @@ public class ChallengeController {
 
     @Operation(summary = "모든 챌린지 데이터", description = "모든 챌린지 데이터를 가져오는 API 입니다.")
     @GetMapping("/all")
-    public List<ChallengeInfoDto> getChallengeInfo() throws Exception {
+    public ResponseEntity<ResponseDto<List<ChallengeInfoDto>>> getChallengeInfo() throws Exception {
 
         log.info("[ChallengeController][getChallengeInfo] Starts");
-
-        return challengeInfoSercive.getAllChallengeInfo();
+        return ResponseHandler.SUCCESS(challengeInfoSercive.getAllChallengeInfo(), "모든 챌린지 데이터 가져오기");
     }
 
     @Operation(summary = "특정 챌린지 데이터", description = "특정 챌린지 데이터를 가져오는 API 입니다.")
     @GetMapping("/detail/{challengeId}")
-    public ChallengeInfoDto getChallengeInfoById(@PathVariable("challengeId") Long challengeId) throws Exception {
+    public ResponseEntity<ResponseDto<ChallengeInfoDto>> getChallengeInfoById(
+            @PathVariable("challengeId") Long challengeId) throws Exception {
 
         log.info("[ChallengeController][getChallengeInfo] Starts");
 
-        return challengeInfoSercive.findById(challengeId);
+        return ResponseHandler.SUCCESS(challengeInfoSercive.findById(challengeId), challengeId + " 챌린지 데이터를 가져오기 성공!");
     }
 
     @Operation(summary = "모든 챌린지 챕터 데이터", description = "모든 챌린지 챕터 데이터를 가져오는 API 입니다.")
     @GetMapping("/part/all")
-    public List<ChallengePartDto> getAllchallengePartInfo() throws Exception {
+    public ResponseEntity<ResponseDto<List<ChallengePartDto>>> getAllchallengePartInfo() throws Exception {
 
         log.info("[ChallengeController][getchallengePartInfo] Starts");
 
-        return challengePartService.getAllchallengePartInfo();
+        return ResponseHandler.SUCCESS(challengePartService.getAllchallengePartInfo(), "모든 챌린지 챕터 데이터 가져오기 성공");
     }
 
     @Operation(summary = "챌린지 시작 날짜순으로 정렬한 챌린지 데이터", description = "메인에 보여지는 데이터로 챌린지 시작 날짜가 가까운 챌린지 데이터 10개를 가져오는 API 입니다. ")
     @GetMapping("/recent")
-    public List<ChallengeCardDto> getRecentChallenge() throws Exception {
+    public ResponseEntity<ResponseDto<List<ChallengeCardDto>>> getRecentChallenge() throws Exception {
         log.info("[ChallengeController][getRecentChallenge] Starts");
 
-        return challengeInfoSercive.getRecentChallenges();
+        return ResponseHandler.SUCCESS(challengeInfoSercive.getRecentChallenges(), "Recent Challenge Data 받기 성공!");
 
     }
 
     @Operation(summary = "HOT 챌린지 데이터", description = "메인에 보여지는 데이터로 참가자 수가 많은 챌린지 데이터 10개를 가져오는 API 입니다. ")
     @GetMapping("/hot")
-    public List<ChallengeCardDto> getHOtChallenge() throws Exception {
+    public ResponseEntity<ResponseDto<List<ChallengeCardDto>>> getHOtChallenge() throws Exception {
         log.info("[ChallengeController][getHOtChallenge] Starts");
 
-        return challengeInfoSercive.getHotChallenges();
+        return ResponseHandler.SUCCESS(challengeInfoSercive.getHotChallenges(), "HOT 챌린지 받아오기 성공");
     }
 
 }
