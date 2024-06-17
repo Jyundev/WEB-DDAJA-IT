@@ -62,6 +62,7 @@ public class ChallengeCardDto {
                 .challengeId(entity.getCertificateInfo().getCertificateId())
                 .totalprogressRate(entity.getTotalprogressRate())
                 .testDay(entity.getTestDay())
+                .thumbnail(entity.getThumbnail())
                 .build();
     }
 

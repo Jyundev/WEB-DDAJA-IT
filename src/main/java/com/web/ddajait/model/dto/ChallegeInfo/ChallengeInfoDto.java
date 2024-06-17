@@ -63,6 +63,7 @@ public class ChallengeInfoDto {
                 .memberPassRate(entity.getMemberPassRate())
                 .totalprogressRate(entity.getTotalprogressRate())
                 .testDay(entity.getTestDay())
+                .thumbnail(entity.getThumbnail())
                 .build();
     }
 
