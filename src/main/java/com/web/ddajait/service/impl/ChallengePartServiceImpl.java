@@ -85,15 +85,9 @@ public class ChallengePartServiceImpl implements ChallengePartService {
         // 현재 유저의 챌린지 진행상태 가져오기
         if (challengeStatus.isPresent()) {
             UserChallengeEntity uChallengeEntity = challengeStatus.get();
-            // Map<String, Object> stepStatus = uChallengeEntity.getChallengeSatus();
-            // stepv = (int) stepStatus.get("step");
-            // dayv = (int) stepStatus.get("day");
             stepv = uChallengeEntity.getStep();
             dayv = uChallengeEntity.getDay();
 
-        } else {
-            stepv = 0;
-            dayv = 0;
         }
 
         final int userStep = stepv;
@@ -101,10 +95,10 @@ public class ChallengePartServiceImpl implements ChallengePartService {
 
         Challenge challenge = new Challenge();
 
-        if (challengeInfoDao.findById(challengeId).isPresent()) {
+        Optional<ChallengeInfoEntity> challengeInfoOptional = challengeInfoDao.findById(challengeId);
+
+        if (challengeInfoOptional.isPresent()) {
             ChallengeInfoEntity challengeInfoentity = challengeInfoDao.findById(challengeId).get();
-            // CertificationRegistrationEntity certificationRegistrationEntity =
-            // certificationRegistrationDao.findByCertificateId(challengeInfoentity.getCertificateInfo().getCertificateId()).get();
 
             Long certificateId = challengeInfoentity.getCertificateInfo().getCertificateId();
 
@@ -146,169 +140,149 @@ public class ChallengePartServiceImpl implements ChallengePartService {
             challenge.setTotal_user(totalUser);
             challenge.setTest_date(testDay);
 
-            List<ChallengePartEntity> partEntityList = challengePartDao
+            Optional<List<ChallengePartEntity>> partEntityListOptional = challengePartDao
                     .findChallengePartsByCertificateId(certificateId);
+            if (partEntityListOptional.isPresent()) {
+                List<ChallengePartEntity> partEntityList = partEntityListOptional.get();
 
-            // partnum으로 그룹화하고 day로 정렬하여 맵을 생성
-            Map<Integer, Map<Integer, List<ChallengePartEntity>>> groupedByPartNumAndDay = partEntityList.stream()
-                    .collect(Collectors.groupingBy(
-                            ChallengePartEntity::getPartNum,
-                            TreeMap::new,
-                            Collectors.groupingBy(
-                                    ChallengePartEntity::getDay,
-                                    TreeMap::new,
-                                    Collectors.toList())));
+                // partnum으로 그룹화하고 day로 정렬하여 맵을 생성
+                Map<Integer, Map<Integer, List<ChallengePartEntity>>> groupedByPartNumAndDay = partEntityList.stream()
+                        .collect(Collectors.groupingBy(
+                                ChallengePartEntity::getPartNum,
+                                TreeMap::new,
+                                Collectors.groupingBy(
+                                        ChallengePartEntity::getDay,
+                                        TreeMap::new,
+                                        Collectors.toList())));
 
-            // 결과 출력
-            List<Step> steps = new ArrayList<>();
-            groupedByPartNumAndDay.forEach((partNum, dayMap) -> {
-                // step 객체 생성
-                Step step = new Step();
+                // 결과 출력
+                List<Step> steps = new ArrayList<>();
+                groupedByPartNumAndDay.forEach((partNum, dayMap) -> {
+                    // step 객체 생성
+                    Step step = new Step();
 
-                step.setStep(partNum);
+                    step.setStep(partNum);
 
-                // Day 리스트 생성
-                List<Day> days = new ArrayList<>();
-                dayMap.forEach((day, entities) -> {
-                    // Day가 중복일 경우 여러 entity 생성
+                    // Day 리스트 생성
+                    List<Day> days = new ArrayList<>();
+                    dayMap.forEach((day, entities) -> {
+                        // Day가 중복일 경우 여러 entity 생성
 
-                    Day dayInfo = new Day();
-                    Map<String, List<String>> chapterMap = new HashMap<>();
-                    List<String> chaptersList = new ArrayList<>();
-                    List<List<String>> sectionsList = new ArrayList<>();
+                        Day dayInfo = new Day();
+                        Map<String, List<String>> chapterMap = new HashMap<>();
+                        List<String> chaptersList = new ArrayList<>();
+                        List<List<String>> sectionsList = new ArrayList<>();
 
-                    entities.forEach(entity -> {
-                        step.setPartName(entity.getPartName());
+                        entities.forEach(entity -> {
+                            step.setPartName(entity.getPartName());
 
-                        dayInfo.setDay(entity.getDay());
+                            dayInfo.setDay(entity.getDay());
 
-                        String memo = "메모를 입력해주세요!";
+                            String memo = "메모를 입력해주세요!";
 
-                        Optional<MemoEntity> memoEntity = memoDao.findMemo(UserId, challengeId, partNum,
-                                entity.getDay());
-                        if (memoEntity.isPresent()) {
-                            memo = memoEntity.get().getMemo();
-                        }
+                            // Memo 설정
+                            Optional<MemoEntity> memoEntity = memoDao.findMemo(UserId, challengeId, partNum,
+                                    entity.getDay());
+                            if (memoEntity.isPresent()) {
+                                memo = memoEntity.get().getMemo();
+                            }
 
-                        dayInfo.setMemo(memo);
+                            dayInfo.setMemo(memo);
 
-                        if (entity.getDay() > userDay) {
-                            dayInfo.setComplete(false);
-                            step.setComplete(false);
-                        } else {
-                            dayInfo.setComplete(true);
-                            step.setComplete(true);
-
-                        }
-
-                        // 챕터별 섹션 데이터 수집
-                        if (chapterMap.containsKey(entity.getChapterName())) {
-                            chapterMap.get(entity.getChapterName()).add(entity.getSectionName());
-                        } else {
-                            List<String> sections = new ArrayList<>();
-                            if (entity.getSectionName().length() > 0) {
-                                sections.add(entity.getSectionName());
-                                chapterMap.put(entity.getChapterName(), sections);
-
+                            // 완료 여부 설정
+                            if (entity.getDay() > userDay) {
+                                dayInfo.setComplete(false);
+                                step.setComplete(false);
                             } else {
-                                chapterMap.put(entity.getChapterName(), null);
-                            }
-                        }
-
-                        // test 데이터 생성
-                        List<TestQuestion> testQuestions = new ArrayList<>();
-                        Long certificatePartId = entity.getCertificatePartInfo().getCertificatePartId();
-                        log.info("[challengePartServiceImpl][getChallengersDetailData] certificatePartId "
-                                + certificatePartId);
-
-                        // 모든 파트의 기출문제
-                        if (entity.getPartName().equals("기출문제 풀이")) {
-                            List<PartQuestionEntity> allPartQuestionEntities = partQuestionDao
-                                    .findByCertificateId(certificateId);
-                            testQuestions = getRandomTestQuestions(allPartQuestionEntities, 5);
-                            // 유저 오답문제 가져오기
-                        } else if (entity.getPartName().equals("오답문제 풀이")) {
-                            UserWrongQuestionEntity wrongQuestionEntity = new UserWrongQuestionEntity();
-                            List<PartQuestionEntity> wrongQuestionEntities = new ArrayList<>();
-                            try {
-                                Optional<UserWrongQuestionEntity> optionalEntity;
-                                optionalEntity = userWrongQuestionDao.findWrongQuestionByUserIdChallengeId(UserId,
-                                        challengeId);
-                                wrongQuestionEntity = optionalEntity.get();
-                                List<Integer> wrongQuestions = wrongQuestionEntity.getWrongQuestions();
-                                wrongQuestionEntities = wrongQuestions.stream().map(
-                                        questionId -> {
-                                            Long id = ((Number) questionId).longValue();
-                                            Optional<PartQuestionEntity> partQuestionEntityOption = partQuestionDao
-                                                    .findById(id);
-                                            if (partQuestionEntityOption.isPresent()) {
-                                                PartQuestionEntity partQuestionEntity = partQuestionEntityOption.get();
-                                                return partQuestionEntity;
-                                            } else {
-                                                return null;
-                                            }
-                                        }).collect(Collectors.toList());
-
-                                testQuestions = getRandomTestQuestions(wrongQuestionEntities, 3);
-
-                            } catch (WrongQuestionNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                dayInfo.setComplete(true);
+                                step.setComplete(true);
                             }
 
-                        } else if (entity.isRandomQuestion()) {
+                            // 챕터별 섹션 데이터 수집
+                            if (chapterMap.containsKey(entity.getChapterName())) {
+                                // chapterMap.get(entity.getChapterName())가 null인 경우 처리
+                                if (chapterMap.get(entity.getChapterName()) == null) {
+                                    chapterMap.put(entity.getChapterName(), new ArrayList<>());
+                                }
+                                chapterMap.get(entity.getChapterName()).add(entity.getSectionName());
+                            } else {
+                                List<String> sections = new ArrayList<>();
+                                if (entity.getSectionName().length() > 0) {
+                                    sections.add(entity.getSectionName());
+                                    chapterMap.put(entity.getChapterName(), sections);
+                                } else {
+                                    chapterMap.put(entity.getChapterName(), null);
+                                }
+                            }
+                            // test 데이터 생성
+                            List<TestQuestion> testQuestions = new ArrayList<>();
+                            Long certificatePartId = entity.getCertificatePartInfo().getCertificatePartId();
+                            log.info("[challengePartServiceImpl][getChallengersDetailData] certificatePartId "
+                                    + certificatePartId);
 
-                            List<PartQuestionEntity> partQuestionEntities = partQuestionDao
-                                    .findByCetificatePartId(certificatePartId);
+                            // 모든 파트의 기출문제
+                            if (entity.getPartName().equals("기출문제 풀이")) {
+                                List<PartQuestionEntity> allPartQuestionEntities = partQuestionDao
+                                        .findByCertificateId(certificateId);
+                                testQuestions = getRandomTestQuestions(allPartQuestionEntities, 5);
+                                // 유저 오답문제 가져오기
+                            } else if (entity.getPartName().equals("오답문제 풀이")) {
+                                UserWrongQuestionEntity wrongQuestionEntity = new UserWrongQuestionEntity();
+                                List<PartQuestionEntity> wrongQuestionEntities = new ArrayList<>();
+                                try {
+                                    Optional<UserWrongQuestionEntity> optionalEntity;
+                                    optionalEntity = userWrongQuestionDao.findWrongQuestionByUserIdChallengeId(UserId,
+                                            challengeId);
+                                    wrongQuestionEntity = optionalEntity.get();
+                                    List<Integer> wrongQuestions = wrongQuestionEntity.getWrongQuestions();
+                                    wrongQuestionEntities = wrongQuestions.stream().map(
+                                            questionId -> {
+                                                Long id = ((Number) questionId).longValue();
+                                                Optional<PartQuestionEntity> partQuestionEntityOption = partQuestionDao
+                                                        .findById(id);
+                                                if (partQuestionEntityOption.isPresent()) {
+                                                    PartQuestionEntity partQuestionEntity = partQuestionEntityOption
+                                                            .get();
+                                                    return partQuestionEntity;
+                                                } else {
+                                                    return null;
+                                                }
+                                            }).collect(Collectors.toList());
 
-                            testQuestions = getRandomTestQuestions(partQuestionEntities, 3);
-                            // 랜덤으로 세가지 문제만 추출
-                            // AtomicInteger testId = new AtomicInteger(0);
-                            // Collections.shuffle(partQuestionEntities);
-                            // List<PartQuestionEntity> randomQuestions = partQuestionEntities.subList(0,
-                            // Math.min(partQuestionEntities.size(), 3));
+                                    testQuestions = getRandomTestQuestions(wrongQuestionEntities, 3);
 
-                            // testQuestions = randomQuestions.stream()
-                            // .map(testData -> {
-                            // if (testData.getChoices().size() == 4) {
-                            // TestQuestion testQuestion = new TestQuestion();
-                            // int id = testId.incrementAndGet();
-                            // testQuestion.setTestId(testData.getQuestionId());
-                            // testQuestion.setNum(id);
-                            // testQuestion.setQuestion(testData.getQuestion());
-                            // testQuestion.setItem1(testData.getChoices().get(0));
-                            // testQuestion.setItem2(testData.getChoices().get(1));
-                            // testQuestion.setItem3(testData.getChoices().get(2));
-                            // testQuestion.setItem4(testData.getChoices().get(3));
-                            // testQuestion.setAnswer(testData.getAnswer());
-                            // return Optional.of(testQuestion);
-                            // } else {
-                            // return Optional.<TestQuestion>empty();
-                            // }
-                            // })
-                            // .filter(Optional::isPresent)
-                            // .map(Optional::get)
-                            // .collect(Collectors.toList());
+                                } catch (WrongQuestionNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
-                        }
-                        dayInfo.setTest(testQuestions);
+                            } else if (entity.isRandomQuestion()) {
+
+                                List<PartQuestionEntity> partQuestionEntities = partQuestionDao
+                                        .findByCetificatePartId(certificatePartId);
+
+                                testQuestions = getRandomTestQuestions(partQuestionEntities, 3);
+
+                            }
+                            dayInfo.setTest(testQuestions);
+                        });
+
+                        chaptersList.addAll(chapterMap.keySet());
+                        sectionsList.addAll(chapterMap.values());
+
+                        dayInfo.setChapter(chaptersList);
+                        dayInfo.setSectionList(sectionsList);
+                        days.add(dayInfo);
+
                     });
+                    step.setDays(days);
 
-                    chaptersList.addAll(chapterMap.keySet());
-                    sectionsList.addAll(chapterMap.values());
-
-                    dayInfo.setChapter(chaptersList);
-                    dayInfo.setSectionList(sectionsList);
-                    days.add(dayInfo);
-
+                    steps.add(step);
                 });
-                step.setDays(days);
 
-                steps.add(step);
-            });
-
-            challenge.setSteps(steps);
+                challenge.setSteps(steps);
+            }
             return challenge;
         } else {
             throw new EntityNotFoundException("Not found ChallengePartEntityList");

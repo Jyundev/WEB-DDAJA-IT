@@ -40,7 +40,7 @@ public class CertificatePartEntity {
     @OneToMany(mappedBy = "certificatePartInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ChallengePartEntity> challengePartEntities;
 
-    @OneToMany(mappedBy = "certificatePartInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "certificatePartInfo", cascade = CascadeType.ALL)
     private List<PartQuestionEntity> partQuestionEntities;
 
 

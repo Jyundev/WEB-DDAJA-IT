@@ -32,10 +32,10 @@ public class ChallengePartImpl implements ChallengePartDao {
     }
 
     @Override
-    public List<ChallengePartEntity> findChallengePartsByCertificateId(Long certificateId) {
+    public Optional<List<ChallengePartEntity>> findChallengePartsByCertificateId(Long certificateId) {
         log.info("[ChallengePartImpl][findChallengePartsByCertificateId] certificateId : "+certificateId);
-        return challengePartRepository.findByCertificateInfo_CertificateId(certificateId);
-        // return challengePartRepository.findChallengePartsByChallengeId(challengeId);
+        
+        return challengePartRepository.findChallengePartByCertificateInfo_CertificateId(certificateId);
         
     }
 
