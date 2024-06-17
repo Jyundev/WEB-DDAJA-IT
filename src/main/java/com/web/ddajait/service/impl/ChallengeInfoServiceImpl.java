@@ -27,9 +27,8 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
     @Override
     public List<ChallengeInfoDto> getAllChallengeInfo() {
         return challengeInfoDao.getAllChallengeInfo().stream()
-                .map(ChallengeInfoDto::from)
+                .map(entity -> ChallengeInfoDto.from(entity, userchallengeDao))
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -37,7 +36,7 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
         if (challengeInfoDao.findById(id).isPresent()) {
             ChallengeInfoEntity entity = challengeInfoDao.findById(id).get();
 
-            return ChallengeInfoDto.from(entity);
+            return ChallengeInfoDto.from(entity, userchallengeDao);
         } else {
             throw new EntityNotFoundException("Not found ChallengeInfoEntity");
         }
@@ -47,8 +46,8 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
     @Override
     public List<ChallengeCardDto> getRecentChallenges() throws Exception {
         List<ChallengeInfoEntity> entitys = challengeInfoDao.getRecentChallegnges();
-        return entitys.parallelStream().map(
-                ChallengeCardDto::from).collect(Collectors.toList());
+        return entitys.parallelStream().map(entity -> ChallengeCardDto.from(entity, userchallengeDao))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -59,7 +58,7 @@ public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
                 entity -> {
                     ChallengeInfoEntity challengeInfoEntity = challengeInfoDao.findById(entity.getChallenge_id()).get();
                     log.info("[ChallengeInfoServiceImpl][getHotChallenges] challengeId {}", entity.getChallenge_id());
-                    return ChallengeCardDto.from(challengeInfoEntity);
+                    return ChallengeCardDto.from(challengeInfoEntity, userchallengeDao);
 
                 }).collect(Collectors.toList());
 

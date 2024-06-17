@@ -3,6 +3,7 @@ package com.web.ddajait.model.dto.ChallegeInfo;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import com.web.ddajait.model.dao.UserchallengeDao;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 
 import jakarta.validation.constraints.NotBlank;
@@ -45,9 +46,9 @@ public class ChallengeCardDto {
 
     private String totalprogressRate;
 
-    private Long totalUser;
+    private int totalUser;
 
-    public static ChallengeCardDto from(ChallengeInfoEntity entity) {
+    public static ChallengeCardDto from(ChallengeInfoEntity entity,  UserchallengeDao userchallengeDao) {
         if (entity == null)
             return null;
 
@@ -60,6 +61,7 @@ public class ChallengeCardDto {
                 .passRate(entity.getPassRate())
                 .memberPassRate(entity.getMemberPassRate())
                 .totalprogressRate(entity.getTotalprogressRate())
+                .totalUser(userchallengeDao.countMemberByChallengeId(entity.getChallengeId()))
                 .testDay(entity.getTestDay())
                 .thumbnail(entity.getThumbnail())
                 .build();
