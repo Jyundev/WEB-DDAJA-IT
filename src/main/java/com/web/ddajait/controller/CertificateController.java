@@ -2,6 +2,7 @@ package com.web.ddajait.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.CertificationRegistrationDto;
 import com.web.ddajait.model.dto.PartQuestionDto;
+import com.web.ddajait.model.dto.ResponseDto;
 import com.web.ddajait.model.dto.Calendar.CalendarDto;
 import com.web.ddajait.model.dto.CertificateInfo.CertificateInfoDto;
 import com.web.ddajait.model.dto.CertificateInfo.Elibility.ElibilityJsonWrapper;
@@ -39,76 +42,84 @@ public class CertificateController {
 
     @GetMapping("/all")
     @Operation(summary = "모든 자격증 데이터", description = "모든 자격증 데이터를 가져오는 API 입니다.")
-    public List<CertificateInfoDto> getAllCertificate() {
+    public ResponseEntity<ResponseDto<List<CertificateInfoDto>>> getAllCertificate() {
         log.info("[CertificateController][getAllCertificate] Starts");
 
-        return certificateInfoService.getAllCertificate();
+        return ResponseHandler.SUCCESS(certificateInfoService.getAllCertificate(), "모든 자격증 데이터 가져오기 성공");
 
     }
 
     @GetMapping("/{certificateId}")
     @Operation(summary = "특정 자격증 정보 데이터", description = "특정 자격증 데이터를 가져오는 API 입니다.")
-    public CertificateInfoDto getCertificate(@PathVariable("certificateId") Long certificateId) {
+    public ResponseEntity<ResponseDto<CertificateInfoDto>> getCertificate(
+            @PathVariable("certificateId") Long certificateId) {
         log.info("[CertificateController][getCertificate] Starts");
 
-        return certificateInfoService.findById(certificateId);
+        return ResponseHandler.SUCCESS(certificateInfoService.findById(certificateId),
+                String.format("certificateId %d  자격증 데이터를 가져오기 성공", certificateId));
 
     }
 
     @GetMapping("/examcontent/{certificateId}")
     @Operation(summary = "자격증 시험 내용", description = "자격증 시험 내용 데이터를 가져오는 API 입니다.")
-    public ExamList getExamcontent(@PathVariable("certificateId") Long certificateId)
+    public ResponseEntity<ResponseDto<ExamList>> getExamcontent(@PathVariable("certificateId") Long certificateId)
             throws JsonMappingException, IOException, JsonProcessingException {
         log.info("[CertificateController][getExamcontent] Starts");
 
-        return certificateInfoService.getExamContent(certificateId);
+        return ResponseHandler.SUCCESS(certificateInfoService.getExamContent(certificateId),
+                String.format("%d 자격증 시험 내용 데이터를 가져오기 성공", certificateId));
 
     }
 
     @GetMapping("/examstandard/{certificateId}")
     @Operation(summary = "자격증 시험 기준", description = "자격증 시험 기준 데이터를 가져오는 API 입니다.")
-    public ExamStandardJsonWrapper getExamStandard(@PathVariable("certificateId") Long certificateId)
+    public ResponseEntity<ResponseDto<ExamStandardJsonWrapper>> getExamStandard(
+            @PathVariable("certificateId") Long certificateId)
             throws JsonMappingException, JsonProcessingException {
         log.info("[CertificateController][getExamStandard] Starts");
 
-        return certificateInfoService.getExamStandard(certificateId);
+        return ResponseHandler.SUCCESS(certificateInfoService.getExamStandard(certificateId), "자격증 시험 기준 데이터 가져오기 성공");
 
     }
 
     @GetMapping("/eligibility/{certificateId}")
     @Operation(summary = "자격증 시험 자격", description = "자격증 시험 자격 데이터를 가져오는 API 입니다.")
-    public ElibilityJsonWrapper getEligibility(@PathVariable("certificateId") Long certificateId)
+    public ResponseEntity<ResponseDto<ElibilityJsonWrapper>> getEligibility(
+            @PathVariable("certificateId") Long certificateId)
             throws JsonMappingException, JsonProcessingException {
         log.info("[CertificateController][getEligibility] Starts");
 
-        return certificateInfoService.getElibility(certificateId);
+        return ResponseHandler.SUCCESS(certificateInfoService.getElibility(certificateId), "자격증 시험 자격 데이터 가져오기 성공");
 
     }
 
     @GetMapping("/question/{certificatePartId}")
     @Operation(summary = "자격증 문제 데이터", description = "챕터별 자격증 문제 데이터를 가져오는 API 입니다.")
-    public List<PartQuestionDto> getCertificateQuestion(Long certificatePartId) throws Exception {
+    public ResponseEntity<ResponseDto<List<PartQuestionDto>>> getCertificateQuestion(Long certificatePartId)
+            throws Exception {
         log.info("[CertificateController][getCertificateQuestion] Starts");
 
-        return partQuestionService.getQuestionListbyCertificatePartID(certificatePartId);
+        return ResponseHandler.SUCCESS(partQuestionService.getQuestionListbyCertificatePartID(certificatePartId),
+                "챕터별 자격증 문제 데이터를 가져오기 성공");
 
     }
 
     @GetMapping("/register/all")
     @Operation(summary = "모든 자격증 접수 일정 데이터", description = "모든 자격증의 접수 일정 데이터를 가져오는 API 입니다.")
-    public List<CertificationRegistrationDto> getAllCertificateRegistration() {
+    public ResponseEntity<ResponseDto<List<CertificationRegistrationDto>>> getAllCertificateRegistration() {
         log.info("[CertificateController][getAllCertificateRegistration] Starts");
 
-        return certificationRegistrationService.getAllCerticationResgitration();
+        return ResponseHandler.SUCCESS(certificationRegistrationService.getAllCerticationResgitration(),
+                "모든 자격증의 접수 일정 데이터 가져오기 성공");
 
     }
 
     @GetMapping("/calandar")
     @Operation(summary = "캘린더 데이터", description = "캘린더 데이터를 가져오는 API 입니다.")
-    public List<CalendarDto> getCalendarData() {
+    public ResponseEntity<ResponseDto<List<CalendarDto>>> getCalendarData() {
         log.info("[CertificateController][getCalendarData] Starts");
 
-        return certificationRegistrationService.getCalendarContent();
+        return ResponseHandler.SUCCESS(certificationRegistrationService.getCalendarContent(), "캘린더 데이터 가져오기 성공");
 
     }
 }
