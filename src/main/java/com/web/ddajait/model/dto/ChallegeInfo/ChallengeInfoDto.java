@@ -61,7 +61,6 @@ public class ChallengeInfoDto {
                 .book(entity.getBook())
                 .passRate(entity.getPassRate())
                 .memberPassRate(entity.getMemberPassRate())
-                .challengeId(entity.getCertificateInfo().getCertificateId())
                 .totalprogressRate(entity.getTotalprogressRate())
                 .testDay(entity.getTestDay())
                 .build();
