@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.PartQuestionDao;
-import com.web.ddajait.model.dto.PartQuestionDto;
+import com.web.ddajait.model.dto.ChallengePart.PartQuestionDto;
 import com.web.ddajait.service.PartQuestionService;
 
 import lombok.RequiredArgsConstructor;

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.jwt.JwtFilter;
 import com.web.ddajait.config.jwt.TokenProvider;
-import com.web.ddajait.model.dto.LoginDto;
-import com.web.ddajait.model.dto.TokenDto;
+import com.web.ddajait.model.dto.Auth.TokenDto;
+import com.web.ddajait.model.dto.Public.LoginDto;
 import com.web.ddajait.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;

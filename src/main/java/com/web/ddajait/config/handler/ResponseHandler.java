@@ -3,7 +3,7 @@ package com.web.ddajait.config.handler;
 import org.springframework.http.ResponseEntity;
 
 import com.web.ddajait.config.constant.ResponseStatus;
-import com.web.ddajait.model.dto.ResponseDto;
+import com.web.ddajait.model.dto.Response.ResponseDto;
 
 import lombok.Getter;
 

@@ -3,8 +3,8 @@ package com.web.ddajait.service;
 import java.util.List;
 
 import com.web.ddajait.config.error.custom.WrongQuestionNotFoundException;
-import com.web.ddajait.model.dto.ChallengePartDto;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
+import com.web.ddajait.model.dto.ChallengePart.ChallengePartDto;
 
 public interface ChallengePartService {
 

@@ -2,11 +2,11 @@ package com.web.ddajait.service;
 
 import java.util.List;
 
-import com.web.ddajait.model.dto.UserCertificateDto;
-import com.web.ddajait.model.dto.UserDto;
-import com.web.ddajait.model.dto.UserPrivateInfoDto;
-import com.web.ddajait.model.dto.UserChallenge.UserChallengeApiDto;
-import com.web.ddajait.model.dto.UserChallenge.UserChallengeDto;
+import com.web.ddajait.model.dto.User.UserCertificateDto;
+import com.web.ddajait.model.dto.User.UserDto;
+import com.web.ddajait.model.dto.User.UserPrivateInfoDto;
+import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeApiDto;
+import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeDto;
 
 import jakarta.servlet.ServletException;
 

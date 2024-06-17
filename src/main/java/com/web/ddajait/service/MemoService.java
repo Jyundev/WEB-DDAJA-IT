@@ -1,6 +1,6 @@
 package com.web.ddajait.service;
 
-import com.web.ddajait.model.dto.UserChallenge.MemoDto;
+import com.web.ddajait.model.dto.User.UserChallenge.MemoDto;
 
 public interface MemoService {
 

@@ -1,7 +1,6 @@
-package com.web.ddajait.model.dto;
+package com.web.ddajait.model.dto.CertificateRegister;
 
 import java.sql.Timestamp;
-
 import java.text.SimpleDateFormat;
 
 import com.web.ddajait.model.entity.CertificationRegistrationEntity;
