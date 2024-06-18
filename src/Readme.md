@@ -50,7 +50,6 @@ GitHub Actions CI/CD 파이프라인은 Spring 애플리케이션을 AWS EC2 인
 
 <div style="display: flex; justify-content: center;">
      <img src="main/java/com/web/ddajait/image/spring_ci_cd.png" alt="Alt text" style="width: 60%; height: 100%; ">
-     
 </div>
 
 ## Spring REST Docs
