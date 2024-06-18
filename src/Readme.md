@@ -40,7 +40,7 @@
 ## ERD
 
 <div style="display: flex; justify-content: center;">
-     <img src="main/java/com/web/ddajait/image/ERD-DDAJAIT.png" alt="Alt text" style="width: 60%; height: 100%; ">
+     <img src="main/java/com/web/ddajait/image/ERD_v3.png" alt="Alt text" style="width: 60%; height: 100%; ">
      
 </div>
 
@@ -49,8 +49,7 @@
 GitHub Actions CI/CD 파이프라인은 Spring 애플리케이션을 AWS EC2 인스턴스에 Docker를 사용하여 배포하는 환경을 구축
 
 <div style="display: flex; justify-content: center;">
-     <img src="main/java/com/web/ddajait/image/spring-boot-ci-cd.drawio.png" alt="Alt text" style="width: 60%; height: 100%; ">
-     
+     <img src="main/java/com/web/ddajait/image/spring_ci_cd.png" alt="Alt text" style="width: 60%; height: 100%; ">
 </div>
 
 ## Spring REST Docs
@@ -60,4 +59,3 @@ http://52.78.44.47/swagger-ui/index.html#/
      <img src="main/java/com/web/ddajait/image/swagger.png" alt="Alt text" style="width: 60%; height: 100%; ">
      
 </div>
-
