@@ -1,6 +1,7 @@
 package com.web.ddajait.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +87,16 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(dto, " 프로필 업데이트 성공");
     }
 
+    // 프로필 이미지 수정
+    @PutMapping("editProfieImd/{userId}")
+    @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지 수정 API 입니다. 유저의 프로필 이미지만 수정합니다")
+    public ResponseEntity<ResponseDto<String>> updateUser(
+            @PathVariable("userId") Long userId,
+            @Valid @RequestBody String profileImage) throws Exception {
+        userService.updateUserProfileImage(profileImage, userId);
+        return ResponseHandler.SUCCESS(profileImage, " 프로필 이미지 업데이트 성공");
+    }
+
     // 유저,권한 정보를 가져오는 메소드
     @GetMapping("/Auth")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
@@ -96,7 +107,7 @@ public class UserApiController {
     }
 
     // 탈퇴
-       // 삭제
+    // 삭제
     // localhost:8080/api/v1/user/{userName}
     @Operation(summary = "유저탈퇴", description = "유저탈퇴 API 입니다. 유저 데이터가 삭제됩니다.")
     @DeleteMapping("delete/{userId}")
@@ -181,26 +192,33 @@ public class UserApiController {
 
     @Operation(summary = "챌린지별 유저 오답문제 가져오기", description = "챌린지별 유저 오답문제를 제공합니다")
     @GetMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}")
-    public ResponseEntity<ResponseDto<UserWrongQuestionDto>> getUserWrongQuestionById(
+    public ResponseEntity<ResponseDto<List<Integer>>> getUserWrongQuestionById(
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId)
             throws Exception {
         log.info("[ChallengeController][getAllUserWrongQuestionById] Starts");
-        UserWrongQuestionDto userWrongQuestionDtos = userWrongQuestionService.findWrongQuestionByUserIdChallengeId(
-                userId,
-                challengeId);
-        return ResponseHandler.SUCCESS(userWrongQuestionDtos, "챌린지별 유저 오답문제를 가져오기 성공");
+        List<UserWrongQuestionDto> userWrongQuestionDtos = userWrongQuestionService
+                .findWrongQuestionByUserIdChallengeId(userId, challengeId);
+
+        List<Integer> questions = userWrongQuestionDtos.stream()
+                .flatMap(dto -> dto.getWrongQuestions().stream())
+                .collect(Collectors.toList());
+
+        return ResponseHandler.SUCCESS(questions, "챌린지별 유저 오답문제를 저장하기 성공");
+
     }
 
     @Operation(summary = "챌린지별 유저 오답문제 저장 및 수정", description = "챌린지별 유저 오답문제 저장 및 수정이 이루어집니다")
-    @PutMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}")
+    @PutMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}/{step}")
     public ResponseEntity<ResponseDto<UserWrongQuestionDto>> modifyUserWrongQuestionByUserIdAndChalleneId(
-            @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId,
+            @PathVariable("userId") Long userId, 
+            @PathVariable("challengeId") Long challengeId,
+            @PathVariable("step") int step,
             @RequestBody UserWrongQuestionDto uDto)
             throws Exception {
         log.info("[ChallengeController][modifyUserWrongQuestionByUserIdAndChalleneId] Starts");
         userWrongQuestionService.modifyWrongQuestion(
                 userId,
-                challengeId, uDto);
+                challengeId, step, uDto);
         return ResponseHandler.SUCCESS(uDto, "챌린지별 유저 오답문제를 저장하기 성공");
     }
 
@@ -208,7 +226,8 @@ public class UserApiController {
 
     @GetMapping("/certificate/{userId}")
     @Operation(summary = "유저 자격증 리스트 조회 API", description = "유저 자격증 리스트 조회 API 입니다.")
-    public ResponseEntity<ResponseDto<List<UserCertificateDetailDto>>> getUserCertificateList(@PathVariable("userId") Long userId)
+    public ResponseEntity<ResponseDto<List<UserCertificateDetailDto>>> getUserCertificateList(
+            @PathVariable("userId") Long userId)
             throws Exception {
         log.info("[UserApiController][getUserCertificateList] Start");
         return ResponseHandler.SUCCESS(userService.getUserCertificateList(userId), "유저 자격증 리스트 조회 성공");
