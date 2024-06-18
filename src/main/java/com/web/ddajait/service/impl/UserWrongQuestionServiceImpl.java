@@ -33,10 +33,16 @@ public class UserWrongQuestionServiceImpl implements UserWrongQuestionService {
         Optional<UserWrongQuestionEntity> wrongQuestionEntity = userWrongQuestionDao
                 .findWrongQuestionByUserIdChallengeId(userId, challengeId);
         if (wrongQuestionEntity.isPresent()) {
+
             UserWrongQuestionEntity wEntity = wrongQuestionEntity.get();
             EntityUtil.copyNonNullProperties(userWrongQuestionDto, wEntity);
+
             wEntity.setUser(userDao.findById(userWrongQuestionDto.getUserId())
                     .orElseThrow(() -> new RuntimeException("User not found")));
+
+
+        userWrongQuestionDao.saveWrongQuestion(wEntity);
+         
         } else {
             saveWrongQuestion(userWrongQuestionDto);
         }
