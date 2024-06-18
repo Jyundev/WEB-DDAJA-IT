@@ -43,7 +43,7 @@
 ## ⚙️ CI/CD 파이프라인
 GitHub Actions, nginx , AWS EC2를 이용하여 Spring 애플리케이션 무중단 배포 환경을 구축했습니다.
 
-![CI](src/main/java/com/web/ddajait/image/spring_ci_cd.drawio.png)
+![CI](src/main/java/com/web/ddajait/image/spring_ci_cd.png)
 
 ## 📝 Spring REST Docs
 ###  Swagger - springdoc : 2.5.0
