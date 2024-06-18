@@ -206,6 +206,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserProfileImage(String profileImage, Long userId) throws Exception {
+        // 기존 사용자 정보 가져오기
+        if (userDao.findById(userId) != null) {
+
+            Optional<UserEntity> userEntityOptional = userDao.findById(userId);
+
+            if (userEntityOptional.isPresent()) {
+
+                UserEntity entity = userEntityOptional.get();
+                entity.setProfileImage(profileImage);
+
+                userDao.updateUser(entity);
+            }
+
+        }
+    }
+
+    @Override
     public int countMemberByMemberEmail(String email) throws Exception {
         return userDao.countMemberByMemberEmail(email);
     }
@@ -404,7 +422,8 @@ public class UserServiceImpl implements UserService {
             return userCertificateEntity.map(UserCertificateDto::from);
 
         } else {
-            log.error("Error finding UserCertificateEntity for userId: {} and certificateId: {}", userId, certificateId);
+            log.error("Error finding UserCertificateEntity for userId: {} and certificateId: {}", userId,
+                    certificateId);
 
             return Optional.of(new UserCertificateDto());
         }

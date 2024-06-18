@@ -1,6 +1,8 @@
 package com.web.ddajait.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -26,16 +28,18 @@ public class UserWrongQuestionServiceImpl implements UserWrongQuestionService {
     private final ChallengeInfoDao challengeInfoDao;
 
     @Override
-    public void modifyWrongQuestion(Long userId, Long challengeId, UserWrongQuestionDto userWrongQuestionDto)
+    public void modifyWrongQuestion(Long userId, Long challengeId, int step, UserWrongQuestionDto userWrongQuestionDto)
             throws Exception {
         log.info("[UserWrongQuestionServiceImpl][modifyWrongQuestion] Starts");
 
         Optional<UserWrongQuestionEntity> wrongQuestionEntity = userWrongQuestionDao
-                .findWrongQuestionByUserIdChallengeId(userId, challengeId);
+                .findWrongQuestionByStep(userId, challengeId, step);
+
         if (wrongQuestionEntity.isPresent()) {
 
             UserWrongQuestionEntity wEntity = wrongQuestionEntity.get();
             EntityUtil.copyNonNullProperties(userWrongQuestionDto, wEntity);
+
 
             wEntity.setUser(userDao.findById(userWrongQuestionDto.getUserId())
                     .orElseThrow(() -> new RuntimeException("User not found")));
@@ -61,17 +65,34 @@ public class UserWrongQuestionServiceImpl implements UserWrongQuestionService {
     }
 
     @Override
-    public UserWrongQuestionDto findWrongQuestionByUserIdChallengeId(Long UserId, Long ChallengeId) throws Exception {
+    public List<UserWrongQuestionDto> findWrongQuestionByUserIdChallengeId(Long userId, Long challengeId) throws Exception {
         log.info("[UserWrongQuestionServiceImpl][findWrongQuestionByUserIdChallengeId] Starts");
-        Optional<UserWrongQuestionEntity> userWrongQuestionEntity = userWrongQuestionDao
-                .findWrongQuestionByUserIdChallengeId(UserId, ChallengeId);
-        if (userWrongQuestionEntity.isPresent()) {
-            return UserWrongQuestionDto.from(userWrongQuestionEntity.get());
-        } else {
-
-            throw new WrongQuestionNotFoundException(
-                    "No wrong question found for userId: " + UserId + " and challengeId: " + ChallengeId);
+    
+        // Validate input parameters
+        if (userId == null || challengeId == null) {
+            throw new IllegalArgumentException("UserId and ChallengeId must not be null");
+        }
+    
+        try {
+            Optional<List<UserWrongQuestionEntity>> userWrongQuestionEntities = userWrongQuestionDao
+                    .findWrongQuestionByUserIdChallengeId(userId, challengeId);
+    
+            if (userWrongQuestionEntities.isPresent()) {
+                return userWrongQuestionEntities.get().stream()
+                        .map(UserWrongQuestionDto::from)
+                        .collect(Collectors.toList());
+            } else {
+                log.warn("[UserWrongQuestionServiceImpl][findWrongQuestionByUserIdChallengeId] No wrong question found for userId: {}, challengeId: {}", userId, challengeId);
+                throw new WrongQuestionNotFoundException(
+                        "No wrong question found for userId: " + userId + " and challengeId: " + challengeId);
+            }
+        } catch (Exception e) {
+            log.error("[UserWrongQuestionServiceImpl][findWrongQuestionByUserIdChallengeId] Exception occurred while fetching data", e);
+            throw e; // or wrap in a custom service exception
         }
     }
+    
+    
+    
 
 }

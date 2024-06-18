@@ -39,6 +39,8 @@ public class UserWrongQuestionEntity {
     // @JoinColumn(name = "question_id", nullable = false)
     // private PartQuestionEntity partQuestion;
 
+    private int step;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;

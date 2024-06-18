@@ -29,6 +29,10 @@ public interface UserService {
         // 프로필 수정 update
         public void updateUser(UserPrivateInfoDto dto, Long userId) throws Exception;
 
+        // 프로필 이미지 수정 update
+        public void updateUserProfileImage(String profileImage, Long userId) throws Exception;
+
+
         // 회원 탈퇴 delete
         public void deleteUser(Long id) throws Exception;
 

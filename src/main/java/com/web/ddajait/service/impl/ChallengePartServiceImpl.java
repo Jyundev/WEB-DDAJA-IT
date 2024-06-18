@@ -227,29 +227,34 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                                 testQuestions = getRandomTestQuestions(allPartQuestionEntities, 5);
                                 // 유저 오답문제 가져오기
                             } else if (entity.getPartName().equals("오답문제 풀이")) {
-                                UserWrongQuestionEntity wrongQuestionEntity = new UserWrongQuestionEntity();
                                 List<PartQuestionEntity> wrongQuestionEntities = new ArrayList<>();
                                 try {
-                                    Optional<UserWrongQuestionEntity> optionalEntity;
-                                    optionalEntity = userWrongQuestionDao.findWrongQuestionByUserIdChallengeId(UserId,
-                                            challengeId);
-                                    wrongQuestionEntity = optionalEntity.get();
-                                    List<Integer> wrongQuestions = wrongQuestionEntity.getWrongQuestions();
-                                    wrongQuestionEntities = wrongQuestions.stream().map(
-                                            questionId -> {
-                                                Long id = ((Number) questionId).longValue();
-                                                Optional<PartQuestionEntity> partQuestionEntityOption = partQuestionDao
-                                                        .findById(id);
-                                                if (partQuestionEntityOption.isPresent()) {
-                                                    PartQuestionEntity partQuestionEntity = partQuestionEntityOption
-                                                            .get();
-                                                    return partQuestionEntity;
-                                                } else {
-                                                    return null;
-                                                }
-                                            }).collect(Collectors.toList());
+                                    Optional<List<UserWrongQuestionEntity>> optionalEntity = userWrongQuestionDao
+                                            .findWrongQuestionByUserIdChallengeId(UserId,
+                                                    challengeId);
+                                    if (optionalEntity.isPresent()) {
 
-                                    testQuestions = getRandomTestQuestions(wrongQuestionEntities, 3);
+                                        List<Integer> questions = optionalEntity.get().stream()
+                                                .flatMap(dto -> dto.getWrongQuestions().stream())
+                                                .collect(Collectors.toList());
+
+                                        wrongQuestionEntities = questions.stream().map(
+                                                questionId -> {
+                                                    Long id = ((Number) questionId).longValue();
+                                                    Optional<PartQuestionEntity> partQuestionEntityOption = partQuestionDao
+                                                            .findById(id);
+                                                    if (partQuestionEntityOption.isPresent()) {
+                                                        PartQuestionEntity partQuestionEntity = partQuestionEntityOption
+                                                                .get();
+                                                        return partQuestionEntity;
+                                                    } else {
+                                                        return null;
+                                                    }
+                                                }).collect(Collectors.toList());
+
+                                        testQuestions = getRandomTestQuestions(wrongQuestionEntities, 3);
+
+                                    }
 
                                 } catch (WrongQuestionNotFoundException e) {
                                     e.printStackTrace();

@@ -27,6 +27,9 @@ public class UserWrongQuestionDto {
     @NotNull
     private Long challengeId;
 
+    @NotNull
+    private int step;
+
     public static UserWrongQuestionDto from(UserWrongQuestionEntity entity) {
         if (entity == null)
             return null;
@@ -35,6 +38,7 @@ public class UserWrongQuestionDto {
                 .userId(entity.getUser().getUserId())
                 .challengeId(entity.getChallengeInfo().getChallengeId())
                 .wrongQuestions(entity.getWrongQuestions())
+                .step(entity.getStep())
                 .build();
     }
 }
