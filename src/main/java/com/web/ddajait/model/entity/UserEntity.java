@@ -87,6 +87,7 @@ public class UserEntity {
     @JoinTable(name = "user_authority", joinColumns = {
             @JoinColumn(name = "userId", referencedColumnName = "userId") }, inverseJoinColumns = {
                     @JoinColumn(name = "authority_name", referencedColumnName = "authority_name") })
+                    
     private Set<AuthorityEntity> authorities;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

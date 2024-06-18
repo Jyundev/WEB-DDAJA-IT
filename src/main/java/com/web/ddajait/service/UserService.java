@@ -1,7 +1,9 @@
 package com.web.ddajait.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.web.ddajait.model.dto.User.UserCertificateDetailDto;
 import com.web.ddajait.model.dto.User.UserCertificateDto;
 import com.web.ddajait.model.dto.User.UserDto;
 import com.web.ddajait.model.dto.User.UserPrivateInfoDto;
@@ -51,13 +53,13 @@ public interface UserService {
         /* 자격증 */
 
         // 유저 자격증 정보 조회
-        public List<UserCertificateDto> getUserCertificateList(Long userId) throws Exception;
+        public List<UserCertificateDetailDto> getUserCertificateList(Long userId) throws Exception;
 
         // 자격증 정보 조회
         public UserCertificateDto getUserCertificate(Long userCertificateId) throws Exception;
 
         // 자격증 ID 조회
-        public UserCertificateDto findUserCertificateId(Long userCertificateId, Long userId) throws Exception;
+        public Optional<UserCertificateDto> findUserCertificateId(Long userCertificateId, Long userId) throws Exception;
 
         // 자격증 정보 업데이트
         public void updateUserCertificate(UserCertificateDto dto, Long certificateId, Long userId) throws Exception;

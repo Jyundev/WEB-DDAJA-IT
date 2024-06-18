@@ -21,6 +21,7 @@ public interface UserCertificateDao {
     // 데이터 찾기
     public Optional<UserCertificateEntity> findByUserIdCertificateId(Long userId, Long certificateId);
 
+
     // 데이터 업데이트
     public void updateUserrCertificate(UserCertificateEntity entity);
 

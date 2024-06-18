@@ -11,5 +11,6 @@ public interface CertificateInfoDao {
 
     public Optional<CertificateInfoEntity> findById(Long id);
 
+    public Optional<CertificateInfoEntity> findByCertificateName(String certificateName);
 
 }

@@ -11,6 +11,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CorsFilter;
 
 import com.web.ddajait.config.auth.AuthenticatedMatchers;
+import com.web.ddajait.config.constant.Role;
 import com.web.ddajait.config.handler.LogoutAuthSuccessHandler;
 import com.web.ddajait.config.jwt.JwtAccessDeniedHandler;
 import com.web.ddajait.config.jwt.JwtAuthenticationEntryPoint;
@@ -71,9 +72,10 @@ public class SecurityConfig {
                                                 // "/user" 와 같은 URL path로 접근할 경우 인증(로그인)만 접근 가능
                                                 .requestMatchers("/user/**", "/api/v1/user/**").authenticated()
                                                 // "/admin" 와 같은 URL path로 접근할 경우 ADMIN 권한을 갖은 사용자만 접근 가능
-                                                .requestMatchers("/admin/**", "/api/v1/admin/**")
-                                                .hasAnyAuthority("ROLE_ADMIN")
-                                                // AuthenticatedMatchers URL은 누구나 접근 가능
+                                                .requestMatchers("/admin/**", "/api/v1/admin/**").hasAuthority(Role.ADMIN.getKey())
+                                                // "/user/challenge" 와 같은 URL path로 접근할 경우 CHALLENGER 권한을 갖은 사용자만 접근 가능
+                                                .requestMatchers("/user/challenge/**", "/api/v1/user/challenge/**").hasAuthority(Role.CHALLENGER.getKey())
+                                                // AuthenticatedMatchers URL -> 로그인 api는 누구나 접근 가능
                                                 .requestMatchers("/api/v1/auth/authenticate", "/api/v1/public/join")
                                                 .permitAll() // 로그인 api
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
@@ -83,10 +85,6 @@ public class SecurityConfig {
                                                 .logoutUrl("/api/v1/logout") // 로그아웃 요청 URL path
                                                 .logoutSuccessHandler(logoutAuthSuccessHandler) // 로그아웃 성공시
                                                 .permitAll())
-                                // .sessionManagement(session -> session
-                                //                 .maximumSessions(1)
-                                //                 .maxSessionsPreventsLogin(true))
-                                // JwtFilter
                                 .with(new JwtSecurityConfig(tokenProvider), customizer -> {
                                 });
                                 
