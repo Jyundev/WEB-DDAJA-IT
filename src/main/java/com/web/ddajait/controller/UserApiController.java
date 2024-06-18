@@ -20,6 +20,7 @@ import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.model.dto.ChallengePart.PartQuestionDto;
 import com.web.ddajait.model.dto.Response.ResponseDto;
+import com.web.ddajait.model.dto.User.UserCertificateDetailDto;
 import com.web.ddajait.model.dto.User.UserCertificateDto;
 import com.web.ddajait.model.dto.User.UserDto;
 import com.web.ddajait.model.dto.User.UserPrivateInfoDto;
@@ -207,7 +208,7 @@ public class UserApiController {
 
     @GetMapping("/certificate/{userId}")
     @Operation(summary = "유저 자격증 리스트 조회 API", description = "유저 자격증 리스트 조회 API 입니다.")
-    public ResponseEntity<ResponseDto<List<UserCertificateDto>>> getUserCertificateList(@PathVariable("userId") Long userId)
+    public ResponseEntity<ResponseDto<List<UserCertificateDetailDto>>> getUserCertificateList(@PathVariable("userId") Long userId)
             throws Exception {
         log.info("[UserApiController][getUserCertificateList] Start");
         return ResponseHandler.SUCCESS(userService.getUserCertificateList(userId), "유저 자격증 리스트 조회 성공");
@@ -219,7 +220,7 @@ public class UserApiController {
             @PathVariable("certificateId") Long certificateId, @PathVariable("userId") Long userId) throws Exception {
         log.info("[UserApiController][getUserCertificate] Start");
 
-        UserCertificateDto userCertificateDto = userService.findUserCertificateId(certificateId, userId);
+        UserCertificateDto userCertificateDto = userService.findUserCertificateId(certificateId, userId).get();
 
         return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 조회 성공");
     }

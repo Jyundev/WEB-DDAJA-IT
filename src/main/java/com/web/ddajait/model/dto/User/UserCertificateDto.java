@@ -15,9 +15,10 @@ import lombok.Setter;
 @Builder
 public class UserCertificateDto {
 
-    private Boolean application;
-
-    private Boolean userResult;
+    @Builder.Default
+    private Boolean application = false;
+    @Builder.Default
+    private Boolean userResult = false;
 
     public static UserCertificateDto from(UserCertificateEntity entity) {
         if (entity == null)

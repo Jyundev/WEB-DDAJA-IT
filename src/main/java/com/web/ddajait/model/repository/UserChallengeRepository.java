@@ -25,12 +25,6 @@ public interface UserChallengeRepository extends JpaRepository<UserChallengeEnti
     @Query(value = "SELECT COALESCE(AVG(progress_rate), 0) FROM user_challenge WHERE challenge_id = ?1", nativeQuery = true)
     double getTotalProgress( Long challenge_id);
 
-    // 챌린지별 참가자수
-    // @Query(value = "SELECT challenge_id, COUNT(*) total_user FROM user_challenge
-    // GROUP BY challenge_id ORDER BY total_user DESC LIMIT 10;", nativeQuery =
-    // true)
-    // List<TotalUserDto> getTotalUser();
-
     // 네이티브 쿼리를 위한 커스텀 메서드
     @Query(value = "SELECT challenge_id, COUNT(*) as total_user FROM user_challenge GROUP BY challenge_id ORDER BY total_user DESC LIMIT 10;", nativeQuery = true)
     List<Object[]> getTotalUserNative();
