@@ -1,5 +1,7 @@
 package com.web.ddajait.model.dto.CertificateInfo.ExamContent;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +18,7 @@ public class Exam {
     private String type;
 
     @JsonProperty("chapter")
-    private String chapter;
+    private List<String> chapter;
 
     @JsonProperty("count")
     private String count;
