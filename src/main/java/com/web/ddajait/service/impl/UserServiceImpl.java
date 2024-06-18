@@ -27,6 +27,7 @@ import com.web.ddajait.model.dto.User.UserPrivateInfoDto;
 import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeApiDto;
 import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeDto;
 import com.web.ddajait.model.entity.AuthorityEntity;
+import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.entity.UserCertificateEntity;
 import com.web.ddajait.model.entity.UserChallengeEntity;
@@ -36,7 +37,6 @@ import com.web.ddajait.util.EntityUtil;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,8 +65,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserchallengeDao userchallengeDao;
     private final PasswordEncoder bCryptPasswordEncoder;
-
-    private final HttpSession httpSession;
 
     @Override
     public List<UserDto> getAllUsers() throws Exception {
@@ -353,7 +351,7 @@ public class UserServiceImpl implements UserService {
 
                     // 권한 목록 업데이트
                     uEntity.setAuthorities(authorities);
-                    
+
                     userDao.updateUser(uEntity);
                 }
 
@@ -450,11 +448,47 @@ public class UserServiceImpl implements UserService {
 
             userDao.updateUser(userEntity);
 
+            // 자격증 정보 업데이트
+       if (!dto.getQualifiedCertificate().isEmpty()) {
+    dto.getQualifiedCertificate().forEach(data -> {
+        UserCertificateEntity userCertificateEntity = new UserCertificateEntity();
+        
+        try {
+            // 자격증 정보 찾기
+            Optional<CertificateInfoEntity> certificateInfoOpt = certificateInfoDao.findByCertificateName(data);
+            if (certificateInfoOpt.isPresent()) {
+                userCertificateEntity.setCertificateInfo(certificateInfoOpt.get());
+                userCertificateEntity.setUserResult(true);
+                userCertificateEntity.setApplication(true);
+
+                // 사용자 정보 찾기
+                Optional<UserEntity> userOpt = userDao.findById(userId);
+                if (userOpt.isPresent()) {
+                    userCertificateEntity.setUser(userOpt.get());
+
+                    // UserCertificateEntity 삽입
+                    userCertificateDao.insertUserrCertificate(userCertificateEntity);
+                    
+                } else {
+                    // 사용자 정보가 없을 때 예외 처리
+                    System.err.println("User with ID " + userId + " not found.");
+                }
+            } else {
+                // 자격증 정보가 없을 때 예외 처리
+                System.err.println("Certificate with name " + data + " not found.");
+            }
+        } catch (Exception e) {
+            // 일반적인 예외 처리
+            System.err.println("An error occurred while processing certificate " + data + " for user ID " + userId);
+            e.printStackTrace();
+        }
+    });
+
         } else {
             throw new NotFoundMemberException("User with id " + userId + " not found");
         }
-
     }
+}
 
     @Override
     public int countMemberByChallengeId(Long challengeId) {

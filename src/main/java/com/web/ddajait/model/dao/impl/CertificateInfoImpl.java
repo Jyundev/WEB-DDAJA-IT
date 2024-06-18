@@ -31,4 +31,11 @@ public class CertificateInfoImpl implements CertificateInfoDao {
         return certificateInfoRepository.findById(id);
     }
 
+    @Override
+    public Optional<CertificateInfoEntity> findByCertificateName(String certificateName) {
+     
+
+        return certificateInfoRepository.findByCertificateFullName(certificateName);
+    }
+
 }
