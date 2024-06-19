@@ -1,6 +1,7 @@
 package com.web.ddajait.config.jwt;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,7 +48,7 @@ public class JwtFilter extends GenericFilterBean {
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            
+
             logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         } else {
             logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
@@ -69,6 +71,15 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 
+    // 오류 응답을 보내는 메서드
+    private void sendErrorResponse(HttpServletResponse response, String message, int statusCode) throws IOException {
+        response.setContentType("application/json");
+        response.setStatus(statusCode);
+        PrintWriter writer = response.getWriter();
+        writer.write("{\"error\": \"" + message + "\"}");
+        writer.flush();
+    }
+
     private static final String[] WHITELIST = {
             "/swagger-ui.html",
             "/swagger-ui/**",
@@ -88,7 +99,6 @@ public class JwtFilter extends GenericFilterBean {
             "/api-docs",
 
     };
-
 
     private boolean isStaticResource(String requestURI) {
         for (String path : WHITELIST) {
