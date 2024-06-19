@@ -17,6 +17,8 @@ public class CorsConfig {
         config.addAllowedMethod("*");
         // config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // 포트를 명시적으로 설정
         config.addAllowedOriginPattern("http://localhost:*"); // Allow any port on localhost
+        config.addAllowedOriginPattern("https://df3cpyo19sfnq.cloudfront.net"); 
+        config.addAllowedOriginPattern("http://ddjait-react-cicd.s3-website.ap-northeast-2.amazonaws.com"); 
         config.addExposedHeader("USER_ID"); // Add this line to expose the USER_ID header
         source.registerCorsConfiguration("/api/v1/**", config);
         return new CorsFilter(source);
