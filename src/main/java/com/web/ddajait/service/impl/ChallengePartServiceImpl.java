@@ -208,10 +208,12 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                             } else {
                                 List<String> sections = new ArrayList<>();
                                 if (entity.getSectionName().length() > 0) {
+
                                     sections.add(entity.getSectionName());
                                     chapterMap.put(entity.getChapterName(), sections);
                                 } else {
-                                    chapterMap.put(entity.getChapterName(), null);
+                                    sections.add("");
+                                    chapterMap.put(entity.getChapterName(), sections);
                                 }
                             }
                             // test 데이터 생성
@@ -227,6 +229,8 @@ public class ChallengePartServiceImpl implements ChallengePartService {
                                 testQuestions = getRandomTestQuestions(allPartQuestionEntities, 5);
                                 // 유저 오답문제 가져오기
                             } else if (entity.getPartName().equals("오답문제 풀이")) {
+                                log.info("[challengePartServiceImpl][getAllchallengePartInfo] 오답문제 : ");
+
                                 List<PartQuestionEntity> wrongQuestionEntities = new ArrayList<>();
                                 try {
                                     Optional<List<UserWrongQuestionEntity>> optionalEntity = userWrongQuestionDao
