@@ -21,6 +21,7 @@ import com.web.ddajait.config.handler.ResponseHandler;
 import com.web.ddajait.model.dto.ChallengePart.Challenge;
 import com.web.ddajait.model.dto.ChallengePart.PartQuestionDto;
 import com.web.ddajait.model.dto.Response.ResponseDto;
+import com.web.ddajait.model.dto.User.ProfileImageDto;
 import com.web.ddajait.model.dto.User.UserCertificateDetailDto;
 import com.web.ddajait.model.dto.User.UserCertificateDto;
 import com.web.ddajait.model.dto.User.UserDto;
@@ -88,11 +89,11 @@ public class UserApiController {
     }
 
     // 프로필 이미지 수정
-    @PutMapping("editProfieImd/{userId}")
+    @PutMapping("editProfieImg/{userId}")
     @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지 수정 API 입니다. 유저의 프로필 이미지만 수정합니다")
-    public ResponseEntity<ResponseDto<String>> updateUser(
+    public ResponseEntity<ResponseDto<ProfileImageDto>> updateUser(
             @PathVariable("userId") Long userId,
-            @Valid @RequestBody String profileImage) throws Exception {
+            @Valid @RequestBody ProfileImageDto profileImage) throws Exception {
         userService.updateUserProfileImage(profileImage, userId);
         return ResponseHandler.SUCCESS(profileImage, " 프로필 이미지 업데이트 성공");
     }
@@ -210,7 +211,7 @@ public class UserApiController {
     @Operation(summary = "챌린지별 유저 오답문제 저장 및 수정", description = "챌린지별 유저 오답문제 저장 및 수정이 이루어집니다")
     @PutMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}/{step}")
     public ResponseEntity<ResponseDto<UserWrongQuestionDto>> modifyUserWrongQuestionByUserIdAndChalleneId(
-            @PathVariable("userId") Long userId, 
+            @PathVariable("userId") Long userId,
             @PathVariable("challengeId") Long challengeId,
             @PathVariable("step") int step,
             @RequestBody UserWrongQuestionDto uDto)

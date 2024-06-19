@@ -21,6 +21,7 @@ import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.dao.UserCertificateDao;
 import com.web.ddajait.model.dao.UserDao;
 import com.web.ddajait.model.dao.UserchallengeDao;
+import com.web.ddajait.model.dto.User.ProfileImageDto;
 import com.web.ddajait.model.dto.User.UserCertificateDetailDto;
 import com.web.ddajait.model.dto.User.UserCertificateDto;
 import com.web.ddajait.model.dto.User.UserDto;
@@ -206,7 +207,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserProfileImage(String profileImage, Long userId) throws Exception {
+    public void updateUserProfileImage(ProfileImageDto profileImage, Long userId) throws Exception {
         // 기존 사용자 정보 가져오기
         if (userDao.findById(userId) != null) {
 
@@ -215,7 +216,7 @@ public class UserServiceImpl implements UserService {
             if (userEntityOptional.isPresent()) {
 
                 UserEntity entity = userEntityOptional.get();
-                entity.setProfileImage(profileImage);
+                entity.setProfileImage(profileImage.getProfileImage());
 
                 userDao.updateUser(entity);
             }

@@ -3,6 +3,7 @@ package com.web.ddajait.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.web.ddajait.model.dto.User.ProfileImageDto;
 import com.web.ddajait.model.dto.User.UserCertificateDetailDto;
 import com.web.ddajait.model.dto.User.UserCertificateDto;
 import com.web.ddajait.model.dto.User.UserDto;
@@ -30,7 +31,7 @@ public interface UserService {
         public void updateUser(UserPrivateInfoDto dto, Long userId) throws Exception;
 
         // 프로필 이미지 수정 update
-        public void updateUserProfileImage(String profileImage, Long userId) throws Exception;
+        public void updateUserProfileImage(ProfileImageDto profileImage, Long userId) throws Exception;
 
 
         // 회원 탈퇴 delete
