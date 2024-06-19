@@ -15,7 +15,6 @@ import com.web.ddajait.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -33,14 +32,15 @@ public class LogoutAuthSuccessHandler implements LogoutSuccessHandler {
         if (authentication != null && authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+            try {
+                userService.updateIsLoginByID(userDetails.getUsername(), false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             // JWT 제거 
             response.setHeader(JwtFilter.AUTHORIZATION_HEADER, ""); 
 
-            HttpSession session = request.getSession(false); // 세션이 없을 수도 있으므로 false 전달
-            if (session != null) {
-                session.removeAttribute("userId");
-                session.invalidate();
-            }
+
         }
 
     }

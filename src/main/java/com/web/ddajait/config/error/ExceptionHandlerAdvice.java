@@ -6,15 +6,18 @@ import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.web.ddajait.config.constant.AuthenticationTypes;
 import com.web.ddajait.config.constant.CommonError;
 import com.web.ddajait.config.constant.MemberError;
 import com.web.ddajait.config.error.custom.DuplicateMemberException;
 import com.web.ddajait.config.error.custom.NotFoundMemberException;
+import com.web.ddajait.config.jwt.InvalidPasswordException;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -35,6 +38,16 @@ public class ExceptionHandlerAdvice {
                 log.error("[Exception] cause: {} , message: {}", NestedExceptionUtils.getMostSpecificCause(e),
                                 e.getMessage());
                 ErrorCode errorCode = CommonError.INTERNAL_SERVER_ERROR;
+                ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(), errorCode.getCode(),
+                                errorCode.getMessage());
+                return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
+        }
+
+        @ExceptionHandler(AuthenticationException.class)
+        public ResponseEntity authException(InvalidPasswordException e) {
+                log.error("[Exception] cause: {} , message: {}", NestedExceptionUtils.getMostSpecificCause(e),
+                                e.getMessage());
+                ErrorCode errorCode = AuthenticationTypes.BadCredentialsException;
                 ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(), errorCode.getCode(),
                                 errorCode.getMessage());
                 return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
