@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
    }
 
    private org.springframework.security.core.userdetails.User createUser(String email, UserEntity user) {
-      log.info("[CustomUserDetailsService][createUser] user : " + user);
+      // log.info("[CustomUserDetailsService][createUser] user : " + user);
 
       try {
          userService.updateIsLoginByID(user.getEmail(), true);

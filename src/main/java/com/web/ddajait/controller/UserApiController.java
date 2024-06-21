@@ -1,9 +1,7 @@
 package com.web.ddajait.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -18,16 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.ddajait.config.handler.ResponseHandler;
-import com.web.ddajait.model.dto.ChallengePart.Challenge;
-import com.web.ddajait.model.dto.ChallengePart.PartQuestionDto;
 import com.web.ddajait.model.dto.Response.ResponseDto;
 import com.web.ddajait.model.dto.User.ProfileImageDto;
 import com.web.ddajait.model.dto.User.UserCertificateDetailDto;
 import com.web.ddajait.model.dto.User.UserCertificateDto;
 import com.web.ddajait.model.dto.User.UserDto;
 import com.web.ddajait.model.dto.User.UserPrivateInfoDto;
-import com.web.ddajait.model.dto.User.UserWrongQuestionDto;
-import com.web.ddajait.model.dto.User.UserChallenge.MemoDto;
 import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeApiDto;
 import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeDto;
 import com.web.ddajait.service.ChallengePartService;
@@ -36,9 +30,9 @@ import com.web.ddajait.service.PartQuestionService;
 import com.web.ddajait.service.UserService;
 import com.web.ddajait.service.UserWrongQuestionService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +55,6 @@ public class UserApiController {
     private final PartQuestionService partQuestionService;
     private final UserWrongQuestionService userWrongQuestionService;
 
-    HttpSession session;
 
     // 추가 정보 수집
     @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다. *닉네임은 프로필 수정 api를 통해 수정됩니다")
@@ -89,7 +82,7 @@ public class UserApiController {
     }
 
     // 프로필 이미지 수정
-    @PutMapping("editProfieImg/{userId}")
+    @PutMapping("/editProfieImg/{userId}")
     @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지 수정 API 입니다. 유저의 프로필 이미지만 수정합니다")
     public ResponseEntity<ResponseDto<ProfileImageDto>> updateUser(
             @PathVariable("userId") Long userId,
@@ -111,14 +104,14 @@ public class UserApiController {
     // 삭제
     // localhost:8080/api/v1/user/{userName}
     @Operation(summary = "유저탈퇴", description = "유저탈퇴 API 입니다. 유저 데이터가 삭제됩니다.")
-    @DeleteMapping("delete/{userId}")
+    @DeleteMapping("/delete/{userId}")
     public ResponseEntity<ResponseDto<String>> deleteUser(@PathVariable("userId") Long userId) throws Exception {
         userService.deleteUser(userId);
         return ResponseHandler.SUCCESS(null, "유저탈퇴에 성공했습니다");
     }
     /* 유저 챌린지 */
 
-    @GetMapping("/challenge/{userId}")
+    @GetMapping("/view/challenge/{userId}")
     @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
     public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(
             @PathVariable("userId") Long userId) throws Exception {
@@ -126,7 +119,8 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userService.getUserChallengList(userId), "유저 챌린지 리스트 조회 성공");
     }
 
-    @GetMapping("/challenge/specific")
+    @Hidden 
+    @GetMapping("/view/challenge/specific")
     @Operation(summary = "특정 챌린지 상테 조회 API", description = "로그인 유저의 특정 챌린지 상태 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> getUserChalenge(
             @RequestParam Long challegeId, @RequestParam Long userId) throws Exception {
@@ -140,7 +134,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
-    @PostMapping("/insert/challenge/update/{challengeId}/{userId}")
+    @PostMapping("/update/challenge/{challengeId}/{userId}")
     @Operation(summary = "유저 챌린지 신청 및 상태 업데이트 API", description = "유저 챌린지 채린지 신청할 경우는 body 값이 없어도 되지만 상태 업데이트를 할 경우 step, day 값을 입력하세요.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
             @PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId,
@@ -152,76 +146,6 @@ public class UserApiController {
 
     }
 
-    @Operation(summary = "챌린지 상세 페이지 데이터", description = "챌린지 상세 페이지 데이터를 가져오는 API 입니다. \n*현제 데이터 오류로 challengeId = 1, 50 테스트 가능")
-    @GetMapping("/challenge/challengePage/{challengeId}/{userId}")
-    public Challenge getchallengeDetailPageInfo(
-            @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId) throws Exception {
-
-        log.info("[ChallengeController][getchallengeDetailPageInfo] Starts");
-
-        return challengePartService.getChallengersDetailData(userId, challengeId);
-    }
-
-    @Operation(summary = "챌린지 데이별 메모 업데이트", description = "챌린지 데이별 메모를 수정하는 API")
-    @PostMapping("/challenge/challengeMemo/{challengeId}/{userId}")
-    public ResponseEntity<ResponseDto<MemoDto>> modifyChallengeMemo(@PathVariable("challengeId") Long challengeId,
-            @PathVariable("userId") Long userId,
-            @Valid @RequestBody MemoDto dto) throws Exception {
-        log.info("[ChallengeController][modifyChallengeMemo] Starts");
-        memoService.modifyUserChallengeMemo(userId, challengeId, dto);
-        return ResponseHandler.SUCCESS(dto, "챌린지 데이별 메모 수정 성공");
-    }
-
-    @Operation(summary = "챌린지 데이별 메모 가져오기", description = "챌린지 데이별 메모를 가져오는 API. ChallengeId, UserId, Step, Day 값이 필요합니다")
-    @GetMapping("/challenge/challengeMemo/{challengeId}/{userId}")
-    public ResponseEntity<ResponseDto<MemoDto>> getChallengeMemo(@Param("challengeId") Long challengeId,
-            @Param("userId") Long userId, @Param("step") int step, @Param("day") int day) throws Exception {
-        log.info("[ChallengeController][getChallengeMemo] Starts");
-        MemoDto memoDto = memoService.findMemo(userId, challengeId, step, day);
-        return ResponseHandler.SUCCESS(memoDto, "챌린지 데이별 메모 저장 성공");
-    }
-
-    @Operation(summary = "챌린지별 모든 기출문제 가져오기", description = "챌린지별 모든 파트의 기출문제를 제공합니다")
-    @GetMapping("/challenge/challengePage/allQuestion/{certificateId}")
-    public ResponseEntity<ResponseDto<List<PartQuestionDto>>> getAllPartQuestionByChallengeId(
-            @PathVariable("certificateId") Long certificateId)
-            throws Exception {
-        log.info("[ChallengeController][getAllPartQuestionByChallengeId] Starts");
-        List<PartQuestionDto> partQuestionDtos = partQuestionService.getQuestionListbyCertificateId(certificateId);
-        return ResponseHandler.SUCCESS(partQuestionDtos, "챌린지별 모든 기출문제 가져오기 성공");
-    }
-
-    @Operation(summary = "챌린지별 유저 오답문제 가져오기", description = "챌린지별 유저 오답문제를 제공합니다")
-    @GetMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}")
-    public ResponseEntity<ResponseDto<List<Integer>>> getUserWrongQuestionById(
-            @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId)
-            throws Exception {
-        log.info("[ChallengeController][getAllUserWrongQuestionById] Starts");
-        List<UserWrongQuestionDto> userWrongQuestionDtos = userWrongQuestionService
-                .findWrongQuestionByUserIdChallengeId(userId, challengeId);
-
-        List<Integer> questions = userWrongQuestionDtos.stream()
-                .flatMap(dto -> dto.getWrongQuestions().stream())
-                .collect(Collectors.toList());
-
-        return ResponseHandler.SUCCESS(questions, "챌린지별 유저 오답문제를 저장하기 성공");
-
-    }
-
-    @Operation(summary = "챌린지별 유저 오답문제 저장 및 수정", description = "챌린지별 유저 오답문제 저장 및 수정이 이루어집니다")
-    @PutMapping("/challenge/challengePage/wrongQuestion/{userId}/{challengeId}/{step}")
-    public ResponseEntity<ResponseDto<UserWrongQuestionDto>> modifyUserWrongQuestionByUserIdAndChalleneId(
-            @PathVariable("userId") Long userId,
-            @PathVariable("challengeId") Long challengeId,
-            @PathVariable("step") int step,
-            @RequestBody UserWrongQuestionDto uDto)
-            throws Exception {
-        log.info("[ChallengeController][modifyUserWrongQuestionByUserIdAndChalleneId] Starts");
-        userWrongQuestionService.modifyWrongQuestion(
-                userId,
-                challengeId, step, uDto);
-        return ResponseHandler.SUCCESS(uDto, "챌린지별 유저 오답문제를 저장하기 성공");
-    }
 
     /* 유저 자격증 */
 
