@@ -44,6 +44,8 @@ public class JwtFilter extends GenericFilterBean {
             chain.doFilter(request, response);
             return;
         }
+
+        //  Authorization 헤더에서 JWT를 추출합니다.
         String jwt = resolveToken(httpServletRequest);
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {

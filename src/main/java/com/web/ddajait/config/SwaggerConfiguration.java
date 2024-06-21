@@ -33,6 +33,7 @@ public class SwaggerConfiguration {
         public OpenAPI customOpenAPI() {
                 return new OpenAPI()
                                 .info(new Info().title("API").version("v1"))
+                                // .servers(List.of(new Server().url("https://"))) 
                                 .addSecurityItem(new SecurityRequirement().addList(SCHEME_NAME))
                                 .components(new Components()
                                                 .addSecuritySchemes(SCHEME_NAME,
