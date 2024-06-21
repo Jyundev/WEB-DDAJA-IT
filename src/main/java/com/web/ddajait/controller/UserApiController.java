@@ -73,7 +73,7 @@ public class UserApiController {
     }
 
     // 프로필 이미지 수정
-    @PutMapping("/editProfieImg/{userId}")
+    @PutMapping("/profile-img/{userId}")
     @Operation(summary = "프로필 이미지 수정", description = "프로필 이미지 수정 API 입니다. 유저의 프로필 이미지만 수정합니다")
     public ResponseEntity<ResponseDto<ProfileImageDto>> updateUser(
             @PathVariable("userId") Long userId,
@@ -83,7 +83,7 @@ public class UserApiController {
     }
 
     // 유저,권한 정보를 가져오는 메소드
-    @GetMapping("/Auth")
+    @GetMapping("/auth")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @Operation(summary = "권한조회", description = "권한조회 API 입니다. \"USER\" 또는 \"ADMIN\" 역할을 가진 사용자만 접근할 수 있습니다.")
     public ResponseEntity<ResponseDto<UserDto>> getMyUserInfo() throws Exception {
@@ -95,7 +95,7 @@ public class UserApiController {
     // 삭제
     // localhost:8080/api/v1/user/{userName}
     @Operation(summary = "유저탈퇴", description = "유저탈퇴 API 입니다. 유저 데이터가 삭제됩니다.")
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<ResponseDto<String>> deleteUser(@PathVariable("userId") Long userId) throws Exception {
         userService.deleteUser(userId);
         return ResponseHandler.SUCCESS(null, "유저탈퇴에 성공했습니다");
@@ -111,7 +111,7 @@ public class UserApiController {
     }
 
     @Hidden
-    @GetMapping("/view/challenge/specific")
+    @GetMapping("/specific/challenge")
     @Operation(summary = "특정 챌린지 상테 조회 API", description = "로그인 유저의 특정 챌린지 상태 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> getUserChalenge(
             @RequestParam Long challegeId, @RequestParam Long userId) throws Exception {
@@ -125,7 +125,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
-    @PostMapping("/update/challenge/{challengeId}/{userId}")
+    @PutMapping("/challenge/{challengeId}/{userId}")
     @Operation(summary = "유저 챌린지 신청 및 상태 업데이트 API", description = "유저 챌린지 채린지 신청할 경우는 body 값이 없어도 되지만 상태 업데이트를 할 경우 step, day 값을 입력하세요.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
             @PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId,
@@ -159,7 +159,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 조회 성공");
     }
 
-    @PostMapping("/certificate/insert/{userId}/{certificateId}")
+    @PostMapping("/certificate/{userId}/{certificateId}")
     @Operation(summary = "유저 자격증 추가 API", description = "유저 자격증 추가 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> insertUserCertificate(
             @RequestBody @Valid UserCertificateDto userCertificateDto, @PathVariable("userId") Long userId,

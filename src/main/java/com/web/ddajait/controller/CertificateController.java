@@ -104,7 +104,7 @@ public class CertificateController {
 
     }
 
-    @GetMapping("/register/all")
+    @GetMapping("/registration")
     @Operation(summary = "모든 자격증 접수 일정 데이터", description = "모든 자격증의 접수 일정 데이터를 가져오는 API 입니다.")
     public ResponseEntity<ResponseDto<List<CertificationRegistrationDto>>> getAllCertificateRegistration() {
         log.info("[CertificateController][getAllCertificateRegistration] Starts");

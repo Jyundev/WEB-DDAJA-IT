@@ -40,7 +40,7 @@ public class ChallengeController {
     }
 
     @Operation(summary = "특정 챌린지 데이터", description = "특정 챌린지 데이터를 가져오는 API 입니다.")
-    @GetMapping("/detail/{challengeId}")
+    @GetMapping("/specific/{challengeId}")
     public ResponseEntity<ResponseDto<ChallengeInfoDto>> getChallengeInfoById(
             @PathVariable("challengeId") Long challengeId) throws Exception {
 
@@ -50,7 +50,7 @@ public class ChallengeController {
     }
 
     @Operation(summary = "모든 챌린지 챕터 데이터", description = "모든 챌린지 챕터 데이터를 가져오는 API 입니다.")
-    @GetMapping("/part/all")
+    @GetMapping("/parts")
     public ResponseEntity<ResponseDto<List<ChallengePartDto>>> getAllchallengePartInfo() throws Exception {
 
         log.info("[ChallengeController][getchallengePartInfo] Starts");

@@ -52,7 +52,7 @@ public class AdminApiController {
     }
 
     @Operation(summary = "모든 유저 조회", description = "모든 유저조회 API 입니다. 유저테이블의 모든 유저를 조회합니다.")
-    @GetMapping("/view/users")
+    @GetMapping("/users")
     public ResponseEntity<ResponseDto<List<UserDto>>> viewAllUsers() throws Exception {
 
         List<UserDto> userDtos = userService.getAllUsers();
