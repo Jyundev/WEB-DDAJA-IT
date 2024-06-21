@@ -57,6 +57,7 @@ public class AuthController {
 
             Long userId = userService.getUserId(authentication.getName());
             String USER_ID = String.valueOf(userId);
+            
             httpHeaders.add("USER_ID", USER_ID);
             log.info("[AuthController][authorize] USER_ID " + USER_ID);
 

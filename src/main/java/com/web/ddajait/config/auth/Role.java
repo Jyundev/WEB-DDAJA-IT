@@ -1,4 +1,4 @@
-package com.web.ddajait.config.constant;
+package com.web.ddajait.config.auth;
 
 public enum Role {
     USER("ROLE_USER"),

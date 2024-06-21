@@ -11,7 +11,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CorsFilter;
 
 import com.web.ddajait.config.auth.AuthenticatedMatchers;
-import com.web.ddajait.config.constant.Role;
+import com.web.ddajait.config.auth.Role;
 import com.web.ddajait.config.handler.LogoutAuthSuccessHandler;
 import com.web.ddajait.config.jwt.JwtAccessDeniedHandler;
 import com.web.ddajait.config.jwt.JwtAuthenticationEntryPoint;
@@ -36,12 +36,6 @@ public class SecurityConfig {
 
         private final LogoutAuthSuccessHandler logoutAuthSuccessHandler;
 
-        // 비밀번호 암호화에서 사용할 객체
-        // @Bean
-        // public PasswordEncoder passwordEncoder() {
-        // return new BCryptPasswordEncoder();
-        // }
-
         // 인증(로그인) & 인가(권한)에 대한 시큐리티 설정
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -57,7 +51,6 @@ public class SecurityConfig {
                                                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                                                 // 접근이 거부되었을 때 403에러 발생
                                                 .accessDeniedHandler(jwtAccessDeniedHandler))
-                                // enable h2-console
                                 .headers(headers -> headers
                                                 // X-Frame-Options 헤더 비활성화
                                                 .frameOptions(frameOptions -> frameOptions.disable()))
@@ -66,18 +59,15 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 // 인증 & 인가 설정
                                 .authorizeHttpRequests(authorize -> authorize
-                                                // 계정 로그인, 아이디 찾기 등은 인증되지 않은 사용자만 접근 가능
+                                                // 로그인, 회원가입 등은 인증되지 않은 사용자만 접근 가능
                                                 .requestMatchers(AuthenticatedMatchers.ignoringArray).permitAll()
-                                                .requestMatchers("/public/**", "/api/v1/public/**").anonymous()
-                                                // "/user" 와 같은 URL path로 접근할 경우 인증(로그인)만 접근 가능
-                                                .requestMatchers("/user/**", "/api/v1/user/**").authenticated()
-                                                // "/admin" 와 같은 URL path로 접근할 경우 ADMIN 권한을 갖은 사용자만 접근 가능
-                                                .requestMatchers("/admin/**", "/api/v1/admin/**").hasAuthority(Role.ADMIN.getKey())
+                                                .requestMatchers( "/api/v1/auth/authenticate", "/api/v1/public/join").anonymous()
                                                 // "/user/challenge" 와 같은 URL path로 접근할 경우 CHALLENGER 권한을 갖은 사용자만 접근 가능
                                                 .requestMatchers("/user/challenge/**", "/api/v1/user/challenge/**").hasAuthority(Role.CHALLENGER.getKey())
-                                                // AuthenticatedMatchers URL -> 로그인 api는 누구나 접근 가능
-                                                .requestMatchers("/api/v1/auth/authenticate", "/api/v1/public/join")
-                                                .permitAll() // 로그인 api
+                                                // "/user" 와 같은 URL path로 접근할 경우 인증(로그인)만 접근 가능
+                                                .requestMatchers("/user/**", "/api/v1/user/**").hasAuthority(Role.USER.getKey())
+                                                // "/admin" 와 같은 URL path로 접근할 경우 ADMIN 권한을 갖은 사용자만 접근 가능
+                                                .requestMatchers("/admin/**", "/api/v1/admin/**").hasAuthority(Role.ADMIN.getKey())
                                                 // 그 외의 모든 URL path는 누구나 접근 가능
                                                 .anyRequest().permitAll())
                                 // 로그아웃에 대한 설정

@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.ddajait.config.constant.Role;
+import com.web.ddajait.config.auth.Role;
 import com.web.ddajait.config.error.custom.DuplicateMemberException;
 import com.web.ddajait.config.error.custom.NotFoundMemberException;
 import com.web.ddajait.model.dao.CertificateInfoDao;

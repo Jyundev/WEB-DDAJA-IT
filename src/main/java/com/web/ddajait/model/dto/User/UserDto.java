@@ -1,7 +1,9 @@
 package com.web.ddajait.model.dto.User;
 
 import java.util.List;
+import java.util.Set;
 
+import com.web.ddajait.model.entity.AuthorityEntity;
 import com.web.ddajait.model.entity.UserEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,6 +58,8 @@ public class UserDto {
     @Schema(description = "취득자격증", example = "['정보처리기사', '리눅스마스터']")
     private List<String> qualifiedCertificate;
 
+    private Set<AuthorityEntity> authorities;
+
     public static UserDto from(UserEntity user) {
         if (user == null)
             return null;
@@ -72,6 +76,7 @@ public class UserDto {
                 .job(user.getJob())
                 .profileImage(user.getProfileImage())
                 .qualifiedCertificate(user.getQualifiedCertificate())
+                .authorities(user.getAuthorities())
                 .build();
     }
 

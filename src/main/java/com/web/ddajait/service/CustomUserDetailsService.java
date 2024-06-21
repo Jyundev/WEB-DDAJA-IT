@@ -22,43 +22,37 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Component("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
+
    private final UserRepository userRepository;
    private final UserService userService;
 
    @Override
    @Transactional
    public UserDetails loadUserByUsername(final String email) {
-      log.info("[userDetailsService] [loadUserByUsername] Start");
-      
+      log.info("[CustomUserDetailsService][loadUserByUsername] Start");
+
       return userRepository.findOneWithAuthoritiesByEmail(email)
             .map(user -> createUser(email, user))
             .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
    }
 
    private org.springframework.security.core.userdetails.User createUser(String email, UserEntity user) {
-      // if (!user.getIsLogin()) {
-      //    throw new RuntimeException(email + " -> 활성화되어 있지 않습니다.");
-      // }
-
-
-      log.info("[userDetailsService] [createUser] user : "+user);
+      log.info("[CustomUserDetailsService][createUser] user : " + user);
 
       try {
          userService.updateIsLoginByID(user.getEmail(), true);
       } catch (ServletException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
+         log.error("ServletException: ", e);
       } catch (Exception e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
+         log.error("Exception: ", e);
       }
 
       List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
             .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
             .collect(Collectors.toList());
+      
 
-
-      // Email이 로그인시 ID로 사용 됨
+      // Email이 로그인시 ID로 사용됨
       return new org.springframework.security.core.userdetails.User(user.getEmail(),
             user.getPassword(),
             grantedAuthorities);

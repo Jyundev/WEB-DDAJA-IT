@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.web.ddajait.config.constant.AuthenticationTypes;
+import com.web.ddajait.config.auth.AuthenticationTypes;
 import com.web.ddajait.config.constant.CommonError;
 import com.web.ddajait.config.constant.MemberError;
 import com.web.ddajait.config.error.custom.DuplicateMemberException;

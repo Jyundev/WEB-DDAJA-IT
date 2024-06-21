@@ -1,7 +1,6 @@
 package com.web.ddajait.config.jwt;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +14,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+
 public class JwtFilter extends GenericFilterBean {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
@@ -29,6 +28,8 @@ public class JwtFilter extends GenericFilterBean {
 
     // 실제 필터릴 로직
     // 토큰의 인증정보를 SecurityContext에 저장하는 역할 수행
+    // 클라이언트는 로그인 후 발급받은 JWT 토큰을 각 요청의 Authorization 헤더에 포함 
+    // 이를 통해 서버는 토큰을 통해 사용자를 식별하고 요청을 처리
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -48,6 +49,7 @@ public class JwtFilter extends GenericFilterBean {
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, getAuthorities: {}", authentication.getAuthorities(), requestURI);
 
             logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         } else {
@@ -58,6 +60,9 @@ public class JwtFilter extends GenericFilterBean {
     }
 
     // Request Header 에서 토큰 정보를 꺼내오기 위한 메소드
+    // HTTP 요청의 Authorization 헤더에서 JWT 토큰을 추출하는 메소드
+    // Bearer 로 시작하는 JWT 토큰을 찾아서 반환
+
     private String resolveToken(HttpServletRequest request) {
         log.info("[JwtFilter][resolveToken] Start : " + request);
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
@@ -71,14 +76,6 @@ public class JwtFilter extends GenericFilterBean {
         return null;
     }
 
-    // 오류 응답을 보내는 메서드
-    private void sendErrorResponse(HttpServletResponse response, String message, int statusCode) throws IOException {
-        response.setContentType("application/json");
-        response.setStatus(statusCode);
-        PrintWriter writer = response.getWriter();
-        writer.write("{\"error\": \"" + message + "\"}");
-        writer.flush();
-    }
 
     private static final String[] WHITELIST = {
             "/swagger-ui.html",
