@@ -340,15 +340,23 @@ public class UserServiceImpl implements UserService {
             long durationInMillis = endTimestamp.getTime() - starTimestamp.getTime();
 
             // 결과를 일 단위로 변환합니다.
-            int period = (int) (durationInMillis / (1000 * 60 * 60 * 24)) + 1;
+            // int period = (int) (durationInMillis / (1000 * 60 * 60 * 24)) + 1;
+            int period = 14;
 
             // 전체기간 나누기 현재 유저가 진행한 날
+
+
+            if(dto.getDay() == 0 && dto.getStep() ==0){
+                dto.setDay(entity.getDay());
+                dto.setStep(entity.getStep());
+            }
 
             dto.setProgressRate(dto.getDay() * 100 / period);
 
             EntityUtil.copyNonNullProperties(dto, entity);
             userchallengeDao.updateUserChallenge(entity);
         } else {
+
 
             Optional<UserEntity> userEntity = userDao.findById(userId);
             if (userEntity.isPresent()) {
