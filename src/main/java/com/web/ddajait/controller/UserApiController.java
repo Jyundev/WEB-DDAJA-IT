@@ -24,11 +24,7 @@ import com.web.ddajait.model.dto.User.UserDto;
 import com.web.ddajait.model.dto.User.UserPrivateInfoDto;
 import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeApiDto;
 import com.web.ddajait.model.dto.User.UserChallenge.UserChallengeDto;
-import com.web.ddajait.service.ChallengePartService;
-import com.web.ddajait.service.MemoService;
-import com.web.ddajait.service.PartQuestionService;
 import com.web.ddajait.service.UserService;
-import com.web.ddajait.service.UserWrongQuestionService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,11 +46,6 @@ import lombok.extern.slf4j.Slf4j;
 public class UserApiController {
 
     private final UserService userService;
-    private final ChallengePartService challengePartService;
-    private final MemoService memoService;
-    private final PartQuestionService partQuestionService;
-    private final UserWrongQuestionService userWrongQuestionService;
-
 
     // 추가 정보 수집
     @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다. *닉네임은 프로필 수정 api를 통해 수정됩니다")
@@ -119,7 +110,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userService.getUserChallengList(userId), "유저 챌린지 리스트 조회 성공");
     }
 
-    @Hidden 
+    @Hidden
     @GetMapping("/view/challenge/specific")
     @Operation(summary = "특정 챌린지 상테 조회 API", description = "로그인 유저의 특정 챌린지 상태 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> getUserChalenge(
@@ -145,7 +136,6 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 상태 업데이트 성공");
 
     }
-
 
     /* 유저 자격증 */
 

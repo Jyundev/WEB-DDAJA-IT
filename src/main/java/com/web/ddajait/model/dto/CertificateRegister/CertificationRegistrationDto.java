@@ -58,7 +58,7 @@ public class CertificationRegistrationDto {
                 .round(entity.getRound())
                 .testDay(entity.getTestDay())
                 .receptionStart(timestampToString(entity.getReceptionStart()))
-                .receptionEnd(timestampToString(entity.getReceptionStart()))
+                .receptionEnd(timestampToString(entity.getReceptionEnd()))
                 .resultDay(entity.getResultDay())
                 .build();
 

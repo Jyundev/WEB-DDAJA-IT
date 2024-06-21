@@ -72,11 +72,16 @@ public class CertificationRegistrationServiceImpl implements CertificationRegist
             // 시작일과 종료일 설정
             String startDay = data.getReceptionStart();
             String endDay = data.getReceptionEnd();
+            
             String title = data.getCertificateName() + " 접수";
 
-            calendarDto.setStart(startDay);
-            calendarDto.setEnd(endDay);
+            Long certificateId = data.getCertificateId();
+
+            calendarDto.setStartDay(startDay);
+            calendarDto.setEndDay(endDay);
+            calendarDto.setEndDay(endDay);
             calendarDto.setTitle(title);
+            calendarDto.setCertificateId(certificateId);
 
             // ExtendedProps 설정
             List<ExtendedProps> extendedProps = new ArrayList<>();

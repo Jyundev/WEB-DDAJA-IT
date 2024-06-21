@@ -1,11 +1,11 @@
 package com.web.ddajait.model.dto.Calendar;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -13,11 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 public class CalendarDto {
     
+    private Long certificateId;
+
     private String title;
 
-    private String start;
+    private String startDay;
     
-    private String end;
+    private String endDay;    
 
     private List<ExtendedProps> extendedProps;
     
