@@ -17,9 +17,9 @@ public class CalendarDto {
 
     private String title;
 
-    private String startDay;
+    private String start;
     
-    private String endDay;    
+    private String end;    
 
     private List<ExtendedProps> extendedProps;
     

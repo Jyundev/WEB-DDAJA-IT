@@ -77,9 +77,8 @@ public class CertificationRegistrationServiceImpl implements CertificationRegist
 
             Long certificateId = data.getCertificateId();
 
-            calendarDto.setStartDay(startDay);
-            calendarDto.setEndDay(endDay);
-            calendarDto.setEndDay(endDay);
+            calendarDto.setStart(startDay);
+            calendarDto.setEnd(endDay);
             calendarDto.setTitle(title);
             calendarDto.setCertificateId(certificateId);
 
