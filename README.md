@@ -50,3 +50,198 @@ GitHub Actions, nginx , AWS EC2를 이용하여 Spring 애플리케이션 무중
 http://52.78.44.47/swagger-ui/index.html#/
 
 ![swagger](src/main/java/com/web/ddajait/image/swagger.png)
+
+
+## FILE TREE
+
+### Backend
+
+```
+📦ddajait
+ ┣ 📂config
+ ┃ ┣ 📂auth
+ ┃ ┃ ┣ 📜AuthenticatedMatchers.java
+ ┃ ┃ ┣ 📜AuthenticationTypes.java
+ ┃ ┃ ┗ 📜Role.java
+ ┃ ┣ 📂constant
+ ┃ ┃ ┣ 📜CommonError.java
+ ┃ ┃ ┣ 📜MemberError.java
+ ┃ ┃ ┣ 📜ResponseCode.java
+ ┃ ┃ ┗ 📜ResponseStatus.java
+ ┃ ┣ 📂error
+ ┃ ┃ ┣ 📂custom
+ ┃ ┃ ┃ ┣ 📜DuplicateMemberException.java
+ ┃ ┃ ┃ ┣ 📜MemoNotFoundException.java
+ ┃ ┃ ┃ ┣ 📜NotFoundMemberException.java
+ ┃ ┃ ┃ ┗ 📜WrongQuestionNotFoundException.java
+ ┃ ┃ ┣ 📜ErrorCode.java
+ ┃ ┃ ┣ 📜ErrorResponse.java
+ ┃ ┃ ┣ 📜ExceptionControllerAdvice.java
+ ┃ ┃ ┣ 📜ExceptionHandlerAdvice.java
+ ┃ ┃ ┗ 📜RestApiException.java
+ ┃ ┣ 📂handler
+ ┃ ┃ ┣ 📜LogoutAuthSuccessHandler.java
+ ┃ ┃ ┗ 📜ResponseHandler.java
+ ┃ ┣ 📂jwt
+ ┃ ┃ ┣ 📜InvalidPasswordException.java
+ ┃ ┃ ┣ 📜JwtAccessDeniedHandler.java
+ ┃ ┃ ┣ 📜JwtAuthenticationEntryPoint.java
+ ┃ ┃ ┣ 📜JwtFilter.java
+ ┃ ┃ ┗ 📜TokenProvider.java
+ ┃ ┣ 📜AppConfig.java
+ ┃ ┣ 📜BaseEntity.java
+ ┃ ┣ 📜CorsConfig.java
+ ┃ ┣ 📜JwtSecurityConfig.java
+ ┃ ┣ 📜SecurityConfig.java
+ ┃ ┗ 📜SwaggerConfiguration.java
+ ┣ 📂controller
+ ┃ ┣ 📜AdminApiController.java
+ ┃ ┣ 📜AuthController.java
+ ┃ ┣ 📜CertificateController.java
+ ┃ ┣ 📜ChallengeController.java
+ ┃ ┣ 📜ChallengeUserController.java
+ ┃ ┣ 📜HeaderController.java
+ ┃ ┣ 📜HealthCheckController.java
+ ┃ ┣ 📜PublicApiController.java
+ ┃ ┗ 📜UserApiController.java
+ ┣ 📂image
+ ┃ ┣ 📜ERD-DDAJAIT.png
+ ┃ ┣ 📜ERD_v3.png
+ ┃ ┣ 📜spring-boot-ci-cd.drawio.png
+ ┃ ┣ 📜spring_ci_cd.png
+ ┃ ┗ 📜swagger.png
+ ┣ 📂model
+ ┃ ┣ 📂dao
+ ┃ ┃ ┣ 📂impl
+ ┃ ┃ ┃ ┣ 📜AuthDaoImpl.java
+ ┃ ┃ ┃ ┣ 📜CertificateInfoImpl.java
+ ┃ ┃ ┃ ┣ 📜CertificationRegistrationImpl.java
+ ┃ ┃ ┃ ┣ 📜ChallengeInfoImpl.java
+ ┃ ┃ ┃ ┣ 📜ChallengePartImpl.java
+ ┃ ┃ ┃ ┣ 📜MemoDaoImpl.java
+ ┃ ┃ ┃ ┣ 📜PartQuestionImpl.java
+ ┃ ┃ ┃ ┣ 📜UserCertificateImpl.java
+ ┃ ┃ ┃ ┣ 📜UserDaoImpl.java
+ ┃ ┃ ┃ ┣ 📜UserWrongQuetionImpl.java
+ ┃ ┃ ┃ ┗ 📜UserchallengeImpl.java
+ ┃ ┃ ┣ 📜AuthDao.java
+ ┃ ┃ ┣ 📜CertificateInfoDao.java
+ ┃ ┃ ┣ 📜CertificationRegistrationDao.java
+ ┃ ┃ ┣ 📜ChallengeInfoDao.java
+ ┃ ┃ ┣ 📜ChallengePartDao.java
+ ┃ ┃ ┣ 📜MemoDao.java
+ ┃ ┃ ┣ 📜PartQuestionDao.java
+ ┃ ┃ ┣ 📜UserCertificateDao.java
+ ┃ ┃ ┣ 📜UserDao.java
+ ┃ ┃ ┣ 📜UserWrongQuestionDao.java
+ ┃ ┃ ┗ 📜UserchallengeDao.java
+ ┃ ┣ 📂dto
+ ┃ ┃ ┣ 📂Auth
+ ┃ ┃ ┃ ┣ 📜AuthorityDto.java
+ ┃ ┃ ┃ ┗ 📜TokenDto.java
+ ┃ ┃ ┣ 📂Calendar
+ ┃ ┃ ┃ ┣ 📜CalendarDto.java
+ ┃ ┃ ┃ ┗ 📜ExtendedProps.java
+ ┃ ┃ ┣ 📂CertificateInfo
+ ┃ ┃ ┃ ┣ 📂Elibility
+ ┃ ┃ ┃ ┃ ┣ 📜ElibilityJsonWrapper.java
+ ┃ ┃ ┃ ┃ ┗ 📜ElibilityStandard.java
+ ┃ ┃ ┃ ┣ 📂ExamContent
+ ┃ ┃ ┃ ┃ ┣ 📜Exam.java
+ ┃ ┃ ┃ ┃ ┗ 📜ExamList.java
+ ┃ ┃ ┃ ┣ 📂ExamStandard
+ ┃ ┃ ┃ ┃ ┗ 📜ExamStandardJsonWrapper.java
+ ┃ ┃ ┃ ┣ 📜Ceriteria.java
+ ┃ ┃ ┃ ┣ 📜CertificateInfoDto.java
+ ┃ ┃ ┃ ┣ 📜EligibilityDto.java
+ ┃ ┃ ┃ ┣ 📜StandardDto.java
+ ┃ ┃ ┃ ┗ 📜eligibility.js
+ ┃ ┃ ┣ 📂CertificateRegister
+ ┃ ┃ ┃ ┗ 📜CertificationRegistrationDto.java
+ ┃ ┃ ┣ 📂ChallegeInfo
+ ┃ ┃ ┃ ┣ 📜ChallengeCardDto.java
+ ┃ ┃ ┃ ┗ 📜ChallengeInfoDto.java
+ ┃ ┃ ┣ 📂ChallengePart
+ ┃ ┃ ┃ ┣ 📜Challenge.java
+ ┃ ┃ ┃ ┣ 📜ChallengePartDto.java
+ ┃ ┃ ┃ ┣ 📜Chapter.java
+ ┃ ┃ ┃ ┣ 📜Day.java
+ ┃ ┃ ┃ ┣ 📜PartQuestionDto.java
+ ┃ ┃ ┃ ┣ 📜Step.java
+ ┃ ┃ ┃ ┗ 📜TestQuestion.java
+ ┃ ┃ ┣ 📂Public
+ ┃ ┃ ┃ ┣ 📜JoinDto.java
+ ┃ ┃ ┃ ┗ 📜LoginDto.java
+ ┃ ┃ ┣ 📂Response
+ ┃ ┃ ┃ ┗ 📜ResponseDto.java
+ ┃ ┃ ┗ 📂User
+ ┃ ┃ ┃ ┣ 📂UserChallenge
+ ┃ ┃ ┃ ┃ ┣ 📜MemoDto.java
+ ┃ ┃ ┃ ┃ ┣ 📜MemoModifyDto.java
+ ┃ ┃ ┃ ┃ ┣ 📜TotalUserDto.java
+ ┃ ┃ ┃ ┃ ┣ 📜UserChallengeApiDto.java
+ ┃ ┃ ┃ ┃ ┗ 📜UserChallengeDto.java
+ ┃ ┃ ┃ ┣ 📜ProfileImageDto.java
+ ┃ ┃ ┃ ┣ 📜UserCertificateDetailDto.java
+ ┃ ┃ ┃ ┣ 📜UserCertificateDto.java
+ ┃ ┃ ┃ ┣ 📜UserDto.java
+ ┃ ┃ ┃ ┣ 📜UserInfoDto.java
+ ┃ ┃ ┃ ┣ 📜UserPrivateInfoDto.java
+ ┃ ┃ ┃ ┗ 📜UserWrongQuestionDto.java
+ ┃ ┣ 📂entity
+ ┃ ┃ ┣ 📜AuthorityEntity.java
+ ┃ ┃ ┣ 📜CertificateInfoEntity.java
+ ┃ ┃ ┣ 📜CertificatePartEntity.java
+ ┃ ┃ ┣ 📜CertificationRegistrationEntity.java
+ ┃ ┃ ┣ 📜ChallengeInfoEntity.java
+ ┃ ┃ ┣ 📜ChallengePartEntity.java
+ ┃ ┃ ┣ 📜MemoEntity.java
+ ┃ ┃ ┣ 📜PartQuestionEntity.java
+ ┃ ┃ ┣ 📜UserCertificateEntity.java
+ ┃ ┃ ┣ 📜UserChallengeEntity.java
+ ┃ ┃ ┣ 📜UserEntity.java
+ ┃ ┃ ┗ 📜UserWrongQuestionEntity.java
+ ┃ ┗ 📂repository
+ ┃ ┃ ┣ 📜AuthRepository.java
+ ┃ ┃ ┣ 📜CertificateInfoRepository.java
+ ┃ ┃ ┣ 📜CertificateRegieterRepogitory.java
+ ┃ ┃ ┣ 📜ChallengeInfoRepository.java
+ ┃ ┃ ┣ 📜ChallengePartRepository.java
+ ┃ ┃ ┣ 📜MemoRepository.java
+ ┃ ┃ ┣ 📜PartQuestionRepository.java
+ ┃ ┃ ┣ 📜UserCertificateRepository.java
+ ┃ ┃ ┣ 📜UserChallengeRepository.java
+ ┃ ┃ ┣ 📜UserRepository.java
+ ┃ ┃ ┗ 📜UserWrongQuestionRepogitory.java
+ ┣ 📂service
+ ┃ ┣ 📂impl
+ ┃ ┃ ┣ 📜AuthServiceImpl.java
+ ┃ ┃ ┣ 📜CertificateInfoServiceImpl.java
+ ┃ ┃ ┣ 📜CertificationRegistrationServiceImpl.java
+ ┃ ┃ ┣ 📜ChallengeInfoServiceImpl.java
+ ┃ ┃ ┣ 📜ChallengePartServiceImpl.java
+ ┃ ┃ ┣ 📜MemoServiceImpl.java
+ ┃ ┃ ┣ 📜PartQuestionServiceImpl.java
+ ┃ ┃ ┣ 📜UserServiceImpl.java
+ ┃ ┃ ┗ 📜UserWrongQuestionServiceImpl.java
+ ┃ ┣ 📜AuthService.java
+ ┃ ┣ 📜CertificateInfoService.java
+ ┃ ┣ 📜CertificationRegistrationService.java
+ ┃ ┣ 📜ChallengeInfoSercive.java
+ ┃ ┣ 📜ChallengePartService.java
+ ┃ ┣ 📜CustomUserDetailsService.java
+ ┃ ┣ 📜MemoService.java
+ ┃ ┣ 📜PartQuestionService.java
+ ┃ ┣ 📜UserService.java
+ ┃ ┗ 📜UserWrongQuestionService.java
+ ┣ 📂util
+ ┃ ┣ 📜CommonUtils.java
+ ┃ ┣ 📜EmailValidator.java
+ ┃ ┣ 📜EntityUtil.java
+ ┃ ┣ 📜JsonListConverter.java
+ ┃ ┣ 📜JsonToObject.java
+ ┃ ┣ 📜ListToJsonConverter.java
+ ┃ ┣ 📜MapToJsonConverter.java
+ ┃ ┗ 📜SecurityUtil.java
+ ┗ 📜DdajaitApplication.java
+```
