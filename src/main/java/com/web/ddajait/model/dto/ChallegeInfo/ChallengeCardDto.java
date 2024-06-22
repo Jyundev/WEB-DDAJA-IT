@@ -24,6 +24,9 @@ public class ChallengeCardDto {
     @NotNull
     private Long challengeId;
 
+    @NotNull
+    private Long certificateId;
+
     @NotBlank
     private String challengeName;
 
@@ -64,6 +67,7 @@ public class ChallengeCardDto {
                 .totalUser(userchallengeDao.countMemberByChallengeId(entity.getChallengeId()))
                 .testDay(entity.getTestDay())
                 .thumbnail(entity.getThumbnail())
+                .certificateId(entity.getCertificateInfo().getCertificateId())
                 .build();
     }
 
