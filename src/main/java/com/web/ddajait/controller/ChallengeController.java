@@ -40,7 +40,7 @@ public class ChallengeController {
     }
 
     @Operation(summary = "특정 챌린지 데이터", description = "특정 챌린지 데이터를 가져오는 API 입니다.")
-    @GetMapping("/specific/{challengeId}")
+    @GetMapping("/{challengeId}")
     public ResponseEntity<ResponseDto<ChallengeInfoDto>> getChallengeInfoById(
             @PathVariable("challengeId") Long challengeId) throws Exception {
 
