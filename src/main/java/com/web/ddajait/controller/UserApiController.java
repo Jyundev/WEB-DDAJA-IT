@@ -100,7 +100,7 @@ public class UserApiController {
     }
     /* 유저 챌린지 */
 
-    @GetMapping("challenges/{userId}/")
+    @GetMapping("challenges/{userId}")
     @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
     public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(
             @PathVariable("userId") Long userId) throws Exception {
