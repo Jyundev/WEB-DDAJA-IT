@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping("/api/v1/user")
-@Tag(name = "User", description = "UserSER API입니다.")
+@Tag(name = "User", description = "USER API입니다.")
 @Validated
 public class UserApiController {
 
@@ -92,8 +92,6 @@ public class UserApiController {
     }
 
     // 탈퇴
-    // 삭제
-    // localhost:8080/api/v1/user/{userName}
     @Operation(summary = "유저탈퇴", description = "유저탈퇴 API 입니다. 유저 데이터가 삭제됩니다.")
     @DeleteMapping("/{userId}")
     public ResponseEntity<ResponseDto<String>> deleteUser(@PathVariable("userId") Long userId) throws Exception {
@@ -102,7 +100,7 @@ public class UserApiController {
     }
     /* 유저 챌린지 */
 
-    @GetMapping("/view/challenge/{userId}")
+    @GetMapping("/challenges/{userId}")
     @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
     public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(
             @PathVariable("userId") Long userId) throws Exception {
@@ -111,7 +109,7 @@ public class UserApiController {
     }
 
     @Hidden
-    @GetMapping("/specific/challenge")
+    @GetMapping("/challenge")
     @Operation(summary = "특정 챌린지 상테 조회 API", description = "로그인 유저의 특정 챌린지 상태 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> getUserChalenge(
             @RequestParam Long challegeId, @RequestParam Long userId) throws Exception {
@@ -148,7 +146,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userService.getUserCertificateList(userId), "유저 자격증 리스트 조회 성공");
     }
 
-    @GetMapping("/certificate/specific/{userId}/{certificateId}")
+    @GetMapping("/certificate/{userId}/{certificateId}")
     @Operation(summary = "특정 유저 자격증 조회 API", description = "특정 유저 자격증 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> getUserCertificate(
             @PathVariable("certificateId") Long certificateId, @PathVariable("userId") Long userId) throws Exception {
@@ -169,7 +167,7 @@ public class UserApiController {
 
     }
 
-    @PostMapping("/certificate/update/{userId}/{certificateId}")
+    @PutMapping("/certificate/{userId}/{certificateId}")
     @Operation(summary = "유저 자격증 상태 업데이트 API", description = "유저 자격증 상태 업데이트 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> updatetUserChallenge(
             @PathVariable("certificateId") Long certificateId, @PathVariable("userId") Long userId,

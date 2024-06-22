@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping("/api/v1/user/challenge")
-@Tag(name = "CHALLENGER", description = "CHALLENGER API입니다.")
+@Tag(name = "Challenger", description = "Challenger API입니다.")
 @Validated
 public class UserChallengeApiController {
 
