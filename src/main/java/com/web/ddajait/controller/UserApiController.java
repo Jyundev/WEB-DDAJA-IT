@@ -126,7 +126,7 @@ public class UserApiController {
     @PostMapping("/application/challenge/{userId}/{challengeId}")
     @Operation(summary = "유저 챌린지 신청 및 상태 업데이트 API", description = "유저 챌린지 채린지 신청할 경우는 body 값이 없어도 되지만 상태 업데이트를 할 경우 step, day 값을 입력하세요.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
-            @PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId,
+            @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId,
             @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
 
         // EntityUtil.copyNonNullProperties(userChallenge, dto);
