@@ -181,7 +181,6 @@ public class UserServiceImpl implements UserService {
             if (userEntityOptional.isPresent()) {
 
                 UserEntity entity = userEntityOptional.get();
-                log.info("[UserServiceImpl][updateUser] entity " + entity.getNickname());
 
                 if (userDto.getProfileImage().length() == 0) {
                     userDto.setProfileImage(entity.getProfileImage());
@@ -197,6 +196,12 @@ public class UserServiceImpl implements UserService {
                 if (nicknameCheck > 0 && !entity.getNickname().equals(userDto.getNickname())) {
                     throw new DuplicateMemberException(userDto.getNickname());
                 }
+
+                      // 닉네임 중복
+                if (nicknameCheck > 0 && !entity.getNickname().equals(userDto.getNickname())) {
+                    throw new DuplicateMemberException(userDto.getNickname());
+                }
+
 
                 // userDto 속성중 Null값이 아닌 값만 userEntity로 복사
                 EntityUtil.copyNonNullProperties(userDto, entity);

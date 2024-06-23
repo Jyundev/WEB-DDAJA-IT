@@ -100,7 +100,7 @@ public class UserApiController {
     }
     /* 유저 챌린지 */
 
-    @GetMapping("challenges/{userId}")
+    @GetMapping("/challenges/{userId}")
     @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
     public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(
             @PathVariable("userId") Long userId) throws Exception {
@@ -123,7 +123,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
-    @PutMapping("status/challenge/{userId}/{challengeId}")
+    @PostMapping("/status/challenge/{userId}/{challengeId}")
     @Operation(summary = "유저 챌린지 신청 및 상태 업데이트 API", description = "유저 챌린지 채린지 신청할 경우는 body 값이 없어도 되지만 상태 업데이트를 할 경우 step, day 값을 입력하세요.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
             @PathVariable("challengeId") Long challengeId, @PathVariable("userId") Long userId,
