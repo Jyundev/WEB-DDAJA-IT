@@ -23,6 +23,8 @@ public class CorsConfig {
         config.addAllowedOriginPattern("https://d26qduhz3ubom8.cloudfront.net/"); 
         config.addExposedHeader("USER_ID"); // Add this line to expose the USER_ID header
         source.registerCorsConfiguration("/api/v1/**", config);
+        source.registerCorsConfiguration("/update/challenge/**", config);
+
         return new CorsFilter(source);
     }
 }
