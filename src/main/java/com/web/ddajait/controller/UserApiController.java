@@ -123,7 +123,7 @@ public class UserApiController {
         return ResponseHandler.SUCCESS(userChallengeDto, "유저 챌린지 조회 성공");
     }
 
-    @PostMapping("/application/challenge/{userId}/{challengeId}")
+    @PostMapping("/update/challenge/{challengeId}/{userId}")
     @Operation(summary = "유저 챌린지 신청 및 상태 업데이트 API", description = "유저 챌린지 채린지 신청할 경우는 body 값이 없어도 되지만 상태 업데이트를 할 경우 step, day 값을 입력하세요.")
     public ResponseEntity<ResponseDto<UserChallengeDto>> updatetUserChallenge(
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId,
