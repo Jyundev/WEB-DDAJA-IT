@@ -1,5 +1,5 @@
-# IT 자격증 스터디 플랫폼 : DDAJA-IT
-
+# IT 자격증 스터디 플랫폼 : <a href = "https://d5ki68ixw55w9.cloudfront.net/">DDAJA-IT </a>
+ 
 ## 📆 프로젝트 기간 
 
 | 날짜 | 업무 내용 |
@@ -46,42 +46,15 @@
 
 <br>
 
-DDAJA-IT 은 "따자 IT 자격증" 의 줄임말로 IT 직군을 희망하는 모든 사람들을 위한 자격증 공부 플랫폼입니다. 
+DDAJA-IT 은 **"따자 IT 자격증"** 의 줄임말로 IT 직군을 희망하는 모든 사람들을 위한 자격증 공부 플랫폼입니다. 
 
 
 따자잇 팀원들은 자격증 준비에 어려움을 겪었지만, 그룹 스터디를 통해 꾸준히 공부할 수 있었습니다. 
 이러한 경험을 바탕으로 비전공자도 쉽게 접근할 수 있는 자격증 공부 플랫폼의 필요성을 느꼈습니다. 
 이에 저희 팀은 IT 직군을 위한 IT 자격증 공부 플랫폼을 만드는 프로젝트를 기획했습니다.
 
-1차 목표로 총 10개의 IT 자격증을 기준으로 프로젝트를 진행했습니다.
+1차 목표로 총 10개의 IT 자격증을 기준으로 프로젝트를 진행했습니다. **(리눅스마스터(1급/2급), 정보처리기사, 정보보안기사, 정보처리산업기사, 네트워크관리사(1급/2급), 빅데이터분석기사, SQLD, ADsP)**
 
-<table>
-    <tr>
-        <td>1. 리눅스마스터(1급/2급)</td>
-    </tr>
-    <tr>
-        <td>2. 정보처리기사</td>
-    </tr>
-    <tr>
-        <td>3. 정보보안기사</td>
-    </tr>
-    <tr>
-        <td>4. 정보처리산업기사/td>
-    </tr>
-    <tr>
-        <td>5. 네트워크관리사(1급/2급)</td>
-    </tr>
-    <tr>
-        <td>6. 빅데이터분석기사</td>
-    </tr>
-    <tr>
-        <td>7. SQLD</td>
-    </tr>
-        <tr>
-        <td>8. ADsP</td>
-    </tr>
-</table>
-<br>
 
 
 ## 서비스 기능 
@@ -93,20 +66,10 @@ DDAJA-IT 은 "따자 IT 자격증" 의 줄임말로 IT 직군을 희망하는 �
 
 <br>
 
-<div align="center">
-    <table>
-        <tr>
-            <td>1. IT 자격증 종류별로 필요한 정보를 한 곳에 모아 제공합니다.</td>
-        </tr>
-        <tr>
-            <td>2. 스터디 챌린지 프로그램을 통해 유저들에게 데일리 과제를 제공합니다.</td>
-        </tr>
-        <tr>
-            <td>3. 사용자들 간의 학습률을 비교하여 동기 부여를 높입니다.</td>
-        </tr>
-    </table>
-</div>
-
+- IT 자격증 종류별로 필요한 정보를 한 곳에 모아 제공합니다
+- 스터디 챌린지 프로그램을 통해 유저들에게 데일리 과제를 제공합니다.
+- 사용자들 간의 학습률을 비교하여 동기 부여를 높입니다
+  
 <br>
 
 ## 개발환경 
@@ -277,7 +240,7 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 
 ## 프론트엔드 
 
-사용자 인터페이스(UI)를 만들기 위해 사용되는 자바스크립트 라이브러리 **React** 르 이용하여 프론트엔드를 개발했습니다.
+사용자 인터페이스(UI)를 만들기 위해 사용되는 자바스크립트 라이브러리 **React** 를 이용하여 프론트엔드를 개발했습니다.
 
 <br>
 
@@ -311,7 +274,7 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/page2.png" style="width: 100%; margin: 5px;">
+    <img alt="PAGE" src="image/main.png" style="width: 100%; margin: 5px;">
 </div>
 
 <br>
@@ -395,7 +358,7 @@ Swagger UI를 이용해 프론트엔드와 백엔드의 협업툴로 사용했�
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/JWT.png" style="width: 80%; margin: 5px;">
+    <img alt="PAGE" src="image/JWT.png" style="width: 70%; margin: 5px;">
 </div>
 
 <br>
@@ -409,7 +372,7 @@ Swagger UI를 이용해 프론트엔드와 백엔드의 협업툴로 사용했�
 
 
 <div align="center">
-    <img alt="PAGE" src="image/jwt_인증.png" style="width: 80%; margin: 5px;">
+    <img alt="PAGE" src="image/jwt_인증.png" style="width: 60%; margin: 5px;">
 </div>
 
 <br>
@@ -428,3 +391,6 @@ DDAJA-IT의 엔티티 관계 다이어그램(ERD)은 총 13개의 테이블로 
 <br>
 
 ## 시연영상
+
+추가 예정 
+추가예정 
