@@ -88,7 +88,7 @@ DDAJA-IT 은 "따자 IT 자격증" 의 줄임말로 IT 직군을 희망하는 �
 
 
 <div align="center">
-<img width="1143" alt="image" src="image\function.png"style="width: 60%; margin: 5px;">
+<img width="1143" alt="image" src="image\function.png"style="width: 80%; margin: 5px;">
 </div>
 
 <br>
@@ -301,7 +301,7 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/page1.png" style="width: 70%; margin: 5px;">
+    <img alt="PAGE" src="image/page1.png" style="width: 100%; margin: 5px;">
 </div>
 
 
@@ -311,7 +311,7 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/page2.png" style="width: 70%; margin: 5px;">
+    <img alt="PAGE" src="image/page2.png" style="width: 100%; margin: 5px;">
 </div>
 
 <br>
@@ -321,7 +321,7 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/page3.png" style="width: 70%; margin: 5px;">
+    <img alt="PAGE" src="image/page3.png" style="width: 100%; margin: 5px;">
 </div>
 
 
@@ -332,7 +332,7 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/page4.png" style="width: 70%; margin: 5px;">
+    <img alt="PAGE" src="image/page4.png" style="width: 100%; margin: 5px;">
 </div>
 
 <br>
@@ -342,7 +342,7 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/page5.png" style="width: 70%; margin: 5px;">
+    <img alt="PAGE" src="image/page5.png" style="width: 100%; margin: 5px;">
 </div>
 
 <br>
@@ -356,8 +356,10 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 
 Swagger UI를 이용해 프론트엔드와 백엔드의 협업툴로 사용했습니다. API를 시각화하는 코드가 자동으로 생성되기 때문에, 보다 간편하게 API를 테스트할 수 있습니다.
 
+<br>
+
 <div align="center">
-    <img alt="PAGE" src="image/swagger.png" style="width: 100%; margin: 5px;">
+    <img alt="swagger.png" src="image/swagger.png" style="width: 80%; margin: 5px;">
 </div>
 
 <br>
