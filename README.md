@@ -36,7 +36,6 @@
 - [난이도 분석 모델](#난이도-분석-모델)
 - [프론트엔드](#프론트엔드)
 - [백엔드](#백엔드)
-- [ERD](#ERD)
 - [시연영상](#시연영상)
 
 ## 프로젝트 개요
@@ -137,7 +136,7 @@ DDAJA-IT 은 "따자 IT 자격증" 의 줄임말로 IT 직군을 희망하는 �
 | 자격증별 시험 문제 데이터 |ADsP, SQLD, 빅데이터분석기사 :  네이버 수제비 카페의 기출문제 데이터를 파이썬을 이용해 자동으로 수집<br> 네트워크관리사, 라눅스마스, 정보보안기사, 정처기, 정처산기 : 전자문제집 CBT 사이트의 기출문제 PDF 파일을 파이썬 패키지(Spire.PDF,PyMuPDF) 를 이용해 문제 추출  |
 
 
-## CI/CD 아키텍처
+## 아키텍처
 
 ### Backend-Frontend
 
@@ -197,7 +196,7 @@ DDAJA-IT 은 "따자 IT 자격증" 의 줄임말로 IT 직군을 희망하는 �
 
 1. 데이터 갱신 확인
 
-- S3의 기출문제 폴더에 있는 PDF 파일을 전주와 비교하여 데이터가 갱신된 경우에만 데이터 수집.
+    - S3의 기출문제 폴더에 있는 PDF 파일을 전주와 비교하여 데이터가 갱신된 경우에만 데이터 수집.
 
 2. PDF 파일 읽기
     - S3에 저장된 PDF 파일을 읽음
@@ -214,12 +213,14 @@ DDAJA-IT 은 "따자 IT 자격증" 의 줄임말로 IT 직군을 희망하는 �
 
 <br>
 
+
+>데이터 수집 결과 알림
+
 <div align="center">
     <img alt="Airflow Success" src="image/airflow_success.png" style="width: 40%; margin: 5px;">
     <img alt="Airflow Error" src="image/airflow_error.png" style="width: 45%; margin: 5px;">
 </div>
 
-<p style="text-align:center;"><i><b><span style="font-size:14px;">airflow 수집 결과 슬랙 알림</span></b></i></p>
 
 ## 난이도 분석 모델
 GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석하여 각 과목의 난이도를 평가했습니다. GPT-4 모델 특징으로는 자연어 처리에 최적화된 최신 모델이며, 다양한 텍스트 분석 및 생성 작업에서 뛰어난 성능을 보입니다.
@@ -237,13 +238,16 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 
 2. 고급 텍스트 이해 능력: GPT-4 API는 복잡한 문장을 이해하고, 문맥을 파악하여 적절한 답변을 생성할 수 있는 능력을 갖추고 있습니다. 
 
+<br>
 
-<div style="display: flex; justify-content: center;">
-    <img alt="Airflow Success" src="image/gpt_code.png" style="width: 40%; margin: 5px;">
-    <img alt="Airflow Error" src="image/gpt_input.png" style="width: 40%; margin: 5px;">
+>난이도 분석 코드와 입력데이터
+
+
+<div align="center">
+    <img alt="GPT" src="image/gpt_code.png" style="width: 50%; margin: 5px;">
+    <img alt="GPT" src="image/gpt_input.png" style="width:45%; margin: 5px;">
 </div>
 <br>
-<p style="text-align:center;"><i><b><span style="font-size:14px;">난이도 분석 코드와 입력데이터</span></b></i></p>
 
 데이터 준비 
 - 수집된 시험 후기 데이터를 CSV 파일로 저장  Pandas 라이브러리를 사용하여 DataFrame 형태로 로드
@@ -260,12 +264,14 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 
 <br>
 
+>난이도 예측 결과
+
 <div align="center">
     <img alt="Airflow Error" src="image/gpt_result.png" style="width: 50%; margin: 5px;">
 </div>
 
 <br>
-<p style="text-align:center;"><i><b><span style="font-size:14px;">난이도 예측 결과</span></b></i></p>
+
 
 모델의 과목별 난이도 예측 결과에 따르면, 4과목이 가장 어려운 과목으로 판단되었고, 실제 시험 결과에서도 4과목과 5과목의 점수가  가장 낮게 나왔습니다.
 
@@ -289,12 +295,18 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 </div>
 
 ## 화면 설계
+
+> 로그인 & 회원가입 & 사용자 정보 수집 페이지
+
+<br>
+
 <div align="center">
     <img alt="PAGE" src="image/page1.png" style="width: 70%; margin: 5px;">
 </div>
 
-<br>
-<p style="text-align:center;"><i><b><span style="font-size:14px;">로그인 & 회원가입 & 사용자 정보 수집 페이지</span></b></i></p>
+
+
+> 메인페이지
 
 <br>
 
@@ -303,8 +315,8 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 </div>
 
 <br>
-<p style="text-align:center;"><i><b><span style="font-size:14px;">메인페이지</span></b></i></p>
 
+> 챌린지 소개 & 챌린지 상세 페이지
 
 <br>
 
@@ -312,8 +324,10 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
     <img alt="PAGE" src="image/page3.png" style="width: 70%; margin: 5px;">
 </div>
 
+
 <br>
-<p style="text-align:center;"><i><b><span style="font-size:14px;">챌린지 소개 & 챌린지 상세 페이지 </span></b></i></p>
+
+>자격증 정보 페이지
 
 <br>
 
@@ -322,15 +336,16 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 </div>
 
 <br>
-<p style="text-align:center;"><i><b><span style="font-size:14px;">자격증 정보 페이지 </span></b></i></p>
+
+>마이페이지
+
+<br>
 
 <div align="center">
     <img alt="PAGE" src="image/page5.png" style="width: 70%; margin: 5px;">
 </div>
 
 <br>
-
-<p style="text-align:center;"><i><b><span style="font-size:14px;">마이페이지</span></b></i></p>
 
 ## 백엔드 
 
@@ -342,30 +357,31 @@ GPT-4 API를 활용하여 정보처리기사 시험 후기 데이터를 분석�
 Swagger UI를 이용해 프론트엔드와 백엔드의 협업툴로 사용했습니다. API를 시각화하는 코드가 자동으로 생성되기 때문에, 보다 간편하게 API를 테스트할 수 있습니다.
 
 <div align="center">
-    <img alt="PAGE" src="image/swagger.png" style="width: 50%; margin: 5px;">
+    <img alt="PAGE" src="image/swagger.png" style="width: 100%; margin: 5px;">
 </div>
 
 <br>
 
-<p style="text-align:center;"><i><b><span style="font-size:14px;">Swagger API 문서 </span></b></i></p>
 
 ### Spring Security 
 
  SPRING 기반의 애플리케이션의 보안(인증과 권한, 인가 등)을 담당하는 
 스프링 하위 프레임워크 Spring Security와 JWT를 사용하여 인증 및 권한 부여를 처리했습니다.
 
+<br>
+
+
 <div align="center">
     <img alt="PAGE" src="image/인가.png" style="width: 40%; margin: 5px;">
 </div>
 
-<br>
-
-<p style="text-align:center;"><i><b><span style="font-size:14px;">권한 설정</span></b></i></p>
 
 ### JWT 인증 방식 
 
 웹에서 사용되는 Json 형식 기반의 토큰 표준 규격입니다. JWT는 3개의 영역(header, payload, verify signature )로 이루어져 있습니다. 
 
+
+<br>
 
 |  | |
 | --- | --- |
@@ -374,27 +390,28 @@ Swagger UI를 이용해 프론트엔드와 백엔드의 협업툴로 사용했�
 | SIGNATURE| Header와 Payload를 Base64로 인코딩한 값에 서버의 Secret Key를 결합하여 Header에서 정의한 알고리즘으로 해시화한 값입니다. |
 |  | |
 
+<br>
+
 <div align="center">
-    <img alt="PAGE" src="image/JWT.png" style="width: 50%; margin: 5px;">
+    <img alt="PAGE" src="image/JWT.png" style="width: 80%; margin: 5px;">
 </div>
 
 <br>
-
-<p style="text-align:center;"><i><b><span style="font-size:14px;">JWT</span></b></i></p>
 
 #### JWT  인증방식 사용 이유
 - **클라이언트와 서버의 독립성**  :  클라이언트가 인증된 상태를 유지하면서도 서버와의 별도 세션 저장소를 필요로 하지 않습니다.
 - **무상태 통신 (Stateless)** : JWT는 토큰 자체에 모든 인증 정보를 포함하고 있으므로 서버는 상태를 유지할 필요가 없습니다. RESTful API와 같은 무상태 통신에 매우 적합합니다.
 
 
+<br>
+
 
 <div align="center">
-    <img alt="PAGE" src="image/jwt_인증.png" style="width: 60%; margin: 5px;">
+    <img alt="PAGE" src="image/jwt_인증.png" style="width: 80%; margin: 5px;">
 </div>
 
 <br>
 
-<p style="text-align:center;"><i><b><span style="font-size:14px;">JWT 인증 방식</span></b></i></p>
 
 ## ERD 
 
@@ -403,11 +420,9 @@ DDAJA-IT의 엔티티 관계 다이어그램(ERD)은 총 13개의 테이블로 
 <br>
 
 <div align="center">
-    <img alt="PAGE" src="image/ERD.png" style="width: 60%; margin: 5px;">
+    <img alt="PAGE" src="image/ERD.png" style="width: 100%; margin: 5px;">
 </div>
 
 <br>
-
-<p style="text-align:center;"><i><b><span style="font-size:14px;">ERD</span></b></i></p>
 
 ## 시연영상
