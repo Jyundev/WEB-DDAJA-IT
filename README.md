@@ -117,7 +117,7 @@ DDAJA-IT 은 **"따자 IT 자격증"** 의 줄임말로 IT 직군을 희망하�
 
 4. Docker 이미지가 생성되어 Docker Hub에 푸시
 
-5. 배포가 EC2 인스턴스로 진행죄며, Nginx가 백엔드의 다른 버전(블루와 그린) 간의 라우팅을 관리
+5. 배포가 EC2 인스턴스로 진행되며, Nginx가 백엔드의 블루와 그린 서버 간의 라우팅을 관리
 
 6. 프론트엔드 코드는 S3에 업로드되고 CloudFront를 통해 전달
 
@@ -127,10 +127,10 @@ DDAJA-IT 은 **"따자 IT 자격증"** 의 줄임말로 IT 직군을 희망하�
 
 ### DATA
 
-주기적으로 이루어져야 하는 데이터 수집 과정을 pipeline를 통해 자동화 하기 위해 airflow 사용 
+주기적으로 이루어져야 하는 데이터 수집 과정을 파이프라인을을 통해 자동화 하기 위해 airflow 사용 
 
 <div align="center">
-<img  alt="image" src="image\data_etl.png"style="width: 75%; margin: 5px;">
+<img  alt="image" src="image\data_etl.png"style="width: 80%; margin: 5px;">
 </div>
 
 
