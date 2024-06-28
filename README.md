@@ -19,9 +19,9 @@
 
 | 구성원 | 깃허브 주소 | 분담 역할 |
 | --- | --- | --- |
-| 장윤영 | https://github.com/Jyundev | CBT 자격증 시험 데이터 수집<br>SpringBoot RESTful API 개발 <br>ERD 및 API 설계<br>Swagger 기반  REST API 문서 자동화<br>프로젝트 문서화 작업|
-| 조하민 | https://github.com/chohaming |AWS 인프라 설계 및 구축<br>airflow 데이터 수집 자동화<br>Git Actions 기반 프론트엔드 배포|
-| 김도한 | https://github.com/rlaehgks115 |React 기반 프론트엔드<br>아키텍처 설계 및 개발<br>S3 기반 백엔드 배포|
+| 장윤영 | https://github.com/Jyundev | CBT 자격증 시험 데이터 수집<br>SpringBoot REST API 개발 <br>ERD 및 API 설계<br>Swagger 기반  REST API 문서 자동화<br>프로젝트 문서화 작업|
+| 조하민 | https://github.com/chohaming |AWS 인프라 설계 및 구축<br>Airflow 데이터 수집 자동화<br>형상관리 및 배포|
+| 김도한 | https://github.com/rlaehgks115 |React 기반 프론트엔드<br>아키텍처 설계 및 개발<br>프론트엔드 배포|
 | 김백운 | https://github.com/kimbw0615 | 자격증 접수일정,  시험 데이터 수집<br>자격증 시험 후기 데이터 수집 및 분석<br>데이터 정제 및 난이도 분석 모델링|
 
 </br></br>
