@@ -87,7 +87,7 @@ DDAJA-IT 은 **"따자 IT 자격증"** 의 줄임말로 IT 직군을 희망하�
 - Docker 25.0.3
 - Github Actions
 - nginx : 1.27.0
-- Mode-js : 20.12.2
+- Node-js : 20.12.2
 - Airflow : 2.9.1
 - AWS EC2, RDS, S3
 
