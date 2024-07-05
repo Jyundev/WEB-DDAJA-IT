@@ -30,7 +30,7 @@ spring:
 
 server:
   port: 8080
-  serverAddress: 52.78.44.47
+  serverAddress: 43.200.79.117
 
 serverName: blue_server
 
@@ -42,7 +42,7 @@ spring:
 
 server:
   port: 8081
-  serverAddress: 52.78.44.47
+  serverAddress: 43.200.79.117
 
 serverName: green_server
 
@@ -64,9 +64,9 @@ spring:
 
   # 데이터 베이스 
   datasource:
-      url: jdbc:mysql://database-1.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com/ddajait_data 
-      username: fp
-      password: qwerasdf1!
+      url: jdbc:mysql://ddajait-database.c7q262e6c0pc.ap-northeast-2.rds.amazonaws.com/ddajait
+      username: admin
+      password: ddajait123
       driver-class-name: com.mysql.cj.jdbc.Driver
 
     # sql:
