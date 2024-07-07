@@ -26,14 +26,14 @@ import com.web.ddajait.service.PartQuestionService;
 import io.jsonwebtoken.io.IOException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("api/v1/certificate")
 @Tag(name = "Certificate", description = "Certoficate API")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CertificateController {
 
     private final CertificateInfoService certificateInfoService;

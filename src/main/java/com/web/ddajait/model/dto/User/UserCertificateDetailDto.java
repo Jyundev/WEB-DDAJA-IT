@@ -32,4 +32,10 @@ public class UserCertificateDetailDto {
                 .isPass(entity.getUserResult())
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return "certificateName : " + certificateName;
+    }
+
 }

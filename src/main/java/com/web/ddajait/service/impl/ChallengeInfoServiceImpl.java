@@ -13,12 +13,12 @@ import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.service.ChallengeInfoSercive;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ChallengeInfoServiceImpl implements ChallengeInfoSercive {
 
     private final ChallengeInfoDao challengeInfoDao;

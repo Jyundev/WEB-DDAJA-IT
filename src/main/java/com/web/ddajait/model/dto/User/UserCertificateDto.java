@@ -29,4 +29,5 @@ public class UserCertificateDto {
                 .application(entity.getApplication())
                 .build();
     }
+
 }

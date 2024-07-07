@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -78,6 +79,11 @@ public class UserDto {
                 .qualifiedCertificate(user.getQualifiedCertificate())
                 .authorities(user.getAuthorities())
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return "nickname : " + nickname + " email : " + email;
     }
 
 }

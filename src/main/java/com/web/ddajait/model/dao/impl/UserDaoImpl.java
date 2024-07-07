@@ -3,7 +3,6 @@ package com.web.ddajait.model.dao.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.config.error.custom.NotFoundMemberException;
@@ -13,12 +12,13 @@ import com.web.ddajait.model.repository.UserRepository;
 import com.web.ddajait.util.SecurityUtil;
 
 import jakarta.servlet.ServletException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<UserEntity> getAllUsers() throws Exception {
@@ -79,6 +79,5 @@ public class UserDaoImpl implements UserDao {
     public UserEntity getUserWithAuthorities(String email) throws Exception {
         return userRepository.findOneWithAuthoritiesByEmail(email).orElse(null);
     }
-
 
 }

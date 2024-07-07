@@ -9,20 +9,19 @@ import com.web.ddajait.model.dao.CertificateInfoDao;
 import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.model.repository.CertificateInfoRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class CertificateInfoImpl implements CertificateInfoDao {
 
-    final private CertificateInfoRepository certificateInfoRepository;
+    private final CertificateInfoRepository certificateInfoRepository;
 
     @Override
     public List<CertificateInfoEntity> getAllCertificate() {
         log.info("[CertificateInfoImpl][getAllCertificate] Starts");
-
         return certificateInfoRepository.findAll();
     }
 
@@ -33,8 +32,6 @@ public class CertificateInfoImpl implements CertificateInfoDao {
 
     @Override
     public Optional<CertificateInfoEntity> findByCertificateName(String certificateName) {
-     
-
         return certificateInfoRepository.findByCertificateFullName(certificateName);
     }
 

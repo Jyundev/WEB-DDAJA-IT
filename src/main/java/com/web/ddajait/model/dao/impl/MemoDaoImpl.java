@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MemoDaoImpl implements MemoDao {
 
-    final private MemoRepository memoRepository;
+    private final  MemoRepository memoRepository;
 
     @Override
     public Optional<MemoEntity> findMemo(Long userId, Long challengeId, int step, int day) {

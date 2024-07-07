@@ -41,4 +41,10 @@ public class UserWrongQuestionDto {
                 .step(entity.getStep())
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return "wrongQuestions : " + wrongQuestions.toString();
+    }
+
 }

@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChallengePartImpl implements ChallengePartDao {
 
-    final private ChallengePartRepository challengePartRepository;
+    private final ChallengePartRepository challengePartRepository;
 
     @Override
     public List<ChallengePartEntity> getAllChallenge() {

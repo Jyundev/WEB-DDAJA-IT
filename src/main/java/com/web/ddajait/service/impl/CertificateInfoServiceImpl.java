@@ -19,11 +19,11 @@ import com.web.ddajait.model.entity.CertificateInfoEntity;
 import com.web.ddajait.service.CertificateInfoService;
 
 import io.jsonwebtoken.io.IOException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class CertificateInfoServiceImpl implements CertificateInfoService {
 
@@ -113,7 +113,7 @@ public class CertificateInfoServiceImpl implements CertificateInfoService {
                     // standard 필드가 텍스트인 경우
                     jsonWrapper.setSimplestandard(subjectNode.asText());
                 }
-          
+
             } else {
                 throw new IllegalArgumentException("Invalid JSON structure for id: " + id);
             }

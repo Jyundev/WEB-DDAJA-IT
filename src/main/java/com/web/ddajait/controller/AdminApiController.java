@@ -29,8 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v1/admin")
 public class AdminApiController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     // 삭제
     // localhost:8080/api/v1/user/{userName}

@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 // https://hogwart-scholars.tistory.com/entry/Spring-Boot-SpringDoc%EA%B3%BC-Swagger%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-API-%EB%AC%B8%EC%84%9C%ED%99%94-%EC%9E%90%EB%8F%99%ED%99%94%ED%95%98%EA%B8%B0
@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 
 //Validated : https://mangkyu.tistory.com/174
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/api/v1/user")
 @Tag(name = "User", description = "USER API입니다.")
@@ -51,10 +51,7 @@ public class UserApiController {
     @Operation(summary = "추가 정보 수집", description = "추가 정보 수집 API 입니다. 성별, 관심분야, 나이를 수집합니다. *닉네임은 프로필 수정 api를 통해 수정됩니다")
     @PostMapping("/info/{userId}")
     public ResponseEntity<ResponseDto<UserPrivateInfoDto>> getUserInfo(
-            @Valid @RequestBody UserPrivateInfoDto dto, @PathVariable("userId") Long userId) throws Exception {
-
-        log.info("[PublicController][UserPrivateInfoDto] Start - AGE: {}, Interst: {}", dto.getAge(),
-                dto.getInterest());
+        @Valid @RequestBody UserPrivateInfoDto dto, @PathVariable("userId") Long userId) throws Exception {
 
         userService.addUserInfo(userId, dto);
 
@@ -87,7 +84,6 @@ public class UserApiController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @Operation(summary = "권한조회", description = "권한조회 API 입니다. \"USER\" 또는 \"ADMIN\" 역할을 가진 사용자만 접근할 수 있습니다.")
     public ResponseEntity<ResponseDto<UserDto>> getMyUserInfo() throws Exception {
-        log.info("[UserApiController][getMyUserInfo] Start");
         return ResponseHandler.SUCCESS(userService.getMyUserWithAuthorities(), "권한 조회");
     }
 
@@ -104,7 +100,6 @@ public class UserApiController {
     @Operation(summary = "유저 챌린지 리스트 조회 API", description = "유저 챌린지 리스트 조회 API 입니다.")
     public ResponseEntity<ResponseDto<List<UserChallengeApiDto>>> getUserChalengeList(
             @PathVariable("userId") Long userId) throws Exception {
-        log.info("[UserApiController][getUserChalengeList] Start");
         return ResponseHandler.SUCCESS(userService.getUserChallengList(userId), "유저 챌린지 리스트 조회 성공");
     }
 
@@ -129,7 +124,6 @@ public class UserApiController {
             @PathVariable("userId") Long userId, @PathVariable("challengeId") Long challengeId,
             @RequestBody @Valid UserChallengeDto userChallenge) throws Exception {
 
-        // EntityUtil.copyNonNullProperties(userChallenge, dto);
         userService.updateUserChallenge(userChallenge, challengeId, userId);
         return ResponseHandler.SUCCESS(userChallenge, "유저 챌린지 상태 업데이트 성공");
 
@@ -142,7 +136,6 @@ public class UserApiController {
     public ResponseEntity<ResponseDto<List<UserCertificateDetailDto>>> getUserCertificateList(
             @PathVariable("userId") Long userId)
             throws Exception {
-        log.info("[UserApiController][getUserCertificateList] Start");
         return ResponseHandler.SUCCESS(userService.getUserCertificateList(userId), "유저 자격증 리스트 조회 성공");
     }
 
@@ -150,8 +143,6 @@ public class UserApiController {
     @Operation(summary = "특정 유저 자격증 조회 API", description = "특정 유저 자격증 조회 API 입니다.")
     public ResponseEntity<ResponseDto<UserCertificateDto>> getUserCertificate(
             @PathVariable("certificateId") Long certificateId, @PathVariable("userId") Long userId) throws Exception {
-        log.info("[UserApiController][getUserCertificate] Start");
-
         UserCertificateDto userCertificateDto = userService.findUserCertificateId(certificateId, userId).get();
 
         return ResponseHandler.SUCCESS(userCertificateDto, "유저 자격증 조회 성공");

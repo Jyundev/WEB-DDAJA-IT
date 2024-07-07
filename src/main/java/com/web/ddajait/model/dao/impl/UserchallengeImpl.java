@@ -12,12 +12,12 @@ import com.web.ddajait.model.entity.UserChallengeEntity;
 import com.web.ddajait.model.entity.UserEntity;
 import com.web.ddajait.model.repository.UserChallengeRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserchallengeImpl implements UserchallengeDao {
     private final UserChallengeRepository userChallengeRepository;
 
@@ -74,7 +74,5 @@ public class UserchallengeImpl implements UserchallengeDao {
     public List<TotalUserDto> getTotalUser() {
         return userChallengeRepository.getTotalUser();
     }
-
-
 
 }

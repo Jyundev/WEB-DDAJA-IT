@@ -9,11 +9,11 @@ import com.web.ddajait.model.dao.UserCertificateDao;
 import com.web.ddajait.model.entity.UserCertificateEntity;
 import com.web.ddajait.model.repository.UserCertificateRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class UserCertificateImpl implements UserCertificateDao {
 

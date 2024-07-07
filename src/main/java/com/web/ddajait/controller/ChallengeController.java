@@ -18,12 +18,12 @@ import com.web.ddajait.service.ChallengePartService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/challenge")
 @Tag(name = "Challenge", description = "Challenge API")
 public class ChallengeController {

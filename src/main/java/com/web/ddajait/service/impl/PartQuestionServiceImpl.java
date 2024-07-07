@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-
 public class PartQuestionServiceImpl implements PartQuestionService {
 
     private final PartQuestionDao partQuestionDao;

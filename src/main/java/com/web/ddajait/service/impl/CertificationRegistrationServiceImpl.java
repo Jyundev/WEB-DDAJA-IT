@@ -17,12 +17,12 @@ import com.web.ddajait.model.dto.CertificateRegister.CertificationRegistrationDt
 import com.web.ddajait.service.CertificateInfoService;
 import com.web.ddajait.service.CertificationRegistrationService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CertificationRegistrationServiceImpl implements CertificationRegistrationService {
 
     private final CertificationRegistrationDao certificationRegistrationDao;
@@ -45,7 +45,7 @@ public class CertificationRegistrationServiceImpl implements CertificationRegist
         List<CertificationRegistrationDto> dtos = getAllCerticationResgitration();
 
         // 각 dto를 CalendarDto로 변환하여 리스트로 수집
-        // stram -> parallelStream 병렬처리 
+        // stram -> parallelStream 병렬처리
         List<CalendarDto> calendarDtos = dtos.parallelStream().map(data -> {
             CertificateInfoDto certificateInfoDto = certificateInfoService.findById(data.getCertificateId());
             List<ElibilityStandard> examStandard = new ArrayList<>();
@@ -72,7 +72,7 @@ public class CertificationRegistrationServiceImpl implements CertificationRegist
             // 시작일과 종료일 설정
             String startDay = data.getReceptionStart();
             String endDay = data.getReceptionEnd();
-            
+
             String title = data.getCertificateName() + " 접수";
 
             Long certificateId = data.getCertificateId();

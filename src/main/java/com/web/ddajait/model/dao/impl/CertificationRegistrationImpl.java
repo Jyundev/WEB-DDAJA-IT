@@ -8,15 +8,15 @@ import com.web.ddajait.model.dao.CertificationRegistrationDao;
 import com.web.ddajait.model.entity.CertificationRegistrationEntity;
 import com.web.ddajait.model.repository.CertificateRegieterRepogitory;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class CertificationRegistrationImpl implements CertificationRegistrationDao {
 
-    final private CertificateRegieterRepogitory certificateRegieterRepogitory;
+    private final CertificateRegieterRepogitory certificateRegieterRepogitory;
 
     @Override
     public List<CertificationRegistrationEntity> getAllCerticationResgitration() {
@@ -25,8 +25,10 @@ public class CertificationRegistrationImpl implements CertificationRegistrationD
     }
 
     // @Override
-    // public Optional<CertificationRegistrationEntity> findByCertificateId(Long certificateId) {
-    //     return certificateRegieterRepogitory.findByCertificateInfo_certificateId(certificateId);
+    // public Optional<CertificationRegistrationEntity> findByCertificateId(Long
+    // certificateId) {
+    // return
+    // certificateRegieterRepogitory.findByCertificateInfo_certificateId(certificateId);
     // }
 
 }

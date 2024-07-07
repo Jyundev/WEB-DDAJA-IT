@@ -24,4 +24,12 @@ public class UserInfoDto {
     @Schema(description = "자격증", example = "[정보처리기사]")
     private List<String>  qualified_certificate;
 
+
+    
+    @Override
+    public String toString() {
+        return "nickname : " + nickname + " gender : "+gender+"interest : " + interest;
+    }
+
+
 }

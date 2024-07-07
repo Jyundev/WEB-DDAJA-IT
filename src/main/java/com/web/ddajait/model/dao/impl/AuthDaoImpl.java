@@ -1,18 +1,18 @@
 package com.web.ddajait.model.dao.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.ddajait.model.dao.AuthDao;
 import com.web.ddajait.model.repository.AuthRepository;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class AuthDaoImpl implements AuthDao{
-    
-    @Autowired
-    private AuthRepository authRepository;
+@RequiredArgsConstructor
+public class AuthDaoImpl implements AuthDao {
+
+    private final AuthRepository authRepository;
 
     @PostConstruct
     public void initializeRoles() {

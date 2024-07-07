@@ -33,4 +33,11 @@ public class UserPrivateInfoDto {
 
     @Schema(description = "프로필이미지", example = "url")
     private String profileImage = "";
+
+    @Override
+    public String toString() {
+        return "nickname : " + nickname + " gender : "+gender+"interest : " + interest;
+    }
+
+
 }

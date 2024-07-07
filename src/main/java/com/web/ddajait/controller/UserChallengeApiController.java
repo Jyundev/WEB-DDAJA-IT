@@ -28,12 +28,12 @@ import com.web.ddajait.service.UserWrongQuestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 //Validated : https://mangkyu.tistory.com/174
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/api/v1/user/challenge")
 @Tag(name = "Challenger", description = "Challenger API입니다.")

@@ -9,13 +9,13 @@ import com.web.ddajait.model.dao.ChallengeInfoDao;
 import com.web.ddajait.model.entity.ChallengeInfoEntity;
 import com.web.ddajait.model.repository.ChallengeInfoRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ChallengeInfoImpl implements ChallengeInfoDao {
 
-    final private ChallengeInfoRepository challengeInfoRepository;
+    private final ChallengeInfoRepository challengeInfoRepository;
 
     @Override
     public List<ChallengeInfoEntity> getAllChallengeInfo() {

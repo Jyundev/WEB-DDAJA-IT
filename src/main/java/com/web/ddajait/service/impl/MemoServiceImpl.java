@@ -13,14 +13,15 @@ import com.web.ddajait.util.EntityUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemoServiceImpl implements MemoService {
 
-    final private MemoDao memoDao;
-    final private UserDao userDao;
-    final private ChallengeInfoDao challengeInfoDao;
+    private final MemoDao memoDao;
+    private final UserDao userDao;
+    private final ChallengeInfoDao challengeInfoDao;
 
     @Override
     public MemoDto findMemo(Long userId, Long challengeId, int step, int day) throws Exception {

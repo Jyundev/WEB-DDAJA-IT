@@ -13,4 +13,9 @@ public class ProfileImageDto {
 
     private String profileImage;
 
+    @Override
+    public String toString() {
+        return "profileImage : " + profileImage;
+    }
+
 }
