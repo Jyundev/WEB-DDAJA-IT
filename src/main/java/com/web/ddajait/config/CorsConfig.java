@@ -1,8 +1,5 @@
 package com.web.ddajait.config;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,11 +16,8 @@ public class CorsConfig {
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.addAllowedOriginPattern("http://localhost:5173"); 
-        config.addAllowedOriginPattern("https://df3cpyo19sfnq.cloudfront.net"); 
-        config.addAllowedOriginPattern("https://ddajait.com/"); 
-        config.addAllowedOriginPattern("https://d5ki68ixw55w9.cloudfront.net"); 
-        config.addAllowedOriginPattern("http://ddjait-react-cicd.s3-website.ap-northeast-2.amazonaws.com"); 
-        config.addAllowedOriginPattern("https://d26qduhz3ubom8.cloudfront.net/"); 
+        config.addAllowedOriginPattern("https://ddajait.com/");
+        config.addAllowedOriginPattern("https://ddajait.shop/"); 
         config.addExposedHeader("USER_ID"); // Add this line to expose the USER_ID header
         source.registerCorsConfiguration("/api/v1/**", config);
         source.registerCorsConfiguration("/update/challenge/**", config);
