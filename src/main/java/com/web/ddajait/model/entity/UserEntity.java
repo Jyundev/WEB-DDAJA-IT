@@ -69,7 +69,7 @@ public class UserEntity {
 
     @Builder.Default
     @Column(columnDefinition = "TEXT")
-    private String profileImage = "https://ddajait-db-s3.s3.ap-northeast-2.amazonaws.com/image/profile/default_profile.png";
+    private String profileImage = "https://ddajait-s3.s3.ap-northeast-2.amazonaws.com/image/profile/default_profile.png";
 
     private int tier;
 

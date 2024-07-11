@@ -54,7 +54,7 @@ public class UserDto {
 
     // @URL
     @Schema(description = "프로필이미지", example = "URL")
-    private String profileImage = "https://ddajait-db-s3.s3.ap-northeast-2.amazonaws.com/image/profile/default_profile.png";
+    private String profileImage = "https://ddajait-s3.s3.ap-northeast-2.amazonaws.com/image/profile/default_profile.png";
 
     @Schema(description = "취득자격증", example = "['정보처리기사', '리눅스마스터']")
     private List<String> qualifiedCertificate;
