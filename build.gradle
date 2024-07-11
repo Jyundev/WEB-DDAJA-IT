@@ -58,11 +58,8 @@ dependencies {
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-
-
-
-// S3
-// implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	// Jasypt
+	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5"
 
 }
 

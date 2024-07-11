@@ -14,9 +14,11 @@ public class AuthDaoImpl implements AuthDao {
 
     private final AuthRepository authRepository;
 
+    // 서비스 클래스가 초기화될 때 권한을 데이터베이스에 삽입
     @PostConstruct
     public void initializeRoles() {
         authRepository.insertRoleUser();
         authRepository.insertRoleAdmin();
+        authRepository.insertRoleChallenger();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.ddajait.model.entity.AuthorityEntity;
+
 // authority 테이블에 ROLE_USER, ROLE_ADMIN, ROLE_CHALLENGER 권한을 삽입
 public interface AuthRepository extends JpaRepository<AuthorityEntity, String> {
     @Modifying
