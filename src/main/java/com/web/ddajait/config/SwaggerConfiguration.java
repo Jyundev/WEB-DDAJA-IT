@@ -1,5 +1,7 @@
 package com.web.ddajait.config;
 
+import java.util.List;
+
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 
 /**
  * 참고 링크
@@ -31,9 +34,10 @@ public class SwaggerConfiguration {
 
         @Bean
         public OpenAPI customOpenAPI() {
+                
                 return new OpenAPI()
                                 .info(new Info().title("API").version("v1"))
-                                // .servers(List.of(new Server().url("https://"))) 
+                                .servers(List.of(new Server().url("https://ddajait.shop"))) 
                                 .addSecurityItem(new SecurityRequirement().addList(SCHEME_NAME))
                                 .components(new Components()
                                                 .addSecuritySchemes(SCHEME_NAME,
