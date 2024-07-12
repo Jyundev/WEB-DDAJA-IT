@@ -20,10 +20,16 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
+      # 암호화 키 
+      - run: touch ./src/main/resources/application-secret.properties
+      - run: echo "${{ secrets.JASYPT_KEY }}" > ./src/main/resources/application-secret.properties
+      - run: cat ./src/main/resources/application-secret.properties
+
       - name: Build with Gradle
         run: |
           chmod 777 ./gradlew
           ./gradlew clean build -x test
+        
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
