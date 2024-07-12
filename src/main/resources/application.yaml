@@ -5,6 +5,7 @@ spring:
       local: local, common
       blue: blue, common
       green: green, common
+    include: secret
 
 server:
   env: blue
@@ -65,14 +66,10 @@ spring:
   # 데이터 베이스 
   datasource:
       url: jdbc:mysql://ddajait-database.c7q262e6c0pc.ap-northeast-2.rds.amazonaws.com/ddajait
-      username: admin
-      password: ddajait123
+      username: ENC(pWqxwuz3pwEVGzbjp1Q8bw==) # admin
+      password: ENC(EyxlESU6d7Y6JrYgkL6Ls5kH/B3w6RDj) # ddajait123
       driver-class-name: com.mysql.cj.jdbc.Driver
-
-    # sql:
-    #   init:
-    #     mode: always
-
+      
 
 
     #  데이터 베이스 커넥션 
@@ -86,16 +83,6 @@ spring:
           
     # defer-datasource-initialization: true
         
-
-  # mustache (1. 루트폴더 변경, 2. 타임리프 캐시 설정 변경)
-  mustache:
-    prefix: classpath:templates/
-    check-template-location: true
-    suffix: .html
-    cache: false
-
-  mvc:
-    static-path-pattern: /static/**
 
 
 # spring doc
@@ -118,8 +105,16 @@ springdoc:
     disabled: true
   model-and-view-allowed: true
 
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor # Jasypt Config 파일에서 등록하는 빈의 이름
+    algorithm: PBEWithMD5AndDES # 암/복호화에 사용되는 알고리즘
+    pool-size: 2 # 암호화 요청을 담고 있는 pool의 크기
+    string-output-type: base64 # 암호화 이후에 어떤 형태로 값을 받을지 설정. base64 / hexadecimal을 선택
+    key-obtention-iterations: 1000 # 암호화 키를 얻기 위해 반복해야 하는 해시 횟수
+    password: ${JASYPT_KEY} # 환경변수 설정 
 
-# loging
+# logingㅖ
 # race → warn → info → debug → error(적은 로깅) 순
 # 개발 서버는 debug, 운영 서버는 info
 logging:
