@@ -66,8 +66,8 @@ spring:
   # 데이터 베이스 
   datasource:
       url: jdbc:mysql://ddajait-database.c7q262e6c0pc.ap-northeast-2.rds.amazonaws.com/ddajait
-      username: ENC(pWqxwuz3pwEVGzbjp1Q8bw==) # admin
-      password: ENC(EyxlESU6d7Y6JrYgkL6Ls5kH/B3w6RDj) # ddajait123
+      username: ENC(pWqxwuz3pwEVGzbjp1Q8bw==) 
+      password: ENC(EyxlESU6d7Y6JrYgkL6Ls5kH/B3w6RDj) 
       driver-class-name: com.mysql.cj.jdbc.Driver
       
 
