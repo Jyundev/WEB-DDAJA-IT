@@ -25,6 +25,8 @@ jobs:
         run: echo "JASYPT_KEY=${{ secrets.JASYPT_KEY }}" >> $GITHUB_ENV
 
       - name: Build with Gradle
+        env:
+          JASYPT_KEY: ${{ secrets.JASYPT_KEY }}
         run: |
           chmod 777 ./gradlew
           ./gradlew clean build -x test
