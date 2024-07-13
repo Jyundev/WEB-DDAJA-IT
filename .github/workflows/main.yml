@@ -22,11 +22,11 @@ jobs:
           distribution: 'adopt'
 
       - name: Set up JASYPT_KEY environment variable
-        uses: microsoft/variable-substitution@v1
+        uses: xrville/replace-value@v1
         with:
-          files: ./src/main/resources/application.yml 
-        env:
-          jasypt.encryptor.password: ${{ secrets.JASYPT_KEY }}
+          files: ./src/main/resources/application.yaml
+          from: '${JASYPT_KEY}'
+          to: ${{ secrets.JASYPT_KEY }}
 
       - name: Build with Gradle
         run: |
