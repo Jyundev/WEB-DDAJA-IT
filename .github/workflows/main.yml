@@ -22,11 +22,13 @@ jobs:
           distribution: 'adopt'
 
       - name: Set up JASYPT_KEY environment variable
-        run: echo "JASYPT_KEY=${{ secrets.JASYPT_KEY }}" >> $GITHUB_ENV
-
-      - name: Build with Gradle
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ./src/main/resources/application.yml 
         env:
           jasypt.encryptor.password: ${{ secrets.JASYPT_KEY }}
+
+      - name: Build with Gradle
         run: |
           chmod 777 ./gradlew
           ./gradlew clean build -x test
