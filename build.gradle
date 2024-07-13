@@ -61,6 +61,7 @@ dependencies {
 	// Jasypt
 	// 프로젝트에 대한 기본 암호화 기능을 추가할 수 있도록 하는 자바 라이브러리
 	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5"
+    implementation 'org.jasypt:jasypt:1.9.3'
 
 }
 
