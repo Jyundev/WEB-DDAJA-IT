@@ -1,6 +1,4 @@
-# IT 자격증 스터디 플랫폼 : <a href = "https://d5ki68ixw55w9.cloudfront.net/">DDAJA-IT </a>
-
-참고 : 7월 1일 이후 서버 업데이트 예정
+# IT 자격증 스터디 플랫폼 : <a href = "https://ddajait.com/">보러가기 </a>
  
 ## 📆 프로젝트 기간 
 
