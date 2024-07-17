@@ -127,4 +127,4 @@ jwt:
   header: Authorization
   #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
   secret: ENC(aB3xZRweVB7oSRARk61KcFasISFtqdsD18G1/r5Sl5zIuxj58YT2s1/SwMZD/g//tvqNpSJfOozJMveW8ltda5kdXjTc+f9Q8q22T2frYKNfEsNDs3+ZD7NyTcpxS/iDdbblZ0F64gtsgGbsf1I7u5wOeBBmKwnjqGIRbNqjD/hwqLbZEdxsQsOs5ipkdaIx) 
-  token-validity-in-seconds: 86400  
+  token-validity-in-seconds: 86400      

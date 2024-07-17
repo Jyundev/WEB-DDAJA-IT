@@ -63,7 +63,7 @@ public class SecurityConfig {
                                                 .requestMatchers(AuthenticatedMatchers.ignoringArray).permitAll()
                                                 .requestMatchers( "/api/v1/auth/authenticate", "/api/v1/public/join").anonymous()
                                                 // "/user/challenge" 와 같은 URL path로 접근할 경우 CHALLENGER 권한을 갖은 사용자만 접근 가능
-                                                .requestMatchers("/user/challenge/**", "/api/v1/user/challenge/**").hasAuthority(Role.CHALLENGER.getKey())
+                                                // .requestMatchers("/user/challenge/**", "/api/v1/user/challenge/**").hasAuthority(Role.CHALLENGER.getKey())
                                                 // "/user" 와 같은 URL path로 접근할 경우 인증(로그인)만 접근 가능
                                                 .requestMatchers("/user/**", "/api/v1/user/**").hasAuthority(Role.USER.getKey())
                                                 // "/admin" 와 같은 URL path로 접근할 경우 ADMIN 권한을 갖은 사용자만 접근 가능
