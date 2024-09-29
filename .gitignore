@@ -36,9 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-### yaml
-*.yaml
-
 ### mac file 
 .DS_Store
 
