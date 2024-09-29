@@ -21,9 +21,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Replace JASYPT_KEY in application.yaml
+      - name: Replace JASYPT_KEY in application.yml
         run: |
-          sed -i 's/\${JASYPT_KEY}/${{ secrets.JASYPT_KEY }}/g' ./src/main/resources/application.yaml
+          sed -i 's/\${JASYPT_KEY}/${{ secrets.JASYPT_KEY }}/g' ./src/main/resources/application.yml
 
 
       - name: Build with Gradle
