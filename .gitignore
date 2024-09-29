@@ -41,3 +41,22 @@ out/
 
 ### mac file 
 .DS_Store
+
+# 로그 
+*.log
+logs/
+
+# 환경 설정 파일 및 시스템 파일
+*.swp
+*.swo
+*.bak
+*.tmp
+*.old
+
+#빌드 시스템 관련 파일
+target/
+*.jar
+*.war
+*.ear
+.gradle/
+build/
