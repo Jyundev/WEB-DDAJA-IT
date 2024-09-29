@@ -2,20 +2,25 @@ spring:
   profiles:
     active: local
     group:
-      local: local, common
-      blue: blue, common
-      green: green, common
-    include: secret
+      local: local
+      blue: blue
+      green: green
 
 server:
   env: blue
-
----
-
+  
+---               
 spring:
   config:
     activate:
       on-profile: local
+
+  # 데이터 베이스 
+  datasource:
+      url: jdbc:mysql://localhost:3306/ddajait?userSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
   port: 8080
@@ -23,11 +28,19 @@ server:
 
 serverName: local_server
 
+
 ---
 spring:
   config:
     activate:
       on-profile: blue
+
+        # 데이터 베이스 
+  datasource:
+      url: jdbc:mysql://ddajait-database.c7q262e6c0pc.ap-northeast-2.rds.amazonaws.com/ddajait
+      username: ENC(pWqxwuz3pwEVGzbjp1Q8bw==) 
+      password: ENC(EyxlESU6d7Y6JrYgkL6Ls5kH/B3w6RDj) 
+      driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
   port: 8080
@@ -40,6 +53,13 @@ spring:
   config:
     activate:
       on-profile: green
+
+    # 데이터 베이스 
+  datasource:
+      url: jdbc:mysql://ddajait-database.c7q262e6c0pc.ap-northeast-2.rds.amazonaws.com/ddajait
+      username: ENC(pWqxwuz3pwEVGzbjp1Q8bw==) 
+      password: ENC(EyxlESU6d7Y6JrYgkL6Ls5kH/B3w6RDj) 
+      driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
   port: 8081
@@ -57,18 +77,13 @@ spring:
     livereload:
       enabled: true
   application:
-    name: final-prod
+    name: ddajait
     
   output:
     ansi:
       enabled: always 
 
-  # 데이터 베이스 
-  datasource:
-      url: jdbc:mysql://ddajait-database.c7q262e6c0pc.ap-northeast-2.rds.amazonaws.com/ddajait
-      username: ENC(pWqxwuz3pwEVGzbjp1Q8bw==) 
-      password: ENC(EyxlESU6d7Y6JrYgkL6Ls5kH/B3w6RDj) 
-      driver-class-name: com.mysql.cj.jdbc.Driver
+
       
 
 
@@ -76,12 +91,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update 
-    properties:
-      properties:
-      # hibernate:
-      #   dialect: org.hibernate.dialect.MySQLDialect
-          
-    # defer-datasource-initialization: true
+
         
 
 
