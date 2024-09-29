@@ -50,10 +50,3 @@ logs/
 *.tmp
 *.old
 
-#빌드 시스템 관련 파일
-target/
-*.jar
-*.war
-*.ear
-.gradle/
-build/
